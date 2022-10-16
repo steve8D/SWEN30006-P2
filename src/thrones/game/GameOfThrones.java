@@ -183,7 +183,8 @@ public class GameOfThrones extends CardGame {
         for (int i = 0; i < nbPlayers; i++) {
             updateScore(i);
         }
-        System.out.println(playerTeams[0] + " score = " + scores[0] + "; " + playerTeams[1] + " score = " + scores[1]);
+        LoggingSystem.logScores(scores);
+        //System.out.println(playerTeams[0] + " score = " + scores[0] + "; " + playerTeams[1] + " score = " + scores[1]);
     }
 
     private Optional<Card> selected;
@@ -201,7 +202,9 @@ public class GameOfThrones extends CardGame {
 
         for (int i = 0; i < nbPlayers; i++) {
             hands[i].sort(Hand.SortType.SUITPRIORITY, true);
-            System.out.println("hands[" + i + "]: " + canonical(hands[i]));
+
+            //System.out.println("hands[" + i + "]: " + canonical(hands[i]));
+            LoggingSystem.logHand(i,hands[i]);
         }
 
         for (final Hand currentHand : hands) {
@@ -356,7 +359,8 @@ public class GameOfThrones extends CardGame {
 
             int pileIndex = playerIndex % 2;
             assert selected.isPresent() : " Pass returned on selection of character.";
-            System.out.println("Player " + playerIndex + " plays " + canonical(selected.get()) + " on pile " + pileIndex);
+            //System.out.println("Player " + playerIndex + " plays " + canonical(selected.get()) + " on pile " + pileIndex);
+            LoggingSystem.logMove(playerIndex,selected.get(),pileIndex);
             selected.get().setVerso(false);
             selected.get().transfer(piles[pileIndex], true); // transfer to pile (includes graphic effect)
             updatePileRanks();
@@ -382,7 +386,8 @@ public class GameOfThrones extends CardGame {
                 } else {
                     selectRandomPile();
                 }
-                System.out.println("Player " + nextPlayer + " plays " + canonical(selected.get()) + " on pile " + selectedPileIndex);
+                //System.out.println("Player " + nextPlayer + " plays " + canonical(selected.get()) + " on pile " + selectedPileIndex);
+                LoggingSystem.logMove(nextPlayer,selected.get(),selectedPileIndex);
                 selected.get().setVerso(false);
                 selected.get().transfer(piles[selectedPileIndex], true); // transfer to pile (includes graphic effect)
                 updatePileRanks();
@@ -397,10 +402,12 @@ public class GameOfThrones extends CardGame {
         updatePileRanks();
         int[] pile0Ranks = calculatePileRanks(0);
         int[] pile1Ranks = calculatePileRanks(1);
-        System.out.println("piles[0]: " + canonical(piles[0]));
-        System.out.println("piles[0] is " + "Attack: " + pile0Ranks[ATTACK_RANK_INDEX] + " - Defence: " + pile0Ranks[DEFENCE_RANK_INDEX]);
-        System.out.println("piles[1]: " + canonical(piles[1]));
-        System.out.println("piles[1] is " + "Attack: " + pile1Ranks[ATTACK_RANK_INDEX] + " - Defence: " + pile1Ranks[DEFENCE_RANK_INDEX]);
+        //System.out.println("piles[0]: " + canonical(piles[0]));
+        //System.out.println("piles[0] is " + "Attack: " + pile0Ranks[ATTACK_RANK_INDEX] + " - Defence: " + pile0Ranks[DEFENCE_RANK_INDEX]);
+        //System.out.println("piles[1]: " + canonical(piles[1]));
+        //System.out.println("piles[1] is " + "Attack: " + pile1Ranks[ATTACK_RANK_INDEX] + " - Defence: " + pile1Ranks[DEFENCE_RANK_INDEX]);
+        LoggingSystem.logPiles(piles, pile0Ranks,pile1Ranks );
+
         Rank pile0CharacterRank = (Rank) piles[0].getCardList().get(0).getRank();
         Rank pile1CharacterRank = (Rank) piles[1].getCardList().get(0).getRank();
         String character0Result;
@@ -410,24 +417,36 @@ public class GameOfThrones extends CardGame {
             scores[0] += pile1CharacterRank.getRankValue();
             scores[2] += pile1CharacterRank.getRankValue();
             character0Result = "Character 0 attack on character 1 succeeded.";
+
         } else {
             scores[1] += pile1CharacterRank.getRankValue();
             scores[3] += pile1CharacterRank.getRankValue();
             character0Result = "Character 0 attack on character 1 failed.";
+
+
         }
 
         if (pile1Ranks[ATTACK_RANK_INDEX] > pile0Ranks[DEFENCE_RANK_INDEX]) {
             scores[1] += pile0CharacterRank.getRankValue();
             scores[3] += pile0CharacterRank.getRankValue();
             character1Result = "Character 1 attack on character 0 succeeded.";
+
+
         } else {
             scores[0] += pile0CharacterRank.getRankValue();
             scores[2] += pile0CharacterRank.getRankValue();
             character1Result = "Character 1 attack character 0 failed.";
+
+
         }
         updateScores();
-        System.out.println(character0Result);
-        System.out.println(character1Result);
+
+
+        //System.out.println(character0Result);
+        //System.out.println(character1Result);
+        LoggingSystem.logBattle(character0Result);
+        LoggingSystem.logBattle(character1Result);
+
         setStatusText(character0Result + " " + character1Result);
 
         // 5: discarded all cards on the piles
@@ -456,7 +475,8 @@ public class GameOfThrones extends CardGame {
         } else {
             text = "Players 1 and 3 won.";
         }
-        System.out.println("Result: " + text);
+        //System.out.println("Result: " + text);
+        LoggingSystem.logResult(scores[0], scores[1]);
         setStatusText(text);
 
         refresh();
@@ -481,7 +501,8 @@ public class GameOfThrones extends CardGame {
         }
         */
         GameOfThrones.seed = 130006;
-        System.out.println("Seed = " + seed);
+        //System.out.println("Seed = " + seed);
+        LoggingSystem.logSeed(seed);
         GameOfThrones.random = new Random(seed);
         new GameOfThrones();
     }
