@@ -4,6 +4,7 @@ package thrones.game;
 
 import ch.aplu.jcardgame.*;
 import ch.aplu.jgamegrid.*;
+import thrones.game.utility.CardUI;
 import thrones.game.utility.LoggingSystem;
 
 import java.awt.Color;
@@ -144,7 +145,14 @@ public class GameOfThrones extends CardGame {
     private Actor[] scoreActors = {null, null, null, null};
     private final int watchingTime = 5000;
     private Hand[] hands;
+    public Hand[] getHands() {
+        return hands;
+    }
     private Hand[] piles;
+    public Hand[] getPiles() {
+        return piles;
+    }
+    private CardUI cardUI;
     private final String[] playerTeams = { "[Players 0 & 2]", "[Players 1 & 3]"};
     private int nextStartingPlayer = random.nextInt(nbPlayers);
 
@@ -155,11 +163,9 @@ public class GameOfThrones extends CardGame {
 
     // boolean[] humanPlayers = { true, false, false, false};
     boolean[] humanPlayers = { false, false, false, false};
-
-
     private void initScore() {
         for (int i = 0; i < nbPlayers; i++) {
-             scores[i] = 0;
+            scores[i] = 0;
             String text = "P" + i + "-0";
             scoreActors[i] = new TextActor(text, Color.WHITE, bgColor, bigFont);
             addActor(scoreActors[i], scoreLocations[i]);
@@ -181,7 +187,7 @@ public class GameOfThrones extends CardGame {
 
     private void updateScores() {
         for (int i = 0; i < nbPlayers; i++) {
-            updateScore(i);
+            cardUI.updateScore(i, scores[i]);
         }
         LoggingSystem.logScores(scores);
     }
@@ -199,42 +205,39 @@ public class GameOfThrones extends CardGame {
         }
         dealingOut(hands, nbPlayers, nbStartCards);
 
-        for (int i = 0; i < nbPlayers; i++) {
-            hands[i].sort(Hand.SortType.SUITPRIORITY, true);
-
-            LoggingSystem.logHand(i,hands[i]);
-        }
-
-        for (final Hand currentHand : hands) {
-            // Set up human player for interaction
-            currentHand.addCardListener(new CardAdapter() {
-                public void leftDoubleClicked(Card card) {
-                    selected = Optional.of(card);
-                    currentHand.setTouchEnabled(false);
-                }
-                public void rightClicked(Card card) {
-                    selected = Optional.empty(); // Don't care which card we right-clicked for player to pass
-                    currentHand.setTouchEnabled(false);
-                }
-            });
-        }
+//        for (int i = 0; i < nbPlayers; i++) {
+//            hands[i].sort(Hand.SortType.SUITPRIORITY, true);
+//
+//            LoggingSystem.logHand(i,hands[i]);
+//        }
+//
+//        for (final Hand currentHand : hands) {
+//            // Set up human player for interaction
+//            currentHand.addCardListener(new CardAdapter() {
+//                public void leftDoubleClicked(Card card) {
+//                    selected = Optional.of(card);
+//                    currentHand.setTouchEnabled(false);
+//                }
+//                public void rightClicked(Card card) {
+//                    selected = Optional.empty(); // Don't care which card we right-clicked for player to pass
+//                    currentHand.setTouchEnabled(false);
+//                }
+//            });
+//        }
         // graphics
-        RowLayout[] layouts = new RowLayout[nbPlayers];
-        for (int i = 0; i < nbPlayers; i++) {
-            layouts[i] = new RowLayout(handLocations[i], handWidth);
-            layouts[i].setRotationAngle(90 * i);
-            hands[i].setView(this, layouts[i]);
-            hands[i].draw();
-        }
+//        RowLayout[] layouts = new RowLayout[nbPlayers];
+//        for (int i = 0; i < nbPlayers; i++) {
+//            layouts[i] = new RowLayout(handLocations[i], handWidth);
+//            layouts[i].setRotationAngle(90 * i);
+//            hands[i].setView(this, layouts[i]);
+//            hands[i].draw();
+//        }
         // End graphics
     }
 
     private void resetPile() {
-        if (piles != null) {
-            for (Hand pile : piles) {
-                pile.removeAll(true);
-            }
-        }
+//        cardUI.removeAll();
+
         piles = new Hand[2];
         for (int i = 0; i < 2; i++) {
             piles[i] = new Hand(deck);
@@ -318,18 +321,18 @@ public class GameOfThrones extends CardGame {
         return new int[] { i, i };
     }
 
-    private void updatePileRankState(int pileIndex, int attackRank, int defenceRank) {
-        TextActor currentPile = (TextActor) pileTextActors[pileIndex];
-        removeActor(currentPile);
-        String text = playerTeams[pileIndex] + " Attack: " + attackRank + " - Defence: " + defenceRank;
-        pileTextActors[pileIndex] = new TextActor(text, Color.WHITE, bgColor, smallFont);
-        addActor(pileTextActors[pileIndex], pileStatusLocations[pileIndex]);
-    }
+//    private void updatePileRankState(int pileIndex, int attackRank, int defenceRank) {
+//        TextActor currentPile = (TextActor) pileTextActors[pileIndex];
+//        removeActor(currentPile);
+//        String text = playerTeams[pileIndex] + " Attack: " + attackRank + " - Defence: " + defenceRank;
+//        pileTextActors[pileIndex] = new TextActor(text, Color.WHITE, bgColor, smallFont);
+//        addActor(pileTextActors[pileIndex], pileStatusLocations[pileIndex]);
+//    }
 
     private void updatePileRanks() {
         for (int j = 0; j < piles.length; j++) {
             int[] ranks = calculatePileRanks(j);
-            updatePileRankState(j, ranks[ATTACK_RANK_INDEX], ranks[DEFENCE_RANK_INDEX]);
+            cardUI.updatePileRankState(j, ranks[ATTACK_RANK_INDEX], ranks[DEFENCE_RANK_INDEX]);
         }
     }
 
@@ -444,13 +447,8 @@ public class GameOfThrones extends CardGame {
     }
 
     public GameOfThrones() {
-        super(700, 700, 30);
-
-        setTitle("Game of Thrones (V" + version + ") Constructed for UofM SWEN30006 with JGameGrid (www.aplu.ch)");
-        setStatusText("Initializing...");
-        initScore();
-
         setupGame();
+        cardUI = new CardUI(this);
         for (int i = 0; i < nbPlays; i++) {
             executeAPlay();
             updateScores();
@@ -467,7 +465,7 @@ public class GameOfThrones extends CardGame {
         LoggingSystem.logResult(scores[0], scores[1]);
         setStatusText(text);
 
-        refresh();
+        cardUI.refresh();
     }
 
     public static void main(String[] args) {
