@@ -1,7 +1,8 @@
-package thrones.game;
+package thrones.game.utility;
 
 import ch.aplu.jcardgame.Card;
 import ch.aplu.jcardgame.Hand;
+import thrones.game.GameOfThrones;
 
 import java.util.stream.Collectors;
 
@@ -58,19 +59,6 @@ public class LoggingSystem {
         logPile(piles[0], pile0Ranks, 0);
         logPile(piles[1], pile1Ranks, 1);
     }
-
-    //public static void logBattle(int attacker, int success){
-
-
-        /*
-        // success is 1 for win and 0 for lose
-        int defender = (attacker == 1)? 0 : 1 ;
-        // 0 if 1 is attacking, and 1 if 0 is attacking
-        String successText = (success == 1)? "succeeded" : "failed";
-        System.out.println("Character "+attacker+" attack on character "+defender+" "+successText+". ");
-
-         */
-    //}
 
     public static void logBattle(String text){
         System.out.println(text);
