@@ -28,6 +28,7 @@ public class CharacterEffect extends Character{
 
     @Override
     public int getAttack() {
+        // this will become more complicated once we actually add characters
         return character.getAttack();
     }
     @Override
@@ -37,5 +38,9 @@ public class CharacterEffect extends Character{
     @Override
     public int getBaseRank() {
         return character.getBaseRank();
+    }
+
+    public boolean isDouble(){
+        return false;// abstract for later
     }
 }
