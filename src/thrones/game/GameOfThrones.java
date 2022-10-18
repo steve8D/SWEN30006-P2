@@ -4,6 +4,9 @@ package thrones.game;
 
 import ch.aplu.jcardgame.*;
 import ch.aplu.jgamegrid.*;
+import thrones.game.character.BaseCharacter;
+import thrones.game.character.Character;
+import thrones.game.character.CharacterEffect;
 import thrones.game.utility.CardUI;
 import thrones.game.utility.LoggingSystem;
 
@@ -124,18 +127,17 @@ public class GameOfThrones extends CardGame {
     public Hand[] getHands() {
         return hands;
     }
+
+
     private Hand[] piles;
     public Hand[] getPiles() {
         return piles;
     }
     private CardUI cardUI;
-    private final String[] playerTeams = { "[Players 0 & 2]", "[Players 1 & 3]"};
     private int nextStartingPlayer = random.nextInt(nbPlayers);
 
     private int[] scores = new int[nbPlayers];
 
-    Font bigFont = new Font("Arial", Font.BOLD, 36);
-    Font smallFont = new Font("Arial", Font.PLAIN, 10);
 
     boolean[] humanPlayers = { true, false, false, false};
     //boolean[] humanPlayers = { false, false, false, false};
@@ -210,6 +212,7 @@ public class GameOfThrones extends CardGame {
 
         // remove prev pile from display
         cardUI.removeAll();
+
 
         piles = new Hand[2];
         for (int i = 0; i < 2; i++) {
@@ -439,10 +442,21 @@ public class GameOfThrones extends CardGame {
         setupGame();
 
 
+
+        //testing
+        Card QH =  new Card(deck, Suit.HEARTS, Rank.QUEEN);
+        Card card2C =  new Card(deck, Suit.CLUBS, Rank.TWO);
+        Character c = new BaseCharacter(QH );
+        Character c2 = new CharacterEffect(card2C,c);
+
+
         for (int i = 0; i < nbPlays; i++) {
             executeAPlay();
             updateScores();
         }
+
+
+
 
 
         LoggingSystem.logResult(scores[0], scores[1]);
