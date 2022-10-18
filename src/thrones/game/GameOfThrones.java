@@ -129,10 +129,10 @@ public class GameOfThrones extends CardGame {
     }
 
 
-    private Hand[] piles;
-    public Hand[] getPiles() {
-        return piles;
-    }
+    private Hand[] piles; //remove
+    private Character[] characters;
+
+
     private CardUI cardUI;
     private int nextStartingPlayer = random.nextInt(nbPlayers);
 
@@ -211,14 +211,32 @@ public class GameOfThrones extends CardGame {
     private void resetPile() {
 
         // remove prev pile from display
-        cardUI.removeAll();
 
 
-        piles = new Hand[2];
+        Hand[] newpiles =null;
+        if(characters != null){
+            newpiles = new Hand[2];
+            newpiles[0] = characters[0].getPile();
+            newpiles[1] = characters[1].getPile();
+        }
+
+
+        cardUI.removeAll(newpiles);
+
+
+
+        piles = new Hand[2]; //remove
+        characters = new Character[2];
+
         for (int i = 0; i < 2; i++) {
 
-            piles[i] = new Hand(deck);
+            piles[i] = new Hand(deck); //remove
+            characters[i] = new BaseCharacter();
+
+
+            piles[i] = characters[i].getPile();//remove //todo make a local variable instead of piles[i] for the rest of this
             cardUI.drawPile(piles[i], i);
+
 //            piles[i].setView(this, new RowLayout(pileLocations[i], 8 * pileWidth));
 //            piles[i].draw();
             final Hand currentPile = piles[i];
@@ -284,21 +302,36 @@ public class GameOfThrones extends CardGame {
 
     private void waitForPileSelection() {
         selectedPileIndex = NON_SELECTION_VALUE;
-        for (Hand pile : piles) {
+
+
+        Hand[] newpiles = new Hand[2];
+        newpiles[0] = characters[0].getPile();
+        newpiles[1] = characters[1].getPile();
+
+
+
+        // remove // make into newpiles
+        for (Hand pile : newpiles) {
             pile.setTouchEnabled(true);
         }
         while(selectedPileIndex == NON_SELECTION_VALUE) {
             delay(100);
         }
-        for (Hand pile : piles) {
+        for (Hand pile : newpiles) {
             pile.setTouchEnabled(false);
         }
     }
 
     private int[] calculatePileRanks(int pileIndex) {
-        Hand currentPile = piles[pileIndex];
-        int i = currentPile.isEmpty() ? 0 : ((Rank) currentPile.get(0).getRank()).getRankValue();
-        return new int[] { i, i };
+        //Hand currentPile = piles[pileIndex];
+        //int i = currentPile.isEmpty() ? 0 : ((Rank) currentPile.get(0).getRank()).getRankValue(); //remove
+
+        Character currentCharacter = characters[pileIndex];
+        int attack = currentCharacter.getAttack();
+        int def = currentCharacter.getDefense();
+
+
+        return new int[] { attack, def };
     }
 
 //    private void updatePileRankState(int pileIndex, int attackRank, int defenceRank) {
@@ -310,7 +343,7 @@ public class GameOfThrones extends CardGame {
 //    }
 
     private void updatePileRanks() {
-        for (int j = 0; j < piles.length; j++) {
+        for (int j = 0; j < piles.length; j++) { //characters.length remove
             int[] ranks = calculatePileRanks(j);
             cardUI.updatePileRankState(j, ranks[ATTACK_RANK_INDEX], ranks[DEFENCE_RANK_INDEX]);
         }
@@ -340,11 +373,17 @@ public class GameOfThrones extends CardGame {
 
             int pileIndex = playerIndex % 2;
             assert selected.isPresent() : " Pass returned on selection of character.";
+
             LoggingSystem.logMove(playerIndex,selected.get(),pileIndex);
 //            selected.get().setVerso(false); //show card face
 //            selected.get().transfer(piles[pileIndex], true); // transfer to pile (includes graphic effect)
 
-            cardUI.moveToPile(selected.get(),piles[pileIndex]);
+            cardUI.moveToPile(selected.get(),characters[pileIndex].getPile());
+
+            // i am forced to initialise a character before a heart card is chosen because i need the pile for clicking purposes
+            // will fix later
+            BaseCharacter base = (BaseCharacter) characters[pileIndex];
+            base.addBaseCard(selected.get());
 
 
             updatePileRanks();
@@ -372,8 +411,12 @@ public class GameOfThrones extends CardGame {
                     selectRandomPile();
                 }
                 LoggingSystem.logMove(nextPlayer,selected.get(),selectedPileIndex);
-                selected.get().setVerso(false);
-                selected.get().transfer(piles[selectedPileIndex], true); // transfer to pile (includes graphic effect)
+
+                cardUI.moveToPile(selected.get(), characters[selectedPileIndex].getPile());
+                characters[selectedPileIndex] = new CharacterEffect(selected.get(), characters[selectedPileIndex]);
+
+//                selected.get().setVerso(false);
+//                selected.get().transfer(piles[selectedPileIndex], true); // transfer to pile (includes graphic effect)
                 updatePileRanks();
             } else {
                 setStatusText("Pass.");
@@ -392,6 +435,8 @@ public class GameOfThrones extends CardGame {
 
         Rank pile0CharacterRank = (Rank) piles[0].getCardList().get(0).getRank();
         Rank pile1CharacterRank = (Rank) piles[1].getCardList().get(0).getRank();
+
+
         String character0Result;
         String character1Result;
 
@@ -447,7 +492,10 @@ public class GameOfThrones extends CardGame {
         Card QH =  new Card(deck, Suit.HEARTS, Rank.QUEEN);
         Card card2C =  new Card(deck, Suit.CLUBS, Rank.TWO);
         Character c = new BaseCharacter(QH );
+
         Character c2 = new CharacterEffect(card2C,c);
+        cardUI.drawPile(c2.getPile(), 0);
+
 
 
         for (int i = 0; i < nbPlays; i++) {

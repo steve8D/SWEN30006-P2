@@ -1,6 +1,7 @@
 package thrones.game.character;
 
 import ch.aplu.jcardgame.Card;
+import ch.aplu.jcardgame.Hand;
 import thrones.game.GameOfThrones;
 
 public class CharacterEffect extends Character{
@@ -11,9 +12,18 @@ public class CharacterEffect extends Character{
     public CharacterEffect(Card card, Character character){
         this.card = card;
         this.character = character;
-        this.pile = character.pile;
-        this.pile.insert(card,false);
 
+        insertToPile(card);
+    }
+
+    @Override
+    public Hand getPile() {
+        return character.getPile();
+    }
+
+    @Override
+    public void insertToPile(Card card) {
+        character.insertToPile(card);
     }
 
     @Override

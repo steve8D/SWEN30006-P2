@@ -115,8 +115,9 @@ public class CardUI {
         gameOfThrones.addActor(scoreActors[player], scoreLocations[player]);
     }
 
-    public void removeAll() {
-        piles = gameOfThrones.getPiles();
+    public void removeAll(Hand[] piles) {
+        //piles = gameOfThrones.getPiles();
+
         if (piles != null) {
             for (Hand pile : piles) {
                 pile.removeAll(true);
@@ -146,7 +147,7 @@ public class CardUI {
 
     public void updatePileRankState(int pileIndex, int attackRank, int defenceRank) {
         // piles is null here, should update from GoT
-        piles = gameOfThrones.getPiles();
+        //piles = gameOfThrones.getPiles();
         TextActor currentPile = (TextActor) pileTextActors[pileIndex];
         gameOfThrones.removeActor(currentPile);
         String text = playerTeams[pileIndex] + " Attack: " + attackRank + " - Defence: " + defenceRank;

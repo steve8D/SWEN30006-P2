@@ -7,9 +7,9 @@ import thrones.game.GameOfThrones;
 
 public abstract class Character {
 
-    protected Hand pile;
+
     protected Card card;
-    protected Deck deck = new Deck(GameOfThrones.Suit.values(), GameOfThrones.Rank.values(), "cover");
+
 
     abstract public int getAttack();
     abstract public int getDefense();
@@ -17,4 +17,6 @@ public abstract class Character {
     abstract public int getBaseRank();
 
 
+    abstract public Hand getPile(); //protected later
+    abstract public void insertToPile(Card card);
 }
