@@ -8,7 +8,7 @@ import thrones.game.GameOfThrones;
 import java.awt.*;
 import java.util.Optional;
 
-public class CardUI extends CardGame {
+public class CardUI {
     private GameOfThrones gameOfThrones;
     private final String version = "1.0";
     private final int pileWidth = 40;
@@ -46,70 +46,73 @@ public class CardUI extends CardGame {
     private Optional<Card> selected;
 
     public CardUI(GameOfThrones game) {
-        super(700, 700, 30);
-
-        setTitle("Game of Thrones (V" + version + ") Constructed for UofM SWEN30006 with JGameGrid (www.aplu.ch)");
-        setStatusText("Initializing...");
 
         this.gameOfThrones = game;
+
+
+        gameOfThrones.setTitle("Game of Thrones (V" + version + ") Constructed for UofM SWEN30006 with JGameGrid (www.aplu.ch)");
+        gameOfThrones.setStatusText("Initializing...");
+
+
         this.hands = gameOfThrones.getHands();
         initScore(game.nbPlayers);
         initPileTextActors();
-        initLayout(game.nbPlayers);
+
     }
 
     private void initScore(int players) {
         for (int i = 0; i < players; i++) {
             String text = "P" + i + "-0";
-            scoreActors[i] = new TextActor(text, Color.WHITE, bgColor, bigFont);
-            addActor(scoreActors[i], scoreLocations[i]);
+            scoreActors[i] = new TextActor(text, Color.WHITE, gameOfThrones.bgColor, bigFont);
+            gameOfThrones.addActor(scoreActors[i], scoreLocations[i]);
         }
     }
 
     private void initPileTextActors() {
         String text = "Attack: 0 - Defence: 0";
         for (int i = 0; i < pileTextActors.length; i++) {
-            pileTextActors[i] = new TextActor(text, Color.WHITE, bgColor, smallFont);
-            addActor(pileTextActors[i], pileStatusLocations[i]);
+            pileTextActors[i] = new TextActor(text, Color.WHITE, gameOfThrones.bgColor, smallFont);
+            gameOfThrones.addActor(pileTextActors[i], pileStatusLocations[i]);
         }
     }
 
-    private void initLayout(int players) {
-        for (int i = 0; i < players; i++) {
-            hands[i].sort(Hand.SortType.SUITPRIORITY, true);
+    public void initLayout(int players) {
+//        for (int i = 0; i < players; i++) {
+//            hands[i].sort(Hand.SortType.SUITPRIORITY, true);
+//
+//            LoggingSystem.logHand(i,hands[i]);
+//        }
+//
+//        for (final Hand currentHand : hands) {
+//            // Set up human player for interaction
+//            currentHand.addCardListener(new CardAdapter() {
+//                public void leftDoubleClicked(Card card) {
+//                    selected = Optional.of(card);
+//                    currentHand.setTouchEnabled(false);
+//                }
+//                public void rightClicked(Card card) {
+//                    selected = Optional.empty(); // Don't care which card we right-clicked for player to pass
+//                    currentHand.setTouchEnabled(false);
+//                }
+//            });
+//        }
 
-            LoggingSystem.logHand(i,hands[i]);
-        }
-
-        for (final Hand currentHand : hands) {
-            // Set up human player for interaction
-            currentHand.addCardListener(new CardAdapter() {
-                public void leftDoubleClicked(Card card) {
-                    selected = Optional.of(card);
-                    currentHand.setTouchEnabled(false);
-                }
-                public void rightClicked(Card card) {
-                    selected = Optional.empty(); // Don't care which card we right-clicked for player to pass
-                    currentHand.setTouchEnabled(false);
-                }
-            });
-        }
 
         RowLayout[] layouts = new RowLayout[players];
         Hand[] playerHands = gameOfThrones.getHands();
         for (int i = 0; i < players; i++) {
             layouts[i] = new RowLayout(handLocations[i], handWidth);
             layouts[i].setRotationAngle(90 * i);
-            playerHands[i].setView(this, layouts[i]);
-            hands[i].draw();
+            playerHands[i].setView(gameOfThrones, layouts[i]);
+            playerHands[i].draw();
         }
     }
 
     public void updateScore(int player, int score) {
-        removeActor(scoreActors[player]);
+        gameOfThrones.removeActor(scoreActors[player]);
         String text = "P" + player + "-" + score;
-        scoreActors[player] = new TextActor(text, Color.WHITE, bgColor, bigFont);
-        addActor(scoreActors[player], scoreLocations[player]);
+        scoreActors[player] = new TextActor(text, Color.WHITE, gameOfThrones.bgColor, bigFont);
+        gameOfThrones.addActor(scoreActors[player], scoreLocations[player]);
     }
 
     public void removeAll() {
@@ -121,27 +124,34 @@ public class CardUI extends CardGame {
         }
     }
 
-    private void drawPile(Hand pile) {
-//        pile.setView(this, new RowLayout(pileLocations[i], 8 * pileWidth));
+    public void drawPile(Hand pile, int location) {
+
+        pile.setView(gameOfThrones, new RowLayout(pileLocations[location], 8 * pileWidth));
         pile.draw();
-        final Hand currentPile = pile;
-//        final int pileIndex = i;
-        pile.addCardListener(new CardAdapter() {
-            public void leftClicked(Card card) {
-//                selectedPileIndex = pileIndex;
-                currentPile.setTouchEnabled(false);
-            }
-        });
+////        pile.setView(this, new RowLayout(pileLocations[i], 8 * pileWidth));
+//        pile.draw();
+//        final Hand currentPile = pile;
+////        final int pileIndex = i;
+//        pile.addCardListener(new CardAdapter() {
+//            public void leftClicked(Card card) {
+////                selectedPileIndex = pileIndex;
+//                currentPile.setTouchEnabled(false);
+//            }
+//        });
     }
+
+
+
+
 
     public void updatePileRankState(int pileIndex, int attackRank, int defenceRank) {
         // piles is null here, should update from GoT
         piles = gameOfThrones.getPiles();
         TextActor currentPile = (TextActor) pileTextActors[pileIndex];
-        removeActor(currentPile);
+        gameOfThrones.removeActor(currentPile);
         String text = playerTeams[pileIndex] + " Attack: " + attackRank + " - Defence: " + defenceRank;
-        pileTextActors[pileIndex] = new TextActor(text, Color.WHITE, bgColor, smallFont);
-        addActor(pileTextActors[pileIndex], pileStatusLocations[pileIndex]);
+        pileTextActors[pileIndex] = new TextActor(text, Color.WHITE, gameOfThrones.bgColor, smallFont);
+        gameOfThrones.addActor(pileTextActors[pileIndex], pileStatusLocations[pileIndex]);
     }
 
     private void removeCardFromPlayer(Card card, int pileIndex) {
@@ -150,5 +160,26 @@ public class CardUI extends CardGame {
         selected.get().setVerso(false);
         selected.get().transfer(piles[pileIndex], true); // transfer to pile (includes graphic effect)
         */
+    }
+
+
+    public void displayResult(int score0, int score1){
+        String text;
+        if (score0 > score1) {
+            text = "Players 0 and 2 won.";
+        } else if (score0 == score1) {
+            text = "All players drew.";
+        } else {
+            text = "Players 1 and 3 won.";
+        }
+        gameOfThrones.setStatusText(text);
+    }
+
+
+    public void moveToPile(Card card, Hand pile){
+        card.setVerso(false); //show card face
+        card.transfer(pile, true); // transfer to pile (includes graphic effect)
+
+
     }
 }

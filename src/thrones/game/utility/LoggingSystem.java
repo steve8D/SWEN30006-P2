@@ -27,7 +27,7 @@ public class LoggingSystem {
         }
     }
 
-    static String canonical(Card c) { return canonical((GameOfThrones.Rank) c.getRank()) + canonical((GameOfThrones.Suit) c.getSuit()); }
+    static public String canonical(Card c) { return canonical((GameOfThrones.Rank) c.getRank()) + canonical((GameOfThrones.Suit) c.getSuit()); }
 
     static String canonical(Hand h) {
         return "[" + h.getCardList().stream().map((Card c)->canonical(c)).collect(Collectors.joining(",")) + "]";
