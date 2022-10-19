@@ -139,8 +139,8 @@ public class GameOfThrones extends CardGame {
     private int[] scores = new int[nbPlayers];
 
 
-    boolean[] humanPlayers = { true, false, false, false};
-    //boolean[] humanPlayers = { false, false, false, false};
+    //boolean[] humanPlayers = { true, false, false, false};
+    boolean[] humanPlayers = { false, false, false, false};
 
 
 //    private void initScore() {
@@ -489,12 +489,12 @@ public class GameOfThrones extends CardGame {
 
 
         //testing
-        Card QH =  new Card(deck, Suit.HEARTS, Rank.QUEEN);
-        Card card2C =  new Card(deck, Suit.CLUBS, Rank.TWO);
-        Character c = new BaseCharacter(QH );
-
-        Character c2 = new CharacterEffect(card2C,c);
-        cardUI.drawPile(c2.getPile(), 0);
+//        Card QH =  new Card(deck, Suit.HEARTS, Rank.QUEEN);
+//        Card card2C =  new Card(deck, Suit.CLUBS, Rank.TWO);
+//        Character c = new BaseCharacter(QH );
+//
+//        Character c2 = new CharacterEffect(card2C,c);
+//        cardUI.drawPile(c2.getPile(), 0);
 
 
 
