@@ -3,17 +3,13 @@ package thrones.game;
 // Oh_Heaven.java
 
 import ch.aplu.jcardgame.*;
-import ch.aplu.jgamegrid.*;
 import thrones.game.character.BaseCharacter;
 import thrones.game.character.Character;
 import thrones.game.character.CharacterEffect;
 import thrones.game.utility.CardUI;
 import thrones.game.utility.LoggingSystem;
 
-import java.awt.Font;
-
 import java.util.*;
-import java.util.stream.Collectors;
 
 @SuppressWarnings("serial")
 public class GameOfThrones extends CardGame {
@@ -219,11 +215,12 @@ public class GameOfThrones extends CardGame {
 
     }
 
-    private void resetPile() {
-
-
+    private void removeOldPiles(){
         Hand[] piles =getPilesFromCharacters(characters);
         cardUI.removeAll(piles);
+    }
+
+    private void createNewPiles() {
 
 
 
@@ -330,7 +327,6 @@ public class GameOfThrones extends CardGame {
         int attack = currentCharacter.getAttack();
         int def = currentCharacter.getDefense();
 
-
         return new int[] { attack, def };
     }
 
@@ -354,7 +350,7 @@ public class GameOfThrones extends CardGame {
     }
 
     private void executeAPlay() {
-        resetPile();
+        createNewPiles();
 
         nextStartingPlayer = getPlayerIndex(nextStartingPlayer);
         if (hands[nextStartingPlayer].getNumberOfCardsWithSuit(Suit.HEARTS) == 0)
@@ -477,8 +473,11 @@ public class GameOfThrones extends CardGame {
         setStatusText(character0Result + " " + character1Result);
 
         // 5: discarded all cards on the piles
+
         nextStartingPlayer += 1;
         delay(watchingTime);
+        removeOldPiles();
+
     }
 
     public GameOfThrones() {
