@@ -2,7 +2,8 @@ package thrones.game.character;
 
 import ch.aplu.jcardgame.Card;
 import ch.aplu.jcardgame.Hand;
-import thrones.game.GameOfThrones;
+import thrones.game.GameOfThrones.Rank;
+
 
 public class CharacterEffect extends Character{
     //will be abstract in the future
@@ -36,7 +37,7 @@ public class CharacterEffect extends Character{
         return character.getDefense();
     }
     @Override
-    public int getBaseRank() {
+    public Rank getBaseRank() {
         return character.getBaseRank();
     }
 

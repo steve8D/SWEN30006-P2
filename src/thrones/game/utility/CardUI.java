@@ -36,8 +36,8 @@ public class CardUI {
     };
     public Actor[] pileTextActors = { null, null };
     private Actor[] scoreActors = {null, null, null, null};
-    private Hand[] hands;
-    private Hand[] piles;
+//    private Hand[] hands;
+//    private Hand[] piles;
     private final String[] playerTeams = { "[Players 0 & 2]", "[Players 1 & 3]"};
 
     Font bigFont = new Font("Arial", Font.BOLD, 36);
@@ -54,7 +54,7 @@ public class CardUI {
         gameOfThrones.setStatusText("Initializing...");
 
 
-        this.hands = gameOfThrones.getHands();
+//        this.hands = gameOfThrones.getHands();
         initScore(game.nbPlayers);
         initPileTextActors();
 
