@@ -53,25 +53,6 @@ public class GameOfThrones extends CardGame {
         }
     }
 
-    /*
-    Canonical String representations of Suit, Rank, Card, and Hand
-    */
-//    String canonical(Suit s) { return s.toString().substring(0, 1); }
-//
-//    String canonical(Rank r) {
-//        switch (r) {
-//            case ACE: case KING: case QUEEN: case JACK: case TEN:
-//                return r.toString().substring(0, 1);
-//            default:
-//                return String.valueOf(r.getRankValue());
-//        }
-//    }
-//
-//    String canonical(Card c) { return canonical((Rank) c.getRank()) + canonical((Suit) c.getSuit()); }
-//
-//    String canonical(Hand h) {
-//        return "[" + h.getCardList().stream().map(this::canonical).collect(Collectors.joining(",")) + "]";
-//    }
     static public int seed;
     static public Random random; //public for now
 
@@ -132,7 +113,6 @@ public class GameOfThrones extends CardGame {
 
     private Deck deck = new Deck(Suit.values(), Rank.values(), "cover");
 
-    private final int watchingTime = 5000;
     private Hand[] hands;//rm
     private Player[] players;
     public Hand[] getHands() {
@@ -154,22 +134,11 @@ public class GameOfThrones extends CardGame {
     private int[] scores = new int[nbPlayers];
 
 
-    //boolean[] humanPlayers = { true, false, false, false};
-    boolean[] humanPlayers = { false, false, false, false};
+    boolean[] humanPlayers = { true, false, false, false};
+    //boolean[] humanPlayers = { false, false, false, false};
 
 
-    private void updateScores() {
-        for (int i = 0; i < nbPlayers; i++) {
-            //cardUI.updateScore(i, scores[i]);
-            cardUI.updateScore(i,players[i].getScore());
-        }
 
-        int[] score = {players[0].getScore(), players[1].getScore()};
-        LoggingSystem.logScores(score);
-        //LoggingSystem.logScores(scores);
-
-
-    }
 
     private Optional<Card> selected;
     private final int NON_SELECTION_VALUE = -1;
@@ -181,11 +150,9 @@ public class GameOfThrones extends CardGame {
     private void setupGame() {
 
 
-        //hands = new Hand[nbPlayers]; //rm
         players = new Player[nbPlayers];
 
         for (int i = 0; i < nbPlayers; i++) {
-            //hands[i] = new Hand(deck);
             if(humanPlayers[i] == true){ // PropertiesLoader.getPlayerType(i)== PlayerType.HUMAN
                 players[i] = new HumanPlayer(new Hand(deck), this, i);
             } else {
@@ -193,17 +160,14 @@ public class GameOfThrones extends CardGame {
 
             }
 
-            //players[i] = new Player(new Hand(deck), this, i); //will remove this later
         }
 
 
         dealingOut(hands, nbPlayers, nbStartCards);
 
         for (int i = 0; i < nbPlayers; i++) {
-            //hands[i].sort(Hand.SortType.SUITPRIORITY, true);
             players[i].sortHand();
 
-            //LoggingSystem.logHand(i,hands[i]);
              LoggingSystem.logHand(i, players[i].getHand());
         }
 
@@ -219,61 +183,14 @@ public class GameOfThrones extends CardGame {
 
 
 
-        cardUI.initLayout(nbPlayers, newhands); //newhands
-    }
-
-    private Hand[] getPilesFromCharacters(Character[] characters){
-        Hand[] piles =null;
-        if(characters != null){ //if there are characters, get their piles
-            piles = new Hand[2];
-            piles[0] = characters[0].getPile();
-            piles[1] = characters[1].getPile();
-        }
-        return piles;
-
-    }
-
-    private void removeOldPiles(){
-        Hand[] piles =getPilesFromCharacters(characters);
-        cardUI.removeAll(piles);
-    }
-
-    private void createNewPiles() {
-
-        characters = new Character[2];
-
-        for (int i = 0; i < 2; i++) {
-
-
-            characters[i] = new BaseCharacter();
-
-            //get the pile for setting up the listener (this will happen when the heart card is played later)
-            // for now the code requires i set up the listener now
-            Hand characterPile = characters[i].getPile();
-
-            cardUI.drawPile(characterPile, i);
-
-            final Hand currentPile = characterPile;
-            final int pileIndex = i;
-
-
-            //this will go to input adapter \//can remove maybe
-            characterPile.addCardListener(new CardAdapter() {
-                public void leftClicked(Card card) {
-                    selectedPileIndex = pileIndex;
-                    currentPile.setTouchEnabled(false);
-                }
-            });
-        }
-
-        updatePileRanks();
+        cardUI.initLayout(nbPlayers, newhands);
     }
 
 
 
 
     private void updatePileRanks() {
-        for (int j = 0; j < characters.length; j++) { //characters.length remove
+        for (int j = 0; j < characters.length; j++) { //
             int[] ranks = characters[j].calculatePileRanks();
             cardUI.updatePileRankState(j, ranks[ATTACK_RANK_INDEX], ranks[DEFENCE_RANK_INDEX]);
         }
@@ -284,89 +201,14 @@ public class GameOfThrones extends CardGame {
     }
 
     private void executeAPlay(int playIndex) {
-        createNewPiles();
-
 
         Play play = playFactory.createPlay(playIndex,this);
 
         play.runPlay();
 
-
-        // 3: calculate winning & update scores for players
-        updatePileRanks();
-
-
-        Battle battle = new Battle(this,characters,cardUI,players);
-        battle.doBattle();
-
-
-//        int[] character0stats = calculatePileRanks(0);
-//        int[] character1stats = calculatePileRanks(1);
-//
-//
-//        LoggingSystem.logPiles(getPilesFromCharacters(characters), character0stats,character1stats );
-//
-//        GameOfThrones.Rank pile0CharacterRank = characters[0].getBaseRank(); //(Rank) piles[0].getCardList().get(0).getRank();
-//        GameOfThrones.Rank pile1CharacterRank = characters[1].getBaseRank(); //(Rank) piles[1].getCardList().get(0).getRank();
-//
-//
-//        String character0Result;
-//        String character1Result;
-//
-//        if (character0stats[ATTACK_RANK_INDEX] > character1stats[DEFENCE_RANK_INDEX]) {
-//            scores[0] += pile1CharacterRank.getRankValue();
-//            scores[2] += pile1CharacterRank.getRankValue();
-//            character0Result = "Character 0 attack on character 1 succeeded.";
-//
-//        } else {
-//            scores[1] += pile1CharacterRank.getRankValue();
-//            scores[3] += pile1CharacterRank.getRankValue();
-//            character0Result = "Character 0 attack on character 1 failed.";
-//
-//
-//        }
-//
-//        if (character1stats[ATTACK_RANK_INDEX] > character0stats[DEFENCE_RANK_INDEX]) {
-//            scores[1] += pile0CharacterRank.getRankValue();
-//            scores[3] += pile0CharacterRank.getRankValue();
-//            character1Result = "Character 1 attack on character 0 succeeded.";
-//
-//
-//        } else {
-//            scores[0] += pile0CharacterRank.getRankValue();
-//            scores[2] += pile0CharacterRank.getRankValue();
-//            character1Result = "Character 1 attack character 0 failed.";
-//
-//
-//        }
-//        updateScores();
-//
-//
-//        LoggingSystem.logBattle(character0Result);
-//        LoggingSystem.logBattle(character1Result);
-//
-//        setStatusText(character0Result + " " + character1Result);
-
-
-        // 5: discarded all cards on the piles
-
-//        nextStartingPlayer += 1;
-        delay(watchingTime);
-        removeOldPiles();
-
     }
 
-//remove in a bit
-    private int[] calculatePileRanks(int pileIndex) {
-        //Hand currentPile = piles[pileIndex];
-        //int i = currentPile.isEmpty() ? 0 : ((Rank) currentPile.get(0).getRank()).getRankValue(); //remove
 
-        Character currentCharacter = characters[pileIndex];
-        int attack = currentCharacter.getAttack();
-        int def = currentCharacter.getDefense();
-
-        return new int[] { attack, def };
-    }
 
     public GameOfThrones() {
         super(700, 700, 30);
@@ -376,25 +218,13 @@ public class GameOfThrones extends CardGame {
         setupGame();
 
 
-
-        //testing
-//        Card QH =  new Card(deck, Suit.HEARTS, Rank.QUEEN);
-//        Card card2C =  new Card(deck, Suit.CLUBS, Rank.TWO);
-//        Character c = new BaseCharacter(QH );
-//
-//        Character c2 = new CharacterEffect(card2C,c);
-//        cardUI.drawPile(c2.getPile(), 0);
-
         playFactory = new PlayFactory();
 
         for (int i = 0; i < nbPlays; i++) {
             executeAPlay(i);
-            //updateScores();
         }
 
 
-        //LoggingSystem.logResult(scores[0], scores[1]);
-        //cardUI.displayResult(scores[0], scores[1]);
         LoggingSystem.logResult(players[0].getScore(), players[1].getScore());
         cardUI.displayResult(players[0].getScore(), players[1].getScore());
         refresh();
