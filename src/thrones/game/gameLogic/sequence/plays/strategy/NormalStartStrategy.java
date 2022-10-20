@@ -1,8 +1,18 @@
 package thrones.game.gameLogic.sequence.plays.strategy;
 
 public class NormalStartStrategy implements  IStartingPlayerStrategy {
-    @Override
-    public int getStartingPlayer(int prevPlayerIndex) {
-        return prevPlayerIndex + 1;
+
+
+    int startingPlayer;
+
+
+    public NormalStartStrategy(int prevPlayerIndex) {
+        startingPlayer = prevPlayerIndex + 1;
     }
+
+    @Override
+    public int getStartingPlayer() {
+        return startingPlayer;
+    }
+
 }

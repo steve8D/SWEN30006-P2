@@ -10,13 +10,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class Player {
+public  abstract class Player {
 
-    private Hand hand;
-    private Optional<Card> selected;
+    protected Hand hand;
+    protected Optional<Card> selected;
     private GameOfThrones game;
 
-    private final int NON_SELECTION_VALUE = -1;
 
     int selectedPileIndex;
 
@@ -64,99 +63,6 @@ public class Player {
     }
 
 
-
-    public Optional<Card> pickACorrectSuit( boolean isCharacter) {
-        Hand currentHand = hand;
-        List<Card> shortListCards = new ArrayList<>();
-        for (int i = 0; i < currentHand.getCardList().size(); i++) {
-            Card card = currentHand.getCardList().get(i);
-            GameOfThrones.Suit suit = (GameOfThrones.Suit) card.getSuit();
-            if (suit.isCharacter() == isCharacter) {
-                shortListCards.add(card);
-            }
-        }
-        if (shortListCards.isEmpty() || !isCharacter && GameOfThrones.random.nextInt(3) == 0) {
-            selected = Optional.empty();
-        } else {
-            selected = Optional.of(shortListCards.get(GameOfThrones.random.nextInt(shortListCards.size())));
-        }
-
-        return selected;
-    }
-
-    public int selectRandomPile() {
-
-        int selectedPileIndex = GameOfThrones.random.nextInt(2);
-        return selectedPileIndex;
-    }
-
-
-    public Optional<Card> waitForCorrectSuit( boolean isCharacter) {
-        if (hand.isEmpty()) {
-            selected = Optional.empty();
-        } else {
-            selected = null;
-            hand.setTouchEnabled(true);
-            do {
-                if (selected == null) {
-                    GameOfThrones.delay(100);
-                    continue;
-                }
-                GameOfThrones.Suit suit = selected.isPresent() ? (GameOfThrones.Suit) selected.get().getSuit() : null;
-                if (isCharacter && suit != null && suit.isCharacter() ||         // If we want character, can't pass and suit must be right
-                        !isCharacter && (suit == null || !suit.isCharacter())) { // If we don't want character, can pass or suit must not be character
-                    // if (suit != null && suit.isCharacter() == isCharacter) {
-                    break;
-                } else {
-                    selected = null;
-                    hand.setTouchEnabled(true);
-                }
-                GameOfThrones.delay(100);
-            } while (true);
-        }
-
-        return selected;
-    }
-
-    public  int  waitForPileSelection(Character[] characters) {
-        selectedPileIndex = NON_SELECTION_VALUE;
-
-        // more listener stuff
-        Hand[] newpiles = new Hand[2];
-        newpiles[0] = characters[0].getPile();
-        newpiles[1] = characters[1].getPile();
-
-
-        //establish listeners
-        for(int i = 0; i < 2; i++){
-            Hand characterPile = newpiles[i];
-
-            final int pileIndex = i;
-            final Hand currentPile = characterPile;
-
-            characterPile.addCardListener(new CardAdapter() {
-                public void leftClicked(Card card) {
-                    selectedPileIndex = pileIndex;
-                    currentPile.setTouchEnabled(false);
-                }
-            });
-
-        }
-
-
-
-
-
-        for (Hand pile : newpiles) {
-            pile.setTouchEnabled(true);
-        }
-        while(selectedPileIndex == NON_SELECTION_VALUE) {
-            GameOfThrones.delay(100);
-        }
-        for (Hand pile : newpiles) {
-            pile.setTouchEnabled(false);
-        }
-
-        return selectedPileIndex;
-    }
+    public abstract Optional<Card> pickCard(boolean isCharacter) ;
+    public  abstract int  pickPile (Character[] characters) ;
 }

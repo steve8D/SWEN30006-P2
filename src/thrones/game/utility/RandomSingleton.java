@@ -1,12 +1,14 @@
 package thrones.game.utility;
 
-public class Random {
+public class RandomSingleton {
     static public int seed;
     static java.util.Random random;
-    private static Random instance = null;
-    public static Random getInstance() {
+    private static RandomSingleton instance = null;
+
+
+    public static RandomSingleton getInstance() {
         if (instance == null) {
-            instance = new Random();
+            instance = new RandomSingleton();
         }
         return instance;
     }

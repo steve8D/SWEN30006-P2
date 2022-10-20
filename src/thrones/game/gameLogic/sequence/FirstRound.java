@@ -7,8 +7,8 @@ import thrones.game.utility.CardUI;
 
 public class FirstRound extends Round{
 
-    public FirstRound(GameOfThrones game, CardUI cardUI, Character[] characters, Player[] players, int startingPlayer, boolean[] humanPlayers) {
-        super(game, cardUI, characters, players, startingPlayer, humanPlayers);
+    public FirstRound(GameOfThrones game, CardUI cardUI, Character[] characters, Player[] players, int startingPlayer) {
+        super(game, cardUI, characters, players, startingPlayer);
     }
 
     @Override
