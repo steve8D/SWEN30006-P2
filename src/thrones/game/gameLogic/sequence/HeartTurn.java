@@ -22,7 +22,7 @@ public class HeartTurn extends Turn {
     public void runTurn(Player player) {
         Optional<Card> selected;
 
-        selected = player.pickCard(true);
+        selected = player.pickCard(true, characters);
 
 
 //        if (playerType == PlayerType.HUMAN) {

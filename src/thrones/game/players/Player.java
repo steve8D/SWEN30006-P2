@@ -64,7 +64,7 @@ public  abstract class Player {
     }
 
 
-    public abstract Optional<Card> pickCard(boolean isCharacter) ;
+    public abstract Optional<Card> pickCard(boolean isCharacter, Character[] characters) ;
     public  abstract int  pickPile (Character[] characters) ;
 
     public int getScore() {
