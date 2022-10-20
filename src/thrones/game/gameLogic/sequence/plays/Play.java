@@ -1,7 +1,10 @@
-package thrones.game.gameLogic.sequence;
+package thrones.game.gameLogic.sequence.plays;
 
 import thrones.game.GameOfThrones;
 import thrones.game.character.Character;
+import thrones.game.gameLogic.sequence.ConsequentRound;
+import thrones.game.gameLogic.sequence.FirstRound;
+import thrones.game.gameLogic.sequence.Round;
 import thrones.game.players.Player;
 import thrones.game.utility.CardUI;
 

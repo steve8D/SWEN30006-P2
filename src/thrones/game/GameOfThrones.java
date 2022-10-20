@@ -5,9 +5,8 @@ package thrones.game;
 import ch.aplu.jcardgame.*;
 import thrones.game.character.BaseCharacter;
 import thrones.game.character.Character;
-import thrones.game.gameLogic.sequence.*;
+import thrones.game.gameLogic.sequence.plays.Play;
 import thrones.game.players.Player;
-import thrones.game.players.PlayerType;
 import thrones.game.utility.CardUI;
 import thrones.game.utility.LoggingSystem;
 
