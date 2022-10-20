@@ -53,12 +53,12 @@ public class BaseCharacter extends Character{
         return rank.getRankValue();
     }
     @Override
-    public int getBaseRank() {
+    public Rank getBaseRank() {
         if(card==null){
-            return 0;
+            return null;
         }
         Rank rank =  (Rank)card.getRank();
-        return rank.getRankValue();
+        return rank;
     }
 
 

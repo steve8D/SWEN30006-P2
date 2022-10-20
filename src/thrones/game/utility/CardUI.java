@@ -36,8 +36,8 @@ public class CardUI {
     };
     public Actor[] pileTextActors = { null, null };
     private Actor[] scoreActors = {null, null, null, null};
-    private Hand[] hands;
-    private Hand[] piles;
+//    private Hand[] hands;
+//    private Hand[] piles;
     private final String[] playerTeams = { "[Players 0 & 2]", "[Players 1 & 3]"};
 
     Font bigFont = new Font("Arial", Font.BOLD, 36);
@@ -54,7 +54,7 @@ public class CardUI {
         gameOfThrones.setStatusText("Initializing...");
 
 
-        this.hands = gameOfThrones.getHands();
+//        this.hands = gameOfThrones.getHands();
         initScore(game.nbPlayers);
         initPileTextActors();
 
@@ -76,7 +76,7 @@ public class CardUI {
         }
     }
 
-    public void initLayout(int players) {
+    public void initLayout(int players, Hand[] hands) {
 //        for (int i = 0; i < players; i++) {
 //            hands[i].sort(Hand.SortType.SUITPRIORITY, true);
 //
@@ -99,7 +99,7 @@ public class CardUI {
 
 
         RowLayout[] layouts = new RowLayout[players];
-        Hand[] playerHands = gameOfThrones.getHands();
+        Hand[] playerHands = hands;
         for (int i = 0; i < players; i++) {
             layouts[i] = new RowLayout(handLocations[i], handWidth);
             layouts[i].setRotationAngle(90 * i);
