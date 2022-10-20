@@ -8,7 +8,7 @@ import thrones.game.PropertiesLoader;
 import java.util.Properties;
 
 public class PlayerFactory {
-    Player[] players = new Player[GameOfThrones.nbPlayers];
+    private Player[] players = new Player[GameOfThrones.nbPlayers];
 
     public Player[] getPlayers(Properties properties, GameOfThrones game, Deck deck) {
         for (int i = 0; i < GameOfThrones.nbPlayers; i++) {
