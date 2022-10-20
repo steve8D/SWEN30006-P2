@@ -4,6 +4,7 @@ import ch.aplu.jcardgame.Card;
 import ch.aplu.jcardgame.CardAdapter;
 import ch.aplu.jcardgame.Hand;
 import thrones.game.GameOfThrones;
+import thrones.game.PropertiesLoader;
 import thrones.game.character.BaseCharacter;
 import thrones.game.character.Character;
 import thrones.game.gameLogic.sequence.ConsequentRound;
@@ -12,6 +13,8 @@ import thrones.game.gameLogic.sequence.Round;
 import thrones.game.gameLogic.sequence.plays.strategy.IStartingPlayerStrategy;
 import thrones.game.players.Player;
 import thrones.game.utility.CardUI;
+
+import java.util.Properties;
 
 public class Play {
 
@@ -24,7 +27,6 @@ public class Play {
 
     private final int ATTACK_RANK_INDEX = 0;
     private final int DEFENCE_RANK_INDEX = 1;
-    private final int watchingTime = 5000;
 
 
     protected IStartingPlayerStrategy startingPlayerStrategy;
@@ -103,7 +105,7 @@ public class Play {
         updatePileRanks();
     }
 
-    public void runPlay(){
+    public void runPlay(Properties properties){
         
 
         for (int i = 0; i < 3; i++){
@@ -114,7 +116,7 @@ public class Play {
         Battle battle = new Battle(game,characters,cardUI,players);
         battle.doBattle();
 
-        game.delay(watchingTime);
+        game.delay(Long.parseLong(properties.getProperty("watchingTime", PropertiesLoader.getDefaultWatchingTime())));
         removeOldPiles();
 
     }

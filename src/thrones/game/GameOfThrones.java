@@ -10,6 +10,7 @@ import thrones.game.gameLogic.sequence.plays.Play;
 import thrones.game.gameLogic.sequence.plays.PlayFactory;
 import thrones.game.players.HumanPlayer;
 import thrones.game.players.Player;
+import thrones.game.players.PlayerFactory;
 import thrones.game.players.RandomPlayer;
 import thrones.game.utility.CardUI;
 import thrones.game.utility.LoggingSystem;
@@ -19,6 +20,7 @@ import java.util.*;
 
 @SuppressWarnings("serial")
 public class GameOfThrones extends CardGame {
+
 
     enum GoTSuit { CHARACTER, DEFENCE, ATTACK, MAGIC }
     public enum Suit {
@@ -67,7 +69,6 @@ public class GameOfThrones extends CardGame {
 
         Hand[] hands = {new Hand(deck),new Hand(deck),new Hand(deck),new Hand(deck) };
 
-
         Hand pack = deck.toHand(false);
         assert pack.getNumberOfCards() == 52 : " Starting pack is not 52 cards.";
         // Remove 4 Aces
@@ -106,7 +107,7 @@ public class GameOfThrones extends CardGame {
     }
 
     private final String version = "1.0";
-    public final int nbPlayers = 4;
+    public static final int nbPlayers = 4;
     public final int nbStartCards = 9;
     public final int nbPlays = 6;
     public final int nbRounds = 3;
@@ -147,11 +148,11 @@ public class GameOfThrones extends CardGame {
     private final int ATTACK_RANK_INDEX = 0;
     private final int DEFENCE_RANK_INDEX = 1;
 
-    private void setupGame() {
-
-
+    private void setupGame(Properties properties) {
+        PlayerFactory playerFactory = new PlayerFactory();
+        players = playerFactory.getPlayers(properties,this,deck);
+        /*
         players = new Player[nbPlayers];
-
         for (int i = 0; i < nbPlayers; i++) {
             if(humanPlayers[i] == true){ // PropertiesLoader.getPlayerType(i)== PlayerType.HUMAN
                 players[i] = new HumanPlayer(new Hand(deck), this, i);
@@ -160,7 +161,7 @@ public class GameOfThrones extends CardGame {
 
             }
 
-        }
+        } */
 
 
         dealingOut(hands, nbPlayers, nbStartCards);
@@ -200,28 +201,28 @@ public class GameOfThrones extends CardGame {
         return index % nbPlayers;
     }
 
-    private void executeAPlay(int playIndex) {
+    private void executeAPlay(int playIndex, Properties properties) {
 
         Play play = playFactory.createPlay(playIndex,this);
 
-        play.runPlay();
+        play.runPlay(properties);
 
     }
 
 
 
-    public GameOfThrones() {
+    public GameOfThrones(Properties properties) {
         super(700, 700, 30);
 
         cardUI = new CardUI(this);
 
-        setupGame();
+        setupGame(properties);
 
 
         playFactory = new PlayFactory();
 
         for (int i = 0; i < nbPlays; i++) {
-            executeAPlay(i);
+            executeAPlay(i, properties);
         }
 
 
@@ -240,18 +241,16 @@ public class GameOfThrones extends CardGame {
             properties = PropertiesLoader.loadPropertiesFile(args[0]);
         }
 
-        String seedProp = properties.getProperty("seed");
+        String seedProp = properties.getProperty("seed",PropertiesLoader.getDefaultSeed());
         if (seedProp != null) { // Use property seed
 			  seed = Integer.parseInt(seedProp);
-        } else { // and no property
-			  seed = new Random().nextInt(); // so randomise
         }
         
         //set up random singleton
         RandomSingleton.getInstance().addSeed(seed);
         LoggingSystem.logSeed(seed);
         GameOfThrones.random = new Random(seed);
-        new GameOfThrones();
+        new GameOfThrones(properties);
     }
 
 

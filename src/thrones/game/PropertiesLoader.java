@@ -9,7 +9,7 @@ public class PropertiesLoader {
 
     private final static String defaultSeed = "130006";
     private final static String defaultWatchingTime = "5000";
-    private final static String defaultPlayerType = "human";
+    private final static String defaultPlayerType = "random";
 
     public static Properties loadPropertiesFile(String propertiesFile) {
         try (InputStream input = new FileInputStream(propertiesFile)) {
