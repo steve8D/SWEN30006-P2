@@ -4,6 +4,8 @@ import ch.aplu.jcardgame.Card;
 import ch.aplu.jcardgame.Hand;
 import thrones.game.GameOfThrones.Rank;
 
+import java.util.ArrayList;
+
 
 public class CharacterEffect extends Character {
     //will be abstract in the future
@@ -13,6 +15,9 @@ public class CharacterEffect extends Character {
         this.card = card;
         this.character = character;
 
+        ArrayList<Card> temp = character.getPile().getCardList();
+        BaseCharacter tempCard = new BaseCharacter();
+        this.character = tempCard;
         insertToPile(card);
     }
 

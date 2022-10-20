@@ -180,7 +180,5 @@ public class CardUI {
     public void moveToPile(Card card, Hand pile){
         card.setVerso(false); //show card face
         card.transfer(pile, true); // transfer to pile (includes graphic effect)
-
-
     }
 }
