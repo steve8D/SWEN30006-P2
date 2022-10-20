@@ -80,14 +80,12 @@ public class Play {
     }
 
     private void createNewPiles() {
-
         characters = new Character[2];
 
         for (int i = 0; i < 2; i++) {
-
             characters[i] = new BaseCharacter();
 
-            //get the pile for setting up the listener (this will happen when the heart card is played later)
+            // get the pile for setting up the listener (this will happen when the heart card is played later)
             // for now the code requires i set up the listener now
             Hand characterPile = characters[i].getPile();
 
@@ -95,17 +93,12 @@ public class Play {
 
             final Hand currentPile = characterPile;
             final int pileIndex = i;
-
-
-
         }
 
         updatePileRanks();
     }
 
     public void runPlay(){
-        
-
         for (int i = 0; i < 3; i++){
             rounds[i].runRound();
         }
@@ -116,6 +109,5 @@ public class Play {
 
         game.delay(watchingTime);
         removeOldPiles();
-
     }
 }

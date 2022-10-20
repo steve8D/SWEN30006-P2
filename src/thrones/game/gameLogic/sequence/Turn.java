@@ -23,8 +23,6 @@ public abstract class Turn {
     public abstract void runTurn(Player player);
 
     protected void updatePileRanks() {
-
-
         for (int j = 0; j < characters.length; j++) { //characters.length remove
             int[] ranks = characters[j].calculatePileRanks();
             cardUI.updatePileRankState(j, ranks[ATTACK_RANK_INDEX], ranks[DEFENCE_RANK_INDEX]);

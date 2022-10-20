@@ -67,7 +67,6 @@ public class GameOfThrones extends CardGame {
 
         Hand[] hands = {new Hand(deck),new Hand(deck),new Hand(deck),new Hand(deck) };
 
-
         Hand pack = deck.toHand(false);
         assert pack.getNumberOfCards() == 52 : " Starting pack is not 52 cards.";
         // Remove 4 Aces
@@ -148,8 +147,6 @@ public class GameOfThrones extends CardGame {
     private final int DEFENCE_RANK_INDEX = 1;
 
     private void setupGame() {
-
-
         players = new Player[nbPlayers];
 
         for (int i = 0; i < nbPlayers; i++) {
@@ -157,20 +154,16 @@ public class GameOfThrones extends CardGame {
                 players[i] = new HumanPlayer(new Hand(deck), this, i);
             } else {
                 players[i] = new RandomPlayer(new Hand(deck), this, i);
-
             }
-
         }
-
 
         dealingOut(hands, nbPlayers, nbStartCards);
 
         for (int i = 0; i < nbPlayers; i++) {
             players[i].sortHand();
 
-             LoggingSystem.logHand(i, players[i].getHand());
+            LoggingSystem.logHand(i, players[i].getHand());
         }
-
 
         Hand[] newhands = new Hand[4];
         int i = 0; //will fix later so initLayout accepts Player
@@ -180,24 +173,7 @@ public class GameOfThrones extends CardGame {
             i++;
         }
 
-
-
-
         cardUI.initLayout(nbPlayers, newhands);
-    }
-
-
-
-
-    private void updatePileRanks() {
-        for (int j = 0; j < characters.length; j++) { //
-            int[] ranks = characters[j].calculatePileRanks();
-            cardUI.updatePileRankState(j, ranks[ATTACK_RANK_INDEX], ranks[DEFENCE_RANK_INDEX]);
-        }
-    }
-
-    private int getPlayerIndex(int index) {
-        return index % nbPlayers;
     }
 
     private void executeAPlay(int playIndex) {
@@ -208,15 +184,12 @@ public class GameOfThrones extends CardGame {
 
     }
 
-
-
     public GameOfThrones() {
         super(700, 700, 30);
 
         cardUI = new CardUI(this);
 
         setupGame();
-
 
         playFactory = new PlayFactory();
 

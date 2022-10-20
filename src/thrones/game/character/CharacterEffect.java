@@ -5,9 +5,8 @@ import ch.aplu.jcardgame.Hand;
 import thrones.game.GameOfThrones.Rank;
 
 
-public class CharacterEffect extends Character{
+public class CharacterEffect extends Character {
     //will be abstract in the future
-
     Character character;
 
     public CharacterEffect(Card card, Character character){
@@ -29,8 +28,8 @@ public class CharacterEffect extends Character{
 
     @Override
     public int getAttack() {
-        // this will become more complicated once we actually add characters
-        return character.getAttack();
+        int score = character.getAttack();
+        return score;
     }
     @Override
     public int getDefense() {

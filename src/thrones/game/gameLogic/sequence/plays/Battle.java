@@ -8,16 +8,10 @@ import thrones.game.utility.LoggingSystem;
 import thrones.game.character.Character;
 
 public class Battle {
-
-
-
-
     private GameOfThrones game;
     private Character[] characters;
     private CardUI cardUI;
-    //private int[] scores;
     private Player[] players;
-
 
     public Battle(GameOfThrones game, Character[] characters, CardUI cardUI, Player[] players) {
         this.game = game;
@@ -25,11 +19,8 @@ public class Battle {
         this.cardUI = cardUI;
         this.players = players;
     }
-
     private final int ATTACK_RANK_INDEX = 0;
     private final int DEFENCE_RANK_INDEX = 1;
-
-
 
     private Hand[] getPilesFromCharacters(Character[] characters){
         // duplicate code only used for loggingsystem- change logPiles to use characters instead
@@ -44,16 +35,13 @@ public class Battle {
     }
 
     public int[] doBattle(){
-
         int[] character0stats = calculatePileRanks(0);
         int[] character1stats = calculatePileRanks(1);
 
-
-        LoggingSystem.logPiles(getPilesFromCharacters(characters), character0stats,character1stats );
+        LoggingSystem.logPiles(getPilesFromCharacters(characters), character0stats, character1stats);
 
         GameOfThrones.Rank pile0CharacterRank = characters[0].getBaseRank(); //(Rank) piles[0].getCardList().get(0).getRank();
         GameOfThrones.Rank pile1CharacterRank = characters[1].getBaseRank(); //(Rank) piles[1].getCardList().get(0).getRank();
-
 
         String character0Result;
         String character1Result;
@@ -96,9 +84,6 @@ public class Battle {
     }
 
     private int[] calculatePileRanks(int pileIndex) {
-        //Hand currentPile = piles[pileIndex];
-        //int i = currentPile.isEmpty() ? 0 : ((Rank) currentPile.get(0).getRank()).getRankValue(); //remove
-
         Character currentCharacter = characters[pileIndex];
         int attack = currentCharacter.getAttack();
         int def = currentCharacter.getDefense();

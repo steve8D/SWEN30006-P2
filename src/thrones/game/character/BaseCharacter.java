@@ -7,7 +7,6 @@ import thrones.game.GameOfThrones;
 import thrones.game.GameOfThrones.Rank;
 
 public class BaseCharacter extends Character{
-
     protected Deck deck = new Deck(GameOfThrones.Suit.values(), GameOfThrones.Rank.values(), "cover");
     protected Hand pile = new Hand(deck);
 
@@ -16,16 +15,13 @@ public class BaseCharacter extends Character{
         this.card = card;
         pile.insert(card,false);
     }
-    public BaseCharacter(){
+    public BaseCharacter() {
         card = null;
-
     }
     public void addBaseCard(Card card){
         this.card= card;
         pile.insert(card,false);
     }
-
-
 
     public Hand getPile() {
         return pile;
@@ -41,7 +37,7 @@ public class BaseCharacter extends Character{
         if(card==null){
             return 0;
         }
-        Rank rank =  (Rank)card.getRank();
+        Rank rank = (Rank) card.getRank();
         return rank.getRankValue();
     }
     @Override
@@ -49,7 +45,7 @@ public class BaseCharacter extends Character{
         if(card==null){
             return 0;
         }
-        Rank rank =  (Rank)card.getRank();
+        Rank rank = (Rank) card.getRank();
         return rank.getRankValue();
     }
     @Override
@@ -57,9 +53,7 @@ public class BaseCharacter extends Character{
         if(card==null){
             return null;
         }
-        Rank rank =  (Rank)card.getRank();
+        Rank rank =  (Rank) card.getRank();
         return rank;
     }
-
-
 }

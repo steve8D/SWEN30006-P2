@@ -24,15 +24,6 @@ public class HeartTurn extends Turn {
 
         selected = player.pickCard(true);
 
-
-//        if (playerType == PlayerType.HUMAN) {
-//            //waitForCorrectSuit(playerIndex, true);
-//            selected = player.pickCard(true);
-//        } else {
-//            //pickACorrectSuit(playerIndex, true);
-//            selected = player.pickCard(true);
-//        }
-
         int playerIndex=player.getPlayerIndex();
 
         int pileIndex = playerIndex % 2;
@@ -47,9 +38,7 @@ public class HeartTurn extends Turn {
         BaseCharacter base = (BaseCharacter) characters[pileIndex];
         base.addBaseCard(selected.get());
 
-
         updatePileRanks();
-
     }
 
 
