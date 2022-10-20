@@ -16,10 +16,6 @@ import java.util.*;
 @SuppressWarnings("serial")
 public class GameOfThrones extends CardGame {
 
-    private final static String defaultSeed = "130006";
-    private final static String defaultWatchingTime = "5000";
-    private final static String defaultPlayerType = "human";
-
     enum GoTSuit { CHARACTER, DEFENCE, ATTACK, MAGIC }
     public enum Suit {
         SPADES(GoTSuit.DEFENCE),
@@ -627,26 +623,19 @@ public class GameOfThrones extends CardGame {
 
         if (args == null || args.length == 0) {
             //set default
-            properties.setProperty("seed",defaultSeed);
-            properties.setProperty("watchingTime",defaultWatchingTime );
-            properties.setProperty("players.0",defaultPlayerType);
-            properties.setProperty("players.1",defaultPlayerType);
-            properties.setProperty("players.2",defaultPlayerType);
-            properties.setProperty("players.3",defaultPlayerType);
+            properties = PropertiesLoader.defaultProperties();
         } else {
             properties = PropertiesLoader.loadPropertiesFile(args[0]);
         }
 
-        String seedProp = properties.getProperty("seed");  //Seed property
+        String seedProp = properties.getProperty("seed");
         if (seedProp != null) { // Use property seed
 			  seed = Integer.parseInt(seedProp);
         } else { // and no property
 			  seed = new Random().nextInt(); // so randomise
         }
 
-        //GameOfThrones.seed = 130006;
-        System.out.println("Seed = " + seed);
-        System.out.println(properties);
+        System.out.println("get properties: "+properties);
 
         LoggingSystem.logSeed(seed);
         GameOfThrones.random = new Random(seed);
