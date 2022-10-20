@@ -14,16 +14,14 @@ public abstract class Round {
     protected Player[] players;
     protected int startingPlayer;
     protected Turn[] turns = null;
-    protected boolean[] humanPlayers;
 
-    public Round(GameOfThrones game, CardUI cardUI, Character[] characters, Player[] players, int startingPlayer, boolean[] humanPlayers) {
+    public Round(GameOfThrones game, CardUI cardUI, Character[] characters, Player[] players, int startingPlayer) {
         // will clean this up later
         this.game = game;
         this.cardUI = cardUI;
         this.characters = characters;
         this.players = players;
         this.startingPlayer = startingPlayer;
-        this.humanPlayers=humanPlayers;
 
         this.turns = createTurns();
 
@@ -35,19 +33,9 @@ public abstract class Round {
 
         for(int i = 0; i < 4; i++){
             currPlayer=getPlayerIndex(currPlayer);
-
-
             game.setStatusText("Player " + currPlayer + " select a Heart card to play");
-            PlayerType playerType;
-            if (humanPlayers[currPlayer]) {
-                playerType=PlayerType.HUMAN;
-            } else {
-                playerType=PlayerType.RANDOM;
-            }
 
-            turns[i].runTurn(players[currPlayer],playerType );
-
-
+            turns[i].runTurn(players[currPlayer] );
 
             currPlayer++;
         }

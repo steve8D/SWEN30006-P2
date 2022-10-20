@@ -19,16 +19,19 @@ public class HeartTurn extends Turn {
     }
 
     @Override
-    public void runTurn(Player player, PlayerType playerType) {
+    public void runTurn(Player player) {
         Optional<Card> selected;
 
-        if (playerType == PlayerType.HUMAN) {
-            //waitForCorrectSuit(playerIndex, true);
-            selected = player.waitForCorrectSuit(true);
-        } else {
-            //pickACorrectSuit(playerIndex, true);
-            selected = player.pickACorrectSuit(true);
-        }
+        selected = player.pickCard(true);
+
+
+//        if (playerType == PlayerType.HUMAN) {
+//            //waitForCorrectSuit(playerIndex, true);
+//            selected = player.pickCard(true);
+//        } else {
+//            //pickACorrectSuit(playerIndex, true);
+//            selected = player.pickCard(true);
+//        }
 
         int playerIndex=player.getPlayerIndex();
 

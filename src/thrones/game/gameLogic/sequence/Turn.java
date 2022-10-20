@@ -20,7 +20,7 @@ public abstract class Turn {
         this.characters = characters;
     }
 
-    public abstract void runTurn(Player player, PlayerType playerType);
+    public abstract void runTurn(Player player);
 
     protected void updatePileRanks() {
 

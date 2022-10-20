@@ -17,32 +17,38 @@ public class EffectTurn extends Turn{
     }
 
     @Override
-    public void runTurn(Player player, PlayerType playerType) {
+    public void runTurn(Player player) {
 
         int selectedPileIndex;
         Optional<Card> selected;
         int playerIndex = player.getPlayerIndex();
 
-        if (playerType == PlayerType.HUMAN) {
-            //waitForCorrectSuit(nextPlayer, false);
-            selected = player.waitForCorrectSuit(false);
+        selected = player.pickCard(false);
 
-        } else {
-            //pickACorrectSuit(nextPlayer, false);
-            selected = player.pickACorrectSuit(false);
 
-        }
+//        if (playerType == PlayerType.HUMAN) {
+//            //waitForCorrectSuit(nextPlayer, false);
+//            selected = player.pickCard(false);
+//
+//        } else {
+//            //pickACorrectSuit(nextPlayer, false);
+//            selected = player.pickCard(false);
+//
+//        }
 
         if (selected.isPresent()) {
             // fix this later
             game.setStatusText("Selected: " + LoggingSystem.canonical(selected.get()) + ". Player" + playerIndex + " select a pile to play the card.");
-            if (playerType == PlayerType.HUMAN) {
-                //waitForPileSelection();
-                selectedPileIndex = player.waitForPileSelection(characters);
-            } else {
-                //selectRandomPile();
-                selectedPileIndex = player.selectRandomPile();
-            }
+
+            selectedPileIndex = player.pickPile(characters);
+
+
+//            if (playerType == PlayerType.HUMAN) {
+//                //waitForPileSelection();
+//            } else {
+//                //selectRandomPile();
+//                selectedPileIndex = player.pickPile(characters);
+//            }
             LoggingSystem.logMove(playerIndex,selected.get(),selectedPileIndex);
 
             cardUI.moveToPile(selected.get(), characters[selectedPileIndex].getPile());

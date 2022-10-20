@@ -7,7 +7,7 @@ import java.util.Properties;
 
 public class PropertiesLoader {
 
-    private final static String defaultSeed = "30006";
+    private final static String defaultSeed = "130006";
     private final static String defaultWatchingTime = "5000";
     private final static String defaultPlayerType = "human";
 
