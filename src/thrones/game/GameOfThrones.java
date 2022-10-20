@@ -151,8 +151,8 @@ public class GameOfThrones extends CardGame {
     private int[] scores = new int[nbPlayers];
 
 
-    //boolean[] humanPlayers = { true, false, false, false};
-    boolean[] humanPlayers = { false, false, false, false};
+    boolean[] humanPlayers = { true, false, false, false};
+    //boolean[] humanPlayers = { false, false, false, false};
 
 
     private void updateScores() {
@@ -198,19 +198,6 @@ public class GameOfThrones extends CardGame {
              LoggingSystem.logHand(i, players[i].getHand());
         }
 
-//        for (final Hand currentHand : hands) {
-//            // Set up human player for interaction
-//            currentHand.addCardListener(new CardAdapter() {
-//                public void leftDoubleClicked(Card card) {
-//                    selected = Optional.of(card);
-//                    currentHand.setTouchEnabled(false);
-//                }
-//                public void rightClicked(Card card) {
-//                    selected = Optional.empty(); // Don't care which card we right-clicked for player to pass
-//                    currentHand.setTouchEnabled(false);
-//                }
-//            });
-//        }
 
         Hand[] newhands = new Hand[4];
         int i = 0; //will fix later so initLayout accepts Player
