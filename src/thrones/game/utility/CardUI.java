@@ -76,7 +76,7 @@ public class CardUI {
         }
     }
 
-    public void initLayout(int players) {
+    public void initLayout(int players, Hand[] hands) {
 //        for (int i = 0; i < players; i++) {
 //            hands[i].sort(Hand.SortType.SUITPRIORITY, true);
 //
@@ -99,7 +99,7 @@ public class CardUI {
 
 
         RowLayout[] layouts = new RowLayout[players];
-        Hand[] playerHands = gameOfThrones.getHands();
+        Hand[] playerHands = hands;
         for (int i = 0; i < players; i++) {
             layouts[i] = new RowLayout(handLocations[i], handWidth);
             layouts[i].setRotationAngle(90 * i);
