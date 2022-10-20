@@ -23,7 +23,7 @@ public class PlayFactory {
 
 
 
-    public Play createPlay(int playIndex, GameOfThrones game, int nextStartingPlayer) {
+    public Play createPlay(int playIndex, GameOfThrones game) {
 //        this.playIndex = playIndex;
 //        this.game = game;
 //        startingPlayerStrategy = selectStartingStrategy();
@@ -31,7 +31,7 @@ public class PlayFactory {
 //        return new Play(game.getHands(), game.piles, game.scores, prevPlayerIndex);
 
         this.playIndex = playIndex;
-        Play play = new Play(game, game.getCardUI(),game.getCharacters(),game.getPlayers(), nextStartingPlayer
+        Play play = new Play(game, game.getCardUI(),game.getCharacters(),game.getPlayers()
         , selectStartingStrategy());
 
 

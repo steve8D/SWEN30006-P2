@@ -144,6 +144,8 @@ public class GameOfThrones extends CardGame {
 
 
     private CardUI cardUI;
+
+    //necessary to keep random consistent
     private int nextStartingPlayer = random.nextInt(nbPlayers);
 
     private PlayFactory playFactory;
@@ -151,8 +153,8 @@ public class GameOfThrones extends CardGame {
     private int[] scores = new int[nbPlayers];
 
 
-    boolean[] humanPlayers = { true, false, false, false};
-    //boolean[] humanPlayers = { false, false, false, false};
+    //boolean[] humanPlayers = { true, false, false, false};
+    boolean[] humanPlayers = { false, false, false, false};
 
 
     private void updateScores() {
@@ -273,8 +275,6 @@ public class GameOfThrones extends CardGame {
 
 
     private void updatePileRanks() {
-
-
         for (int j = 0; j < characters.length; j++) { //characters.length remove
             int[] ranks = characters[j].calculatePileRanks();
             cardUI.updatePileRankState(j, ranks[ATTACK_RANK_INDEX], ranks[DEFENCE_RANK_INDEX]);
@@ -288,18 +288,8 @@ public class GameOfThrones extends CardGame {
     private void executeAPlay(int playIndex) {
         createNewPiles();
 
-        nextStartingPlayer = getPlayerIndex(nextStartingPlayer);
 
-
-        if (players[nextStartingPlayer].getHand().getNumberOfCardsWithSuit(Suit.HEARTS) == 0)
-            nextStartingPlayer = getPlayerIndex(nextStartingPlayer + 1);
-        assert players[nextStartingPlayer].getHand().getNumberOfCardsWithSuit(Suit.HEARTS) != 0 : " Starting player has no hearts.";
-
-
-
-        //Play play = new Play(this,cardUI,characters,players,nextStartingPlayer);
-
-        Play play = playFactory.createPlay(playIndex,this,nextStartingPlayer);
+        Play play = playFactory.createPlay(playIndex,this);
 
         play.runPlay();
 
@@ -355,7 +345,7 @@ public class GameOfThrones extends CardGame {
 
         // 5: discarded all cards on the piles
 
-        nextStartingPlayer += 1;
+//        nextStartingPlayer += 1;
         delay(watchingTime);
         removeOldPiles();
 

@@ -15,18 +15,17 @@ public class Play {
     protected CardUI cardUI;
     protected Character[] characters;
     protected Player[] players;
-    protected int startingPlayer;
 
     protected Round[] rounds;
 
     protected IStartingPlayerStrategy startingPlayerStrategy;
 
-    public Play( GameOfThrones game, CardUI cardUI, Character[] characters, Player[] players, int startingPlayer, IStartingPlayerStrategy startingPlayerStrategy) {
+    public Play( GameOfThrones game, CardUI cardUI, Character[] characters, Player[] players, IStartingPlayerStrategy startingPlayerStrategy) {
         this.game = game;
         this.cardUI = cardUI;
         this.characters = characters;
         this.players = players;
-        this.startingPlayer = startingPlayer; //factory will take care of this later
+
 
         this.startingPlayerStrategy = startingPlayerStrategy;
 
@@ -34,13 +33,10 @@ public class Play {
 
     }
 
-    public void setStartingPlayerStrategy(IStartingPlayerStrategy startingPlayerStrategy) {
-        this.startingPlayerStrategy = startingPlayerStrategy;
-    }
 
     private Round[] createRounds(){
 
-        startingPlayer = startingPlayerStrategy.getStartingPlayer();
+        int startingPlayer = startingPlayerStrategy.getStartingPlayer();
 
         Round[] rounds = {
                 new FirstRound(game,cardUI,characters,players,startingPlayer),
