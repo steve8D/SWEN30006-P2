@@ -1,9 +1,13 @@
 package thrones.game.character;
 
 import ch.aplu.jcardgame.Card;
+import ch.aplu.jcardgame.Hand;
 import thrones.game.GameOfThrones;
 
-public class MagicEffect extends CharacterEffect{
+import java.util.ArrayList;
+
+public class MagicEffect extends CharacterEffect {
+    String operation = "";
     public MagicEffect(Card card, Character character) {
         super(card, character);
     }
@@ -11,6 +15,7 @@ public class MagicEffect extends CharacterEffect{
     @Override
     public int getAttack() {
         if (applyEffect(GameOfThrones.Suit.CLUBS)) {
+            operation = "attack";
             int thisCardRank = ((GameOfThrones.Rank)card.getRank()).getRankValue();
             int rankOfCardBelow = 0;
             rankOfCardBelow += character.getAttack();
@@ -28,6 +33,7 @@ public class MagicEffect extends CharacterEffect{
     @Override
     public int getDefense() {
         if (applyEffect(GameOfThrones.Suit.SPADES)) {
+            operation = "defense";
             int thisCardRank = ((GameOfThrones.Rank)card.getRank()).getRankValue();
             int rankOfCardBelow = 0;
             rankOfCardBelow += character.getDefense();
@@ -51,10 +57,20 @@ public class MagicEffect extends CharacterEffect{
 
     private boolean applyEffect(GameOfThrones.Suit suit) {
         GameOfThrones.Suit suitOfCardBelow = (GameOfThrones.Suit)character.getCard().getSuit();
-//        while (suitOfCardBelow == GameOfThrones.Suit.DIAMONDS) {
-//            Card temp = )character.getCard();
-//            suitOfCardBelow = (GameOfThrones.Suit) card.getSuit();
-//        }
+        if (suitOfCardBelow == GameOfThrones.Suit.DIAMONDS) {
+            ArrayList<Card> piles = character.getPile().getCardList();
+            int curCard = piles.indexOf(character.getCard());
+            int i = 1;
+            while (true) {
+                int prevIndex = curCard - i;
+                Card prevCard = piles.get(prevIndex);
+                if (prevCard.getSuit() != GameOfThrones.Suit.DIAMONDS) {
+                    suitOfCardBelow = (GameOfThrones.Suit) prevCard.getSuit();
+                    break;
+                }
+                i++;
+            }
+        }
         return (suit == suitOfCardBelow);
     }
 }

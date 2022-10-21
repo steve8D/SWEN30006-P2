@@ -14,8 +14,6 @@ public abstract class Character {
     abstract public void insertToPile(Card card);
 
     public int[] calculatePileRanks() {
-        //Hand currentPile = piles[pileIndex];
-        //int i = currentPile.isEmpty() ? 0 : ((Rank) currentPile.get(0).getRank()).getRankValue(); //remove
         int attack = this.getAttack();
         int def = this.getDefense();
 
