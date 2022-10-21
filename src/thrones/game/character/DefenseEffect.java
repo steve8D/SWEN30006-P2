@@ -10,12 +10,12 @@ public class DefenseEffect extends CharacterEffect{
 
     @Override
     public int getDefense() {
-        int dense =  character.getDefense();
+        int defense =  character.getDefense();
         int extraDefense = ((GameOfThrones.Rank)card.getRank()).getRankValue();
         if(isDouble()){
             extraDefense=extraDefense*2;
         }
-        return dense+extraDefense;
+        return defense+extraDefense;
     }
 
     @Override

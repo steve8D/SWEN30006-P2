@@ -30,8 +30,7 @@ public class CharacterEffect extends Character {
 
     @Override
     public int getAttack() {
-        int score = character.getAttack();
-        return score;
+        return character.getAttack();
     }
     @Override
     public int getDefense() {
