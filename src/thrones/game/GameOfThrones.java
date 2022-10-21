@@ -11,6 +11,7 @@ import thrones.game.players.Player;
 import thrones.game.players.RandomPlayer;
 import thrones.game.utility.CardUI;
 import thrones.game.utility.LoggingSystem;
+import thrones.game.utility.PropertiesLoader;
 import thrones.game.utility.RandomSingleton;
 
 import java.util.*;

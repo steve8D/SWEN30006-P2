@@ -7,8 +7,6 @@ public class AttackEffect extends CharacterEffect{
     public AttackEffect(Card card, Character character) {
         super(card, character);
     }
-
-
     @Override
     public int getAttack() {
         int attack =  character.getAttack();
@@ -17,7 +15,6 @@ public class AttackEffect extends CharacterEffect{
             extraAttack=extraAttack*2;
         }
         return attack+extraAttack;
-
     }
 
     @Override

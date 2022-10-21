@@ -37,27 +37,16 @@ public class EffectTurn extends Turn {
             //move this to a factory later
             // just new CharacterFactory
             // characterFactory.getCharacter( selected.gt(), characters[selectedPileIndex]
-            if( ((GameOfThrones.Suit)selected.get().getSuit()).isAttack()) {
+            if(((GameOfThrones.Suit)selected.get().getSuit()).isAttack()) {
                 characters[selectedPileIndex] = new AttackEffect(selected.get(), characters[selectedPileIndex]);
             }  else if(((GameOfThrones.Suit)selected.get().getSuit()).isDefence()) {
                 characters[selectedPileIndex] = new DefenseEffect(selected.get(), characters[selectedPileIndex]);
-
             } else if(((GameOfThrones.Suit)selected.get().getSuit()).isMagic()){
                 characters[selectedPileIndex] = new MagicEffect(selected.get(), characters[selectedPileIndex]);
-
             }
-
-
-
-
-                //characters[selectedPileIndex] = new CharacterEffect(selected.get(), characters[selectedPileIndex]);
-
             updatePileRanks();
         } else {
             game.setStatusText("Pass.");
-            //for debugging
-            System.out.println("passed "+ playerIndex);
         }
-
     }
 }
