@@ -21,4 +21,8 @@ public abstract class Character {
 
         return new int[] { attack, def };
     }
+
+    public Card getCard() {
+        return card;
+    }
 }

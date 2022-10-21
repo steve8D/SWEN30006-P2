@@ -15,9 +15,9 @@ public class CharacterEffect extends Character {
         this.card = card;
         this.character = character;
 
-        ArrayList<Card> temp = character.getPile().getCardList();
-        BaseCharacter tempCard = new BaseCharacter();
-        this.character = tempCard;
+//        ArrayList<Card> temp = character.getPile().getCardList();
+//        BaseCharacter tempCard = new BaseCharacter();
+//        this.character = tempCard;
         insertToPile(card);
     }
 

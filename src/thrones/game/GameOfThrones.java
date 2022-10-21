@@ -134,7 +134,8 @@ public class GameOfThrones extends CardGame {
 
 
 //    boolean[] humanPlayers = { true, false, false, false};
-    boolean[] humanPlayers = { false, false, false, false};
+    // boolean[] humanPlayers = { false, false, false, false};
+     boolean[] humanPlayers = { true, true, true, true};
 
 
 
