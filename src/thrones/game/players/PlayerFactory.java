@@ -10,10 +10,10 @@ import java.util.Properties;
 public class PlayerFactory {
     private Player[] players = new Player[GameOfThrones.nbPlayers];
 
-    public Player[] getPlayers(Properties properties, GameOfThrones game, Deck deck) {
+    public Player[] getPlayers(GameOfThrones game, Deck deck) {
         for (int i = 0; i < GameOfThrones.nbPlayers; i++) {
             String keyString = "players."+i;
-            String value = properties.getProperty(keyString, PropertiesLoader.getDefaultPlayerType());
+            String value = PropertiesLoader.getProperties().getProperty(keyString, PropertiesLoader.getDefaultPlayerType());
             players[i] = createPlayerType(value, deck, game, i);
         }
         return players;

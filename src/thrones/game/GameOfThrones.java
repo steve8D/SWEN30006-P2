@@ -148,9 +148,9 @@ public class GameOfThrones extends CardGame {
     private final int ATTACK_RANK_INDEX = 0;
     private final int DEFENCE_RANK_INDEX = 1;
 
-    private void setupGame(Properties properties) {
+    private void setupGame() {
         PlayerFactory playerFactory = new PlayerFactory();
-        players = playerFactory.getPlayers(properties,this,deck);
+        players = playerFactory.getPlayers(this,deck);
         /*
         players = new Player[nbPlayers];
         for (int i = 0; i < nbPlayers; i++) {
@@ -201,28 +201,28 @@ public class GameOfThrones extends CardGame {
         return index % nbPlayers;
     }
 
-    private void executeAPlay(int playIndex, Properties properties) {
+    private void executeAPlay(int playIndex) {
 
         Play play = playFactory.createPlay(playIndex,this);
 
-        play.runPlay(properties);
+        play.runPlay();
 
     }
 
 
 
-    public GameOfThrones(Properties properties) {
+    public GameOfThrones() {
         super(700, 700, 30);
 
         cardUI = new CardUI(this);
 
-        setupGame(properties);
+        setupGame();
 
 
         playFactory = new PlayFactory();
 
         for (int i = 0; i < nbPlays; i++) {
-            executeAPlay(i, properties);
+            executeAPlay(i);
         }
 
 
@@ -241,6 +241,8 @@ public class GameOfThrones extends CardGame {
             properties = PropertiesLoader.loadPropertiesFile(args[0]);
         }
 
+        System.out.println("asdawdas: "+PropertiesLoader.getProperties());
+
         String seedProp = properties.getProperty("seed",PropertiesLoader.getDefaultSeed());
         if (seedProp != null) { // Use property seed
 			  seed = Integer.parseInt(seedProp);
@@ -250,7 +252,7 @@ public class GameOfThrones extends CardGame {
         RandomSingleton.getInstance().addSeed(seed);
         LoggingSystem.logSeed(seed);
         GameOfThrones.random = new Random(seed);
-        new GameOfThrones(properties);
+        new GameOfThrones();
     }
 
 

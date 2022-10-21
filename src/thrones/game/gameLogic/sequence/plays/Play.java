@@ -105,7 +105,7 @@ public class Play {
         updatePileRanks();
     }
 
-    public void runPlay(Properties properties){
+    public void runPlay(){
         
 
         for (int i = 0; i < 3; i++){
@@ -116,7 +116,7 @@ public class Play {
         Battle battle = new Battle(game,characters,cardUI,players);
         battle.doBattle();
 
-        game.delay(Long.parseLong(properties.getProperty("watchingTime", PropertiesLoader.getDefaultWatchingTime())));
+        game.delay(Long.parseLong(PropertiesLoader.getProperties().getProperty("WatchingTime",PropertiesLoader.getDefaultWatchingTime())));
         removeOldPiles();
 
     }

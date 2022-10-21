@@ -10,6 +10,7 @@ public class PropertiesLoader {
     private final static String defaultSeed = "130006";
     private final static String defaultWatchingTime = "5000";
     private final static String defaultPlayerType = "random";
+    private static Properties properties;
 
     public static Properties loadPropertiesFile(String propertiesFile) {
         try (InputStream input = new FileInputStream(propertiesFile)) {
@@ -19,6 +20,7 @@ public class PropertiesLoader {
             // load a properties file
             prop.load(input);
 
+            properties = prop;
             return prop;
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -27,14 +29,15 @@ public class PropertiesLoader {
     }
 
     public static Properties defaultProperties(){
-        Properties properties = new Properties();
-        properties.setProperty("seed",defaultSeed);
-        properties.setProperty("watchingTime",defaultWatchingTime );
-        properties.setProperty("players.0",defaultPlayerType);
-        properties.setProperty("players.1",defaultPlayerType);
-        properties.setProperty("players.2",defaultPlayerType);
-        properties.setProperty("players.3",defaultPlayerType);
-        return properties;
+        Properties prop = new Properties();
+        prop.setProperty("seed",defaultSeed);
+        prop.setProperty("watchingTime",defaultWatchingTime );
+        prop.setProperty("players.0",defaultPlayerType);
+        prop.setProperty("players.1",defaultPlayerType);
+        prop.setProperty("players.2",defaultPlayerType);
+        prop.setProperty("players.3",defaultPlayerType);
+        properties = prop;
+        return prop;
     }
 
     public static String getDefaultSeed(){
@@ -45,5 +48,8 @@ public class PropertiesLoader {
     }
     public static String getDefaultPlayerType(){
         return defaultPlayerType;
+    }
+    public static Properties getProperties(){
+        return properties;
     }
 }
