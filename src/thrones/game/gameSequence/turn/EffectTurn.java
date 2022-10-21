@@ -1,17 +1,16 @@
-package thrones.game.gameLogic.sequence;
+package thrones.game.gameSequence.turn;
 
 import ch.aplu.jcardgame.Card;
 import thrones.game.GameOfThrones;
 import thrones.game.character.*;
 import thrones.game.character.Character;
 import thrones.game.players.Player;
-import thrones.game.players.PlayerType;
 import thrones.game.utility.CardUI;
 import thrones.game.utility.LoggingSystem;
 
 import java.util.Optional;
 
-public class EffectTurn extends Turn{
+public class EffectTurn extends Turn {
     public EffectTurn(GameOfThrones game, CardUI cardUI, Character[] characters) {
         super(game, cardUI, characters);
     }

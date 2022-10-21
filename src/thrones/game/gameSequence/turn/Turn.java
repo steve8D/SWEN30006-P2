@@ -1,8 +1,7 @@
-package thrones.game.gameLogic.sequence;
+package thrones.game.gameSequence.turn;
 
 import thrones.game.GameOfThrones;
 import thrones.game.players.Player;
-import thrones.game.players.PlayerType;
 import thrones.game.utility.CardUI;
 import thrones.game.character.Character;
 

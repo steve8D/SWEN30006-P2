@@ -1,10 +1,9 @@
-package thrones.game.gameLogic.sequence;
+package thrones.game.gameSequence.turn;
 
 import ch.aplu.jcardgame.Card;
 import thrones.game.GameOfThrones;
 import thrones.game.character.BaseCharacter;
 import thrones.game.players.Player;
-import thrones.game.players.PlayerType;
 import thrones.game.utility.CardUI;
 import thrones.game.utility.LoggingSystem;
 import thrones.game.character.Character;

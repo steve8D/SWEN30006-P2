@@ -1,4 +1,4 @@
-package thrones.game.gameLogic.sequence.plays.strategy;
+package thrones.game.gameSequence.strategy;
 
 public class NormalStartStrategy implements  IStartingPlayerStrategy {
 

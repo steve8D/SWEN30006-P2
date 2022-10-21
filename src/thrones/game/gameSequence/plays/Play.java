@@ -1,15 +1,14 @@
-package thrones.game.gameLogic.sequence.plays;
+package thrones.game.gameSequence.plays;
 
-import ch.aplu.jcardgame.Card;
-import ch.aplu.jcardgame.CardAdapter;
 import ch.aplu.jcardgame.Hand;
 import thrones.game.GameOfThrones;
 import thrones.game.character.BaseCharacter;
 import thrones.game.character.Character;
-import thrones.game.gameLogic.sequence.ConsequentRound;
-import thrones.game.gameLogic.sequence.FirstRound;
-import thrones.game.gameLogic.sequence.Round;
-import thrones.game.gameLogic.sequence.plays.strategy.IStartingPlayerStrategy;
+import thrones.game.gameSequence.Battle;
+import thrones.game.gameSequence.round.ConsequentRound;
+import thrones.game.gameSequence.round.FirstRound;
+import thrones.game.gameSequence.round.Round;
+import thrones.game.gameSequence.strategy.IStartingPlayerStrategy;
 import thrones.game.players.Player;
 import thrones.game.utility.CardUI;
 

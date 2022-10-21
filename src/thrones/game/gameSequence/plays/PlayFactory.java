@@ -1,10 +1,10 @@
-package thrones.game.gameLogic.sequence.plays;
+package thrones.game.gameSequence.plays;
 
 import thrones.game.GameOfThrones;
-import thrones.game.gameLogic.sequence.plays.strategy.IStartingPlayerStrategy;
-import thrones.game.gameLogic.sequence.plays.strategy.LastStartStrategy;
-import thrones.game.gameLogic.sequence.plays.strategy.NormalStartStrategy;
-import thrones.game.gameLogic.sequence.plays.strategy.RandomStartStrategy;
+import thrones.game.gameSequence.strategy.IStartingPlayerStrategy;
+import thrones.game.gameSequence.strategy.LastStartStrategy;
+import thrones.game.gameSequence.strategy.NormalStartStrategy;
+import thrones.game.gameSequence.strategy.RandomStartStrategy;
 
 public class PlayFactory {
 

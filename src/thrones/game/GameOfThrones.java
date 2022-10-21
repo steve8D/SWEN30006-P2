@@ -3,11 +3,9 @@ package thrones.game;
 // Oh_Heaven.java
 
 import ch.aplu.jcardgame.*;
-import thrones.game.character.BaseCharacter;
 import thrones.game.character.Character;
-import thrones.game.gameLogic.sequence.plays.Battle;
-import thrones.game.gameLogic.sequence.plays.Play;
-import thrones.game.gameLogic.sequence.plays.PlayFactory;
+import thrones.game.gameSequence.plays.Play;
+import thrones.game.gameSequence.plays.PlayFactory;
 import thrones.game.players.HumanPlayer;
 import thrones.game.players.Player;
 import thrones.game.players.RandomPlayer;
@@ -134,8 +132,7 @@ public class GameOfThrones extends CardGame {
 
 
 //    boolean[] humanPlayers = { true, false, false, false};
-    // boolean[] humanPlayers = { false, false, false, false};
-     boolean[] humanPlayers = { true, true, true, true};
+    boolean[] humanPlayers = { false, false, false, false};
 
 
 

@@ -1,9 +1,9 @@
-package thrones.game.gameLogic.sequence;
+package thrones.game.gameSequence.round;
 
 import thrones.game.GameOfThrones;
 import thrones.game.character.Character;
+import thrones.game.gameSequence.turn.Turn;
 import thrones.game.players.Player;
-import thrones.game.players.PlayerType;
 import thrones.game.utility.CardUI;
 
 public abstract class Round {
