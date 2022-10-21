@@ -8,10 +8,7 @@ import thrones.game.character.Character;
 import thrones.game.gameLogic.sequence.plays.Battle;
 import thrones.game.gameLogic.sequence.plays.Play;
 import thrones.game.gameLogic.sequence.plays.PlayFactory;
-import thrones.game.players.HumanPlayer;
-import thrones.game.players.Player;
-import thrones.game.players.RandomPlayer;
-import thrones.game.players.SimplePlayer;
+import thrones.game.players.*;
 import thrones.game.utility.CardUI;
 import thrones.game.utility.LoggingSystem;
 import thrones.game.utility.RandomSingleton;
@@ -164,7 +161,7 @@ public class GameOfThrones extends CardGame {
                 players[i] = new HumanPlayer(new Hand(deck), this, i);
             } else {
                 //testing only
-                players[i] = new SimplePlayer(new Hand(deck), this, i);
+                players[i] = new SmartPlayer(new Hand(deck), this, i);
 
             }
 
