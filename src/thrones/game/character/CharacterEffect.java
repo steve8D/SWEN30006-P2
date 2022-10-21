@@ -48,4 +48,8 @@ public class CharacterEffect extends Character {
     public boolean isDouble(){
         return false;// abstract for later
     }
+
+    protected CharacterEffect getCharacter(){ // for recursion in magic piles
+        return (CharacterEffect) this.character;
+    }
 }
