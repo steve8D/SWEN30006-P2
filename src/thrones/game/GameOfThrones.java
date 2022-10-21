@@ -241,8 +241,6 @@ public class GameOfThrones extends CardGame {
             properties = PropertiesLoader.loadPropertiesFile(args[0]);
         }
 
-        System.out.println("asdawdas: "+PropertiesLoader.getProperties());
-
         String seedProp = properties.getProperty("seed",PropertiesLoader.getDefaultSeed());
         if (seedProp != null) { // Use property seed
 			  seed = Integer.parseInt(seedProp);
