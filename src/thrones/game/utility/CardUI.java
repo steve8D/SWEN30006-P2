@@ -47,7 +47,6 @@ public class CardUI {
         this.gameOfThrones = game;
         gameOfThrones.setTitle("Game of Thrones (V" + version + ") Constructed for UofM SWEN30006 with JGameGrid (www.aplu.ch)");
         gameOfThrones.setStatusText("Initializing...");
-//        this.hands = gameOfThrones.getHands();
         initScore(game.nbPlayers);
         initPileTextActors();
     }
@@ -70,7 +69,6 @@ public class CardUI {
 
     public void initLayout(Player[] players) {
         RowLayout[] layouts = new RowLayout[players.length];
-        //Hand[] playerHands = hands;
         for (int i = 0; i < players.length; i++) {
             layouts[i] = new RowLayout(handLocations[i], handWidth);
             layouts[i].setRotationAngle(90 * i);
