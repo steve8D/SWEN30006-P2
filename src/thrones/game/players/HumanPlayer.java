@@ -95,7 +95,7 @@ public class HumanPlayer extends Player {
             pile.setTouchEnabled(false);
         }
         if(isLegal(characters[selectedPileIndex],selected.get() )==false){
-            sortHand(); // unfocuses that card
+            sortHand(); // unfocuses the illegal card
             return NON_SELECTION_VALUE;
         }
 

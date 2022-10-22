@@ -32,7 +32,7 @@ public class EffectTurn extends Turn implements Publisher {
         selected = player.pickCard(false, characters);
 
         if (selected.isPresent()) {
-            // fix this later
+            // move this to cardUI
             game.setStatusText("Selected: " + LoggingSystem.canonical(selected.get()) + ". Player" + playerIndex + " select a pile to play the card.");
 
             selectedPileIndex = player.pickPile(characters);
@@ -41,7 +41,6 @@ public class EffectTurn extends Turn implements Publisher {
                 game.setStatusText("Pass.");
                 return;
             }
-
 
             try{
                 CompositeRule legalityChecker = new CompositeRule();

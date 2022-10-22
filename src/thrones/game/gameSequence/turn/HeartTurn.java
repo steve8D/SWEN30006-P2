@@ -22,6 +22,7 @@ public class HeartTurn extends Turn {
     public void runTurn(Player player) {
 
         int playerIndex=player.getPlayerIndex();
+        //move this to cardUI
         game.setStatusText("Player " + playerIndex + " select a Heart card to play");
 
         Optional<Card> selected;

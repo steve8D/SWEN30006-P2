@@ -64,7 +64,7 @@ public class SmartPlayer extends Player implements Subscriber {
             selectedPile= (team+1)%2; //magic on enemy
         }
         else{
-            selectedPile= team;
+            selectedPile= team; // buff on team
         }
 
         if(isLegal(characters[selectedPile],selectedCard )==false){
@@ -77,10 +77,7 @@ public class SmartPlayer extends Player implements Subscriber {
 
     private Optional<Card> pickEffect(Character[] characters){
 
-
-
         ArrayList<Card> viableCards = removeDiamonds();
-
 
         Card selectedCard = simulateBattles(characters,viableCards);
         // cards which will change the battle outcome

@@ -123,16 +123,7 @@ public class CardUI {
 
         pile.setView(gameOfThrones, new RowLayout(pileLocations[location], 8 * pileWidth));
         pile.draw();
-////        pile.setView(this, new RowLayout(pileLocations[i], 8 * pileWidth));
-//        pile.draw();
-//        final Hand currentPile = pile;
-////        final int pileIndex = i;
-//        pile.addCardListener(new CardAdapter() {
-//            public void leftClicked(Card card) {
-////                selectedPileIndex = pileIndex;
-//                currentPile.setTouchEnabled(false);
-//            }
-//        });
+
     }
 
 
@@ -149,13 +140,6 @@ public class CardUI {
         gameOfThrones.addActor(pileTextActors[pileIndex], pileStatusLocations[pileIndex]);
     }
 
-    private void removeCardFromPlayer(Card card, int pileIndex) {
-        // Empty
-        /*
-        selected.get().setVerso(false);
-        selected.get().transfer(piles[pileIndex], true); // transfer to pile (includes graphic effect)
-        */
-    }
 
 
     public void displayResult(int score0, int score1){
