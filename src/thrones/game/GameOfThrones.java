@@ -18,6 +18,7 @@ import java.util.*;
 @SuppressWarnings("serial")
 public class GameOfThrones extends CardGame {
 
+
     enum GoTSuit { CHARACTER, DEFENCE, ATTACK, MAGIC }
     public enum Suit {
         SPADES(GoTSuit.DEFENCE),
@@ -65,7 +66,6 @@ public class GameOfThrones extends CardGame {
 
         Hand[] hands = {new Hand(deck),new Hand(deck),new Hand(deck),new Hand(deck) };
 
-
         Hand pack = deck.toHand(false);
         assert pack.getNumberOfCards() == 52 : " Starting pack is not 52 cards.";
         // Remove 4 Aces
@@ -104,7 +104,7 @@ public class GameOfThrones extends CardGame {
     }
 
     private final String version = "1.0";
-    public final int nbPlayers = 4;
+    public static final int nbPlayers = 4;
     public final int nbStartCards = 9;
     public final int nbPlays = 6;
     public final int nbRounds = 3;
@@ -147,21 +147,10 @@ public class GameOfThrones extends CardGame {
 
     private void setupGame() {
 
-        // PlayerFactory playerFactory = new PlayerFactory();
-        //players = playerFactory.getPlayers();
+        PlayerFactory playerFactory = new PlayerFactory();
+        players = playerFactory.getPlayers(this,deck);
+        /*
 
-        players = new Player[nbPlayers];
-
-        for (int i = 0; i < nbPlayers; i++) {
-            if(humanPlayers[i] == true){ // PropertiesLoader.getPlayerType(i)== PlayerType.HUMAN
-                players[i] = new HumanPlayer(new Hand(deck), this, i);
-            } else {
-                //testing only
-                players[i] = new SmartPlayer(new Hand(deck), this, i);
-
-            }
-
-        }
 
 
         dealingOut(hands, nbPlayers, nbStartCards);
@@ -241,11 +230,9 @@ public class GameOfThrones extends CardGame {
             properties = PropertiesLoader.loadPropertiesFile(args[0]);
         }
 
-        String seedProp = properties.getProperty("seed");
+        String seedProp = properties.getProperty("seed",PropertiesLoader.getDefaultSeed());
         if (seedProp != null) { // Use property seed
 			  seed = Integer.parseInt(seedProp);
-        } else { // and no property
-			  seed = new Random().nextInt(); // so randomise
         }
         random = new Random(seed);
         
