@@ -136,7 +136,7 @@ public class GameOfThrones extends CardGame {
     private int[] scores = new int[nbPlayers];
 
 
-    //boolean[] humanPlayers = { true, false, false, false};
+//    boolean[] humanPlayers = { true, false, false, false};
     boolean[] humanPlayers = { false, false, false, false};
 
 
