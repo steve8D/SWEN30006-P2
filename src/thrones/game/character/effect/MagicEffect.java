@@ -1,8 +1,9 @@
-package thrones.game.character;
+package thrones.game.character.effect;
 
 import ch.aplu.jcardgame.Card;
-import ch.aplu.jcardgame.Hand;
 import thrones.game.GameOfThrones;
+import thrones.game.character.Character;
+import thrones.game.character.effect.CharacterEffect;
 
 import java.util.ArrayList;
 

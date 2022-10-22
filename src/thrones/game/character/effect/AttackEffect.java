@@ -1,7 +1,8 @@
-package thrones.game.character;
+package thrones.game.character.effect;
 
 import ch.aplu.jcardgame.Card;
 import thrones.game.GameOfThrones.Rank;
+import thrones.game.character.Character;
 
 public class AttackEffect extends CharacterEffect {
     public AttackEffect(Card card, Character character) {

@@ -1,14 +1,13 @@
-package thrones.game.character;
+package thrones.game.character.effect;
 
 import ch.aplu.jcardgame.Card;
 import ch.aplu.jcardgame.Hand;
 import thrones.game.GameOfThrones.Rank;
-
-import java.util.ArrayList;
+import thrones.game.character.Character;
 
 
 public abstract class CharacterEffect extends Character {
-    Character character;
+    protected Character character;
 
     public CharacterEffect(Card card, Character character){
         this.card = card;

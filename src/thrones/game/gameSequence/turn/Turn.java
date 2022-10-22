@@ -1,7 +1,7 @@
 package thrones.game.gameSequence.turn;
 
 import thrones.game.GameOfThrones;
-import thrones.game.character.CharacterEffectFactory;
+import thrones.game.character.effect.CharacterEffectFactory;
 import thrones.game.players.Player;
 import thrones.game.utility.CardUI;
 import thrones.game.character.Character;

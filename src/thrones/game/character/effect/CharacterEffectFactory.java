@@ -1,7 +1,8 @@
-package thrones.game.character;
+package thrones.game.character.effect;
 
 import ch.aplu.jcardgame.Card;
 import thrones.game.GameOfThrones;
+import thrones.game.character.Character;
 
 public class CharacterEffectFactory {
     private static CharacterEffectFactory instance = null;

@@ -1,9 +1,11 @@
-package thrones.game.character;
+package thrones.game.character.effect;
 
 import ch.aplu.jcardgame.Card;
 import thrones.game.GameOfThrones;
+import thrones.game.character.Character;
+import thrones.game.character.effect.CharacterEffect;
 
-public class DefenseEffect extends CharacterEffect{
+public class DefenseEffect extends CharacterEffect {
     public DefenseEffect(Card card, Character character) {
         super(card, character);
     }
