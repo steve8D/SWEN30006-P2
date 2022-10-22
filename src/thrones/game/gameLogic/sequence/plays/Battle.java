@@ -20,6 +20,7 @@ public class Battle {
     private CardUI cardUI;
     //private int[] scores;
     private Player[] players;
+    private boolean isReal;
 
 
     public Battle(GameOfThrones game, Character[] characters, CardUI cardUI, Player[] players) {
@@ -27,6 +28,12 @@ public class Battle {
         this.characters = characters;
         this.cardUI = cardUI;
         this.players = players;
+        this.isReal = true;
+    }
+
+    public Battle(){
+        // for simulating battle only
+        this.isReal = false;
     }
 
     private final int ATTACK_RANK_INDEX = 0;
@@ -47,26 +54,26 @@ public class Battle {
     }
 
 
-    public int[] simulateBattle(Character character0, Character character1){
+    public boolean[] simulateBattle(Character character0, Character character1){
         int[] character0stats = calculatePileRanks(character0);
         int[] character1stats = calculatePileRanks(character1);
 
 
-        int character0success;
-        int character1success;
+        boolean character0success;
+        boolean character1success;
 
         if (character0stats[ATTACK_RANK_INDEX] > character1stats[DEFENCE_RANK_INDEX]) {
-            character0success=1;
+            character0success=true;
         } else {
-            character0success=0;
+            character0success=false;
         }
         if (character1stats[ATTACK_RANK_INDEX] > character0stats[DEFENCE_RANK_INDEX]) {
-            character1success=1;
+            character1success=true;
         } else {
-            character1success=0;
+            character1success=false;
         }
 
-        return new int[] {character0success,character1success};
+        return new boolean[] {character0success,character1success};
     }
 
     public int[] doBattle(){
@@ -76,55 +83,35 @@ public class Battle {
         LoggingSystem.logPiles(getPilesFromCharacters(characters), character0stats,character1stats );
 
 
-        int[] successes = simulateBattle(characters[0],characters[1] );
+        boolean[] successes = simulateBattle(characters[0],characters[1] );
 
-        int character0success = successes[0];
-        int character1success = successes[1];
+        boolean character0success = successes[0];
+        boolean character1success = successes[1];
 
-//        if (character0stats[ATTACK_RANK_INDEX] > character1stats[DEFENCE_RANK_INDEX]) {
-//            character0success=1;
-//        } else {
-//            character0success=0;
-//        }
-//        if (character1stats[ATTACK_RANK_INDEX] > character0stats[DEFENCE_RANK_INDEX]) {
-//            character1success=1;
-//        } else {
-//            character1success=0;
-//        }
 
         int[] scoresToAdd = {0,0};
         Rank pile0CharacterRank = characters[0].getBaseRank(); //(Rank) piles[0].getCardList().get(0).getRank();
         Rank pile1CharacterRank = characters[1].getBaseRank(); //(Rank) piles[1].getCardList().get(0).getRank();
 
+        String character0Result;
+        String character1Result  ;
 
-        if (character0success==1) {
-
-
+        if (character0success==true) {
             scoresToAdd[0] += pile1CharacterRank.getRankValue();
-
+             character0Result =  CHAR_0_SUCCESS;
         } else {
-
-
             scoresToAdd[1] += pile1CharacterRank.getRankValue();
+             character0Result =  CHAR_0_FAIL;
 
         }
 
-        if (character1success == 1) {
-
+        if (character1success == true) {
             scoresToAdd[1] += pile0CharacterRank.getRankValue();
-
+             character1Result =  CHAR_1_SUCCESS ;
         } else {
-
             scoresToAdd[0] += pile0CharacterRank.getRankValue();
-
+             character1Result =CHARACTER_0_FAILED;
         }
-
-
-
-
-        //move this into above if statment
-        String character0Result = (character0success==1)? CHAR_0_SUCCESS: CHAR_0_FAIL;
-        String character1Result = (character1success==1)? CHAR_1_SUCCESS : CHARACTER_0_FAILED;
 
         for (int i = 0; i < 4; i++){
             players[i].addScore(scoresToAdd[i%2]);

@@ -40,8 +40,7 @@ public class EffectTurn extends Turn implements Publisher {
             selectedPileIndex = player.pickPile(characters);
             if(selectedPileIndex == NON_SELECTION_VALUE){
                 game.setStatusText("Pass.");
-                //for debugging
-                System.out.println("passed "+ playerIndex);
+
             } else {
                 LoggingSystem.logMove(playerIndex,selected.get(),selectedPileIndex);
 

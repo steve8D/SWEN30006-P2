@@ -29,9 +29,6 @@ public class SmartPlayer extends Player implements Subscriber {
     public SmartPlayer(Hand hand, GameOfThrones game, int playerIndex) {
         super(hand, game, playerIndex);
         CardCounter.getInstance().subscribe(this,"Diamonds");
-
-
-
     }
 
     @Override
@@ -59,13 +56,12 @@ public class SmartPlayer extends Player implements Subscriber {
 
     @Override
     public int pickPile(Character[] characters) {
-        return 1;
-//        if(((Suit)selectedCard.getSuit()).isMagic()){
-//            return (team+1)%2; //magic on enemy
-//        }
-//        else{
-//            return team;
-//        }
+        if(((Suit)selectedCard.getSuit()).isMagic()){
+            return (team+1)%2; //magic on enemy
+        }
+        else{
+            return team;
+        }
     }
 
     private Optional<Card> pickEffect(Character[] characters){
@@ -94,21 +90,21 @@ public class SmartPlayer extends Player implements Subscriber {
         Character friendlyCharacter = characters[team];
         Character enemyCharacter=characters[(team+1)%2];
 
-        Battle battle = new Battle(null, null, null ,null);
+        Battle battle = new Battle();
         //ok i need a different constructor in battle
-        int[] currentBattleOutcome = battle.simulateBattle(friendlyCharacter,enemyCharacter );
+        boolean[] currentBattleOutcome = battle.simulateBattle(friendlyCharacter,enemyCharacter );
 
 
 
         for(Card c: viableCards){
             Suit suit = ((Suit) c.getSuit());
 
-            int[] hypotheticalBattleOutcome;
+            boolean[] hypotheticalBattleOutcome;
             if(suit.isMagic()){
                 // apply magic to enemy
                 hypotheticalBattleOutcome =
-                        battle.simulateBattle(friendlyCharacter,new MagicEffect(c, enemyCharacter,false));
-                hypotheticalBattleOutcome = new int[] {1,0};
+                        battle.simulateBattle(friendlyCharacter,new MagicEffect(c, enemyCharacter,false));//
+                // hypotheticalBattleOutcome = new int[] {1,0};
 
             }else {
                 Character newchar;
@@ -123,9 +119,9 @@ public class SmartPlayer extends Player implements Subscriber {
                 //buff our character
                 hypotheticalBattleOutcome =
                         battle.simulateBattle(newchar, enemyCharacter);
-                hypotheticalBattleOutcome = new int[] {1,0};
+                //hypotheticalBattleOutcome = new int[] {1,0};
             }
-            if(currentBattleOutcome[0] < hypotheticalBattleOutcome[0] || currentBattleOutcome[1] >hypotheticalBattleOutcome[1]){
+            if((currentBattleOutcome[0]==false&& hypotheticalBattleOutcome[0] ==true)|| (currentBattleOutcome[1] ==true&&hypotheticalBattleOutcome[1]==false)){
                 // if we win the battle, or the enemy loses the battle
                 influentialCards.add(c);
 
