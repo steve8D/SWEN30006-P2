@@ -3,6 +3,7 @@ package thrones.game.utility;
 import ch.aplu.jcardgame.Card;
 import ch.aplu.jcardgame.Hand;
 import thrones.game.GameOfThrones;
+import thrones.game.players.Player;
 
 import java.util.stream.Collectors;
 
@@ -42,6 +43,11 @@ public class LoggingSystem {
 
     public static void logHand(int player, Hand hand){
         System.out.println("hands[" + player + "]: " + canonical(hand));
+    }
+
+    public static void logHand(Player p){
+        System.out.println("hands[" + p.getPlayerIndex() + "]: " + canonical(p.getHand()));
+
     }
 
     public static void logMove(int player, Card card, int pileIndex){

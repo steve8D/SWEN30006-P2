@@ -57,54 +57,6 @@ public class GameOfThrones extends CardGame {
     static public int seed;
     static public Random random; //public for now
 
-    // return random Card from Hand
-    public static Card randomCard(Hand hand) {
-        assert !hand.isEmpty() : " random card from empty hand.";
-        int x = random.nextInt(hand.getNumberOfCards());
-        return hand.get(x);
-    }
-
-    private void dealingOut(Hand[] handsOld, int nbPlayers, int nbCardsPerPlayer) {
-
-        Hand[] hands = {new Hand(deck),new Hand(deck),new Hand(deck),new Hand(deck) };
-
-        Hand pack = deck.toHand(false);
-        assert pack.getNumberOfCards() == 52 : " Starting pack is not 52 cards.";
-        // Remove 4 Aces
-        List<Card> aceCards = pack.getCardsWithRank(Rank.ACE);
-        for (Card card : aceCards) {
-            card.removeFromHand(false);
-        }
-        assert pack.getNumberOfCards() == 48 : " Pack without aces is not 48 cards.";
-        // Give each player 3 heart cards
-        for (int i = 0; i < nbPlayers; i++) {
-            for (int j = 0; j < 3; j++) {
-                List<Card> heartCards = pack.getCardsWithSuit(Suit.HEARTS);
-                int x = random.nextInt(heartCards.size());
-                Card randomCard = heartCards.get(x);
-                randomCard.removeFromHand(false);
-                hands[i].insert(randomCard, false);
-            }
-        }
-        assert pack.getNumberOfCards() == 36 : " Pack without aces and hearts is not 36 cards.";
-        // Give each player 9 of the remaining cards
-        for (int i = 0; i < nbCardsPerPlayer; i++) {
-            for (int j = 0; j < nbPlayers; j++) {
-                assert !pack.isEmpty() : " Pack has prematurely run out of cards.";
-                Card dealt = randomCard(pack);
-                dealt.removeFromHand(false);
-                hands[j].insert(dealt, false);
-            }
-        }
-        for (int j = 0; j < nbPlayers; j++) {
-            assert hands[j].getNumberOfCards() == 12 : " Hand does not have twelve cards.";
-        }
-
-        for(int k = 0; k < nbPlayers; k++){
-            players[k].setHand(hands[k]); //rm clean hands up round 2
-        }
-    }
-
     private final String version = "1.0";
     public static final int nbPlayers = 4;
     public final int nbStartCards = 9;
@@ -151,23 +103,8 @@ public class GameOfThrones extends CardGame {
 
         PlayerFactory playerFactory = new PlayerFactory();
         players = playerFactory.getPlayers(this,deck);
-        dealingOut(hands, nbPlayers, nbStartCards);
 
-        for (int i = 0; i < nbPlayers; i++) {
-            players[i].sortHand();
-
-            LoggingSystem.logHand(i, players[i].getHand());
-        }
-
-        Hand[] newhands = new Hand[4];
-        int i = 0; //will fix later so initLayout accepts Player
-        for(Player p: players){
-            p.setUpClickListener();
-            newhands[i] = p.getHand();
-            i++;
-        }
-
-        cardUI.initLayout(nbPlayers, newhands);
+        cardUI.initLayout(players);
     }
 
     private void executeAPlay(int playIndex) {
@@ -197,7 +134,8 @@ public class GameOfThrones extends CardGame {
 
         if (args == null || args.length == 0) {
             //set default
-            properties = PropertiesLoader.defaultProperties();
+//            properties = PropertiesLoader.defaultProperties();
+            properties = PropertiesLoader.loadPropertiesFile("properties/got.properties");
         } else {
             properties = PropertiesLoader.loadPropertiesFile(args[0]);
         }

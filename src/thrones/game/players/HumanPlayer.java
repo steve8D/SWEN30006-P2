@@ -5,6 +5,10 @@ import ch.aplu.jcardgame.CardAdapter;
 import ch.aplu.jcardgame.Hand;
 import thrones.game.GameOfThrones;
 import thrones.game.character.Character;
+import thrones.game.utility.rules.CompositeRule;
+import thrones.game.utility.rules.DiamondOnHeartRule;
+import thrones.game.utility.rules.EffectRule;
+import thrones.game.utility.rules.HeartRule;
 
 import java.util.Optional;
 
@@ -13,10 +17,12 @@ public class HumanPlayer extends Player {
 
     public HumanPlayer(Hand hand, GameOfThrones game, int playerIndex) {
         super(hand, game, playerIndex);
+
     }
 
     @Override
     public Optional<Card> pickCard(boolean isCharacter, Character[] characters) {
+        this.isCharacter=isCharacter;
         return waitForCorrectSuit(isCharacter);
     }
 
@@ -88,7 +94,35 @@ public class HumanPlayer extends Player {
         for (Hand pile : newpiles) {
             pile.setTouchEnabled(false);
         }
+        if(isLegal(characters[selectedPileIndex],selected.get() )==false){
+            sortHand(); // unfocuses the illegal card
+            return NON_SELECTION_VALUE;
+        }
+
 
         return selectedPileIndex;
     }
+
+    public void setUpClickListener(){
+        final Hand currentHand = hand;
+
+        currentHand.addCardListener(new CardAdapter() {
+            public void leftDoubleClicked(Card card) {
+                selected = Optional.of(card);
+                currentHand.setTouchEnabled(false);
+            }
+            public void rightClicked(Card card) {
+                selected = Optional.empty(); // Don't care which card we right-clicked for player to pass
+                currentHand.setTouchEnabled(false);
+            }
+        });
+    }
+
+    @Override
+    public void setHand(Hand hand) {
+        super.setHand(hand);
+        setUpClickListener();
+    }
+
+
 }

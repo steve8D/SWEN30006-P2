@@ -18,12 +18,19 @@ public class RandomPlayer extends Player{
 
     @Override
     public Optional<Card> pickCard(boolean isCharacter, Character[] characters) {
+        this.isCharacter=isCharacter;
+
         return pickACorrectSuit(isCharacter);
     }
 
     @Override
     public int pickPile(Character[] characters) {
-        return selectRandomPile();
+        int selectedPile= selectRandomPile();
+
+        if(isLegal(characters[selectedPile],selected.get() )==false){
+            return NON_SELECTION_INDEX;
+        }
+        return selectedPile;
     }
 
 
@@ -47,7 +54,6 @@ public class RandomPlayer extends Player{
     }
 
     public int selectRandomPile() {
-
         int selectedPileIndex = GameOfThrones.random.nextInt(2);
         return selectedPileIndex;
     }
