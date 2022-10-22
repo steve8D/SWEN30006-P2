@@ -57,54 +57,6 @@ public class GameOfThrones extends CardGame {
     static public int seed;
     static public Random random; //public for now
 
-    // return random Card from Hand
-//    public static Card randomCard(Hand hand) {
-//        assert !hand.isEmpty() : " random card from empty hand.";
-//        int x = random.nextInt(hand.getNumberOfCards());
-//        return hand.get(x);
-//    }
-
-//    private void dealingOut(Hand[] handsOld, int nbPlayers, int nbCardsPerPlayer) {
-//
-//        Hand[] hands = {new Hand(deck),new Hand(deck),new Hand(deck),new Hand(deck) };
-//
-//        Hand pack = deck.toHand(false);
-//        assert pack.getNumberOfCards() == 52 : " Starting pack is not 52 cards.";
-//        // Remove 4 Aces
-//        List<Card> aceCards = pack.getCardsWithRank(Rank.ACE);
-//        for (Card card : aceCards) {
-//            card.removeFromHand(false);
-//        }
-//        assert pack.getNumberOfCards() == 48 : " Pack without aces is not 48 cards.";
-//        // Give each player 3 heart cards
-//        for (int i = 0; i < nbPlayers; i++) {
-//            for (int j = 0; j < 3; j++) {
-//                List<Card> heartCards = pack.getCardsWithSuit(Suit.HEARTS);
-//                int x = random.nextInt(heartCards.size());
-//                Card randomCard = heartCards.get(x);
-//                randomCard.removeFromHand(false);
-//                hands[i].insert(randomCard, false);
-//            }
-//        }
-//        assert pack.getNumberOfCards() == 36 : " Pack without aces and hearts is not 36 cards.";
-//        // Give each player 9 of the remaining cards
-//        for (int i = 0; i < nbCardsPerPlayer; i++) {
-//            for (int j = 0; j < nbPlayers; j++) {
-//                assert !pack.isEmpty() : " Pack has prematurely run out of cards.";
-//                Card dealt = randomCard(pack);
-//                dealt.removeFromHand(false);
-//                hands[j].insert(dealt, false);
-//            }
-//        }
-//        for (int j = 0; j < nbPlayers; j++) {
-//            assert hands[j].getNumberOfCards() == 12 : " Hand does not have twelve cards.";
-//        }
-//
-//        for(int k = 0; k < nbPlayers; k++){
-//            players[k].setHand(hands[k]); //rm clean hands up round 2
-//        }
-//    }
-
     private final String version = "1.0";
     public static final int nbPlayers = 4;
     public final int nbStartCards = 9;
