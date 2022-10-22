@@ -17,7 +17,7 @@ public class HumanPlayer extends Player{
     }
 
     @Override
-    public Optional<Card> pickCard(boolean isCharacter) {
+    public Optional<Card> pickCard(boolean isCharacter, Character[] characters) {
         return waitForCorrectSuit(isCharacter);
     }
 

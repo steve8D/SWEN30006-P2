@@ -8,10 +8,7 @@ import thrones.game.character.Character;
 import thrones.game.gameLogic.sequence.plays.Battle;
 import thrones.game.gameLogic.sequence.plays.Play;
 import thrones.game.gameLogic.sequence.plays.PlayFactory;
-import thrones.game.players.HumanPlayer;
-import thrones.game.players.Player;
-import thrones.game.players.PlayerFactory;
-import thrones.game.players.RandomPlayer;
+import thrones.game.players.*;
 import thrones.game.utility.CardUI;
 import thrones.game.utility.LoggingSystem;
 import thrones.game.utility.RandomSingleton;
@@ -149,19 +146,11 @@ public class GameOfThrones extends CardGame {
     private final int DEFENCE_RANK_INDEX = 1;
 
     private void setupGame() {
+
         PlayerFactory playerFactory = new PlayerFactory();
         players = playerFactory.getPlayers(this,deck);
         /*
-        players = new Player[nbPlayers];
-        for (int i = 0; i < nbPlayers; i++) {
-            if(humanPlayers[i] == true){ // PropertiesLoader.getPlayerType(i)== PlayerType.HUMAN
-                players[i] = new HumanPlayer(new Hand(deck), this, i);
-            } else {
-                players[i] = new RandomPlayer(new Hand(deck), this, i);
 
-            }
-
-        } */
 
 
         dealingOut(hands, nbPlayers, nbStartCards);
@@ -245,6 +234,7 @@ public class GameOfThrones extends CardGame {
         if (seedProp != null) { // Use property seed
 			  seed = Integer.parseInt(seedProp);
         }
+        random = new Random(seed);
         
         //set up random singleton
         RandomSingleton.getInstance().addSeed(seed);

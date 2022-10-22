@@ -6,4 +6,8 @@ public class DefenseEffect extends CharacterEffect{
     public DefenseEffect(Card card, Character character) {
         super(card, character);
     }
+
+    public DefenseEffect(Card card, Character character, boolean transfer) {
+        super(card, character, transfer);
+    }
 }
