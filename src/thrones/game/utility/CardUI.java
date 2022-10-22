@@ -1,5 +1,8 @@
 package thrones.game.utility;
-import ch.aplu.jcardgame.*;
+
+import ch.aplu.jcardgame.Card;
+import ch.aplu.jcardgame.Hand;
+import ch.aplu.jcardgame.RowLayout;
 import ch.aplu.jgamegrid.Actor;
 import ch.aplu.jgamegrid.Location;
 import ch.aplu.jgamegrid.TextActor;
@@ -10,7 +13,6 @@ import java.awt.*;
 import java.util.Optional;
 
 public class CardUI {
-    private GameOfThrones gameOfThrones;
     private final String version = "1.0";
     private final int pileWidth = 40;
     private final int handWidth = 400;
@@ -20,7 +22,6 @@ public class CardUI {
             new Location(350, 75),
             new Location(625, 350)
     };
-
     private final Location[] scoreLocations = {
             new Location(575, 675),
             new Location(25, 575),
@@ -35,30 +36,20 @@ public class CardUI {
             new Location(250, 200),
             new Location(250, 520)
     };
-    public Actor[] pileTextActors = { null, null };
-    private Actor[] scoreActors = {null, null, null, null};
-//    private Hand[] hands;
-//    private Hand[] piles;
-    private final String[] playerTeams = { "[Players 0 & 2]", "[Players 1 & 3]"};
-
+    private final String[] playerTeams = {"[Players 0 & 2]", "[Players 1 & 3]"};
+    public Actor[] pileTextActors = {null, null};
     Font bigFont = new Font("Arial", Font.BOLD, 36);
     Font smallFont = new Font("Arial", Font.PLAIN, 10);
-
-    private Optional<Card> selected;
+    private GameOfThrones gameOfThrones;
+    private Actor[] scoreActors = {null, null, null, null};
 
     public CardUI(GameOfThrones game) {
-
         this.gameOfThrones = game;
-
-
         gameOfThrones.setTitle("Game of Thrones (V" + version + ") Constructed for UofM SWEN30006 with JGameGrid (www.aplu.ch)");
         gameOfThrones.setStatusText("Initializing...");
-
-
 //        this.hands = gameOfThrones.getHands();
         initScore(game.nbPlayers);
         initPileTextActors();
-
     }
 
     private void initScore(int players) {
@@ -77,20 +68,7 @@ public class CardUI {
         }
     }
 
-    public void initLayout(int players, Hand[] hands) {
-
-        RowLayout[] layouts = new RowLayout[players];
-        Hand[] playerHands = hands;
-        for (int i = 0; i < players; i++) {
-            layouts[i] = new RowLayout(handLocations[i], handWidth);
-            layouts[i].setRotationAngle(90 * i);
-            playerHands[i].setView(gameOfThrones, layouts[i]);
-            playerHands[i].draw();
-        }
-    }
-
-    public void initLayout(Player[] players){
-
+    public void initLayout(Player[] players) {
         RowLayout[] layouts = new RowLayout[players.length];
         //Hand[] playerHands = hands;
         for (int i = 0; i < players.length; i++) {
@@ -99,7 +77,6 @@ public class CardUI {
             players[i].getHand().setView(gameOfThrones, layouts[i]);
             players[i].getHand().draw();
         }
-
     }
 
     public void updateScore(int player, int score) {
@@ -110,8 +87,6 @@ public class CardUI {
     }
 
     public void removeAll(Hand[] piles) {
-        //piles = gameOfThrones.getPiles();
-
         if (piles != null) {
             for (Hand pile : piles) {
                 pile.removeAll(true);
@@ -120,19 +95,11 @@ public class CardUI {
     }
 
     public void drawPile(Hand pile, int location) {
-
         pile.setView(gameOfThrones, new RowLayout(pileLocations[location], 8 * pileWidth));
         pile.draw();
-
     }
 
-
-
-
-
     public void updatePileRankState(int pileIndex, int attackRank, int defenceRank) {
-        // piles is null here, should update from GoT
-        //piles = gameOfThrones.getPiles();
         TextActor currentPile = (TextActor) pileTextActors[pileIndex];
         gameOfThrones.removeActor(currentPile);
         String text = playerTeams[pileIndex] + " Attack: " + attackRank + " - Defence: " + defenceRank;
@@ -140,9 +107,7 @@ public class CardUI {
         gameOfThrones.addActor(pileTextActors[pileIndex], pileStatusLocations[pileIndex]);
     }
 
-
-
-    public void displayResult(int score0, int score1){
+    public void displayResult(int score0, int score1) {
         String text;
         if (score0 > score1) {
             text = "Players 0 and 2 won.";
@@ -154,11 +119,8 @@ public class CardUI {
         gameOfThrones.setStatusText(text);
     }
 
-
-    public void moveToPile(Card card, Hand pile){
-        card.setVerso(false); //show card face
-        card.transfer(pile, true); // transfer to pile (includes graphic effect)
-
-
+    public void moveToPile(Card card, Hand pile) {
+        card.setVerso(false);
+        card.transfer(pile, true);
     }
 }

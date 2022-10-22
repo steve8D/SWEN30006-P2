@@ -7,7 +7,6 @@ import thrones.game.players.Player;
 import thrones.game.utility.CardUI;
 
 public abstract class Round {
-
     protected GameOfThrones game;
     protected CardUI cardUI;
     protected Character[] characters;
@@ -22,18 +21,14 @@ public abstract class Round {
         this.characters = characters;
         this.players = players;
         this.startingPlayer = startingPlayer;
-
         this.turns = createTurns();
     }
 
-    public void runRound(){
+    public void runRound() {
         int currPlayer = startingPlayer;
-
-        for(int i = 0; i < 4; i++){
-            currPlayer=getPlayerIndex(currPlayer);
-
+        for (int i = 0; i < 4; i++) {
+            currPlayer = getPlayerIndex(currPlayer);
             turns[i].runTurn(players[currPlayer]);
-
             currPlayer++;
         }
     }
@@ -41,7 +36,6 @@ public abstract class Round {
     private int getPlayerIndex(int index) {
         return index % 4;
     }//magic for now
-
 
     protected abstract Turn[] createTurns();
 }
