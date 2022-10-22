@@ -15,12 +15,11 @@ public class ConsequentRound extends Round {
     @Override
     protected Turn[] createTurns() {
         Turn[] turns = {
-                new EffectTurn(game,cardUI,characters),
-                new EffectTurn(game,cardUI,characters),
-                new EffectTurn(game,cardUI,characters),
-                new EffectTurn(game,cardUI,characters),
+                new EffectTurn(game, cardUI, characters),
+                new EffectTurn(game, cardUI, characters),
+                new EffectTurn(game, cardUI, characters),
+                new EffectTurn(game, cardUI, characters),
         };
-
         return turns;
     }
 }

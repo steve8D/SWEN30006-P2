@@ -13,12 +13,13 @@ public class CharacterEffectFactory {
         }
         return instance;
     }
+
     public Character createCharacter(Card card, Character mostRecentCard) {
-        if(((GameOfThrones.Suit)card.getSuit()).isAttack()) {
+        if (((GameOfThrones.Suit) card.getSuit()).isAttack()) {
             return new AttackEffect(card, mostRecentCard);
-        }  else if(((GameOfThrones.Suit)card.getSuit()).isDefence()) {
+        } else if (((GameOfThrones.Suit) card.getSuit()).isDefence()) {
             return new DefenseEffect(card, mostRecentCard);
-        } else if(((GameOfThrones.Suit)card.getSuit()).isMagic()){
+        } else if (((GameOfThrones.Suit) card.getSuit()).isMagic()) {
             return new MagicEffect(card, mostRecentCard);
         }
         return null;

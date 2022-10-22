@@ -3,7 +3,6 @@ package thrones.game.character.effect;
 import ch.aplu.jcardgame.Card;
 import thrones.game.GameOfThrones;
 import thrones.game.character.Character;
-import thrones.game.character.effect.CharacterEffect;
 
 import java.util.ArrayList;
 
@@ -19,16 +18,16 @@ public class MagicEffect extends CharacterEffect {
     @Override
     public int getAttack() {
         if (applyEffect(GameOfThrones.Suit.CLUBS)) {
-            int thisCardRank = ((GameOfThrones.Rank)card.getRank()).getRankValue();
+            int thisCardRank = ((GameOfThrones.Rank) card.getRank()).getRankValue();
             int rankOfCardBelow = 0;
             rankOfCardBelow += character.getAttack();
-            if(isDouble()){
-                thisCardRank=thisCardRank*2;
+            if (isDouble()) {
+                thisCardRank = thisCardRank * 2;
             }
             if (thisCardRank > rankOfCardBelow) {
                 return 0;
             }
-            return rankOfCardBelow-thisCardRank;
+            return rankOfCardBelow - thisCardRank;
         }
         return character.getAttack();
     }
@@ -36,29 +35,29 @@ public class MagicEffect extends CharacterEffect {
     @Override
     public int getDefense() {
         if (applyEffect(GameOfThrones.Suit.SPADES)) {
-            int thisCardRank = ((GameOfThrones.Rank)card.getRank()).getRankValue();
+            int thisCardRank = ((GameOfThrones.Rank) card.getRank()).getRankValue();
             int rankOfCardBelow = 0;
             rankOfCardBelow += character.getDefense();
-            if(isDouble()){
-                thisCardRank=thisCardRank*2;
+            if (isDouble()) {
+                thisCardRank = thisCardRank * 2;
             }
             if (thisCardRank > rankOfCardBelow) {
                 return 0;
             }
-            return rankOfCardBelow-thisCardRank;
+            return rankOfCardBelow - thisCardRank;
         }
         return character.getDefense();
     }
 
     @Override
     public boolean isDouble() {
-        int thisCardRank = ((GameOfThrones.Rank)card.getRank()).getRankValue();
-        int rankOfCardBelow = ((GameOfThrones.Rank)character.getCard().getRank()).getRankValue();
-        return (thisCardRank==rankOfCardBelow);
+        int thisCardRank = ((GameOfThrones.Rank) card.getRank()).getRankValue();
+        int rankOfCardBelow = ((GameOfThrones.Rank) character.getCard().getRank()).getRankValue();
+        return (thisCardRank == rankOfCardBelow);
     }
 
     private boolean applyEffect(GameOfThrones.Suit suit) {
-        GameOfThrones.Suit suitOfCardBelow = (GameOfThrones.Suit)character.getCard().getSuit();
+        GameOfThrones.Suit suitOfCardBelow = (GameOfThrones.Suit) character.getCard().getSuit();
         if (suitOfCardBelow == GameOfThrones.Suit.DIAMONDS) {
             suitOfCardBelow = getSuitOfCardBelow();
         }

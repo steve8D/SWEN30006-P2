@@ -9,43 +9,42 @@ import thrones.game.utility.PropertiesLoader;
 import thrones.game.utility.RandomSingleton;
 
 import java.util.List;
-import java.util.Properties;
 
 public class PlayerFactory {
-
     public static final int NB_CARDS_PER_PLAYER = 9;
     private Deck deck = new Deck(GameOfThrones.Suit.values(), GameOfThrones.Rank.values(), "cover");
-
     private Player[] players = new Player[GameOfThrones.nbPlayers];
 
-
+    public static Card randomCard(Hand hand) {
+        assert !hand.isEmpty() : " random card from empty hand.";
+        int x = RandomSingleton.getInstance().generateRandomInt(hand.getNumberOfCards());
+        return hand.get(x);
+    }
 
     public Player[] getPlayers(GameOfThrones game, Deck deck) {
         for (int i = 0; i < GameOfThrones.nbPlayers; i++) {
-            String keyString = "players."+i;
+            String keyString = "players." + i;
             String value = PropertiesLoader.getProperties().getProperty(keyString, PropertiesLoader.getDefaultPlayerType());
             players[i] = createPlayerType(value, deck, game, i);
         }
-        dealingOut(players,GameOfThrones.nbPlayers, NB_CARDS_PER_PLAYER);
-
-
+        dealingOut(players, GameOfThrones.nbPlayers, NB_CARDS_PER_PLAYER);
         return players;
     }
 
-    private Player createPlayerType(String playerType, Deck deck, GameOfThrones game, int index){
-        if(playerType!=null){
+    private Player createPlayerType(String playerType, Deck deck, GameOfThrones game, int index) {
+        if (playerType != null) {
             Player player = null;
-            if(playerType.matches("human")){
-                player = new HumanPlayer(new Hand(deck), game , index);
+            if (playerType.matches("human")) {
+                player = new HumanPlayer(new Hand(deck), game, index);
             }
-            if(playerType.matches("random")){
-                player = new RandomPlayer(new Hand(deck), game , index);
+            if (playerType.matches("random")) {
+                player = new RandomPlayer(new Hand(deck), game, index);
             }
-            if(playerType.matches("simple")){
-                player = new SimplePlayer(new Hand(deck), game , index);
+            if (playerType.matches("simple")) {
+                player = new SimplePlayer(new Hand(deck), game, index);
             }
-            if(playerType.matches("smart")){
-                player = new SmartPlayer(new Hand(deck), game , index);
+            if (playerType.matches("smart")) {
+                player = new SmartPlayer(new Hand(deck), game, index);
             }
             return player;
         }
@@ -54,9 +53,7 @@ public class PlayerFactory {
     }
 
     private void dealingOut(Player[] players, int nbPlayers, int nbCardsPerPlayer) {
-
-        Hand[] hands = {new Hand(deck),new Hand(deck),new Hand(deck),new Hand(deck) };
-
+        Hand[] hands = {new Hand(deck), new Hand(deck), new Hand(deck), new Hand(deck)};
         Hand pack = deck.toHand(false);
         assert pack.getNumberOfCards() == 52 : " Starting pack is not 52 cards.";
         // Remove 4 Aces
@@ -88,17 +85,10 @@ public class PlayerFactory {
         for (int j = 0; j < nbPlayers; j++) {
             assert hands[j].getNumberOfCards() == 12 : " Hand does not have twelve cards.";
         }
-
-        for(int k = 0; k < nbPlayers; k++){
-            players[k].setHand(hands[k]); //rm clean hands up round 2
+        for (int k = 0; k < nbPlayers; k++) {
+            players[k].setHand(hands[k]);
             players[k].sortHand();
             LoggingSystem.logHand(players[k]);
         }
-    }
-
-    public static Card randomCard(Hand hand) {
-        assert !hand.isEmpty() : " random card from empty hand.";
-        int x = RandomSingleton.getInstance().generateRandomInt(hand.getNumberOfCards());
-        return hand.get(x);
     }
 }

@@ -9,30 +9,25 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class RandomPlayer extends Player{
-
-
+public class RandomPlayer extends Player {
     public RandomPlayer(Hand hand, GameOfThrones game, int playerIndex) {
         super(hand, game, playerIndex);
     }
 
     @Override
     public Optional<Card> pickCard(boolean isCharacter, Character[] characters) {
-        this.isCharacter=isCharacter;
-
+        this.isCharacter = isCharacter;
         return pickACorrectSuit(isCharacter);
     }
 
     @Override
     public int pickPile(Character[] characters) {
-        int selectedPile= selectRandomPile();
-
-        if(isLegal(characters[selectedPile],selected.get() )==false){
+        int selectedPile = selectRandomPile();
+        if (isLegal(characters[selectedPile], selected.get()) == false) {
             return NON_SELECTION_INDEX;
         }
         return selectedPile;
     }
-
 
     public Optional<Card> pickACorrectSuit(boolean isCharacter) {
         Hand currentHand = hand;
@@ -49,7 +44,6 @@ public class RandomPlayer extends Player{
         } else {
             selected = Optional.of(shortListCards.get(GameOfThrones.random.nextInt(shortListCards.size())));
         }
-
         return selected;
     }
 

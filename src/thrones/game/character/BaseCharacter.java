@@ -6,26 +6,24 @@ import ch.aplu.jcardgame.Hand;
 import thrones.game.GameOfThrones;
 import thrones.game.GameOfThrones.Rank;
 
-public class BaseCharacter extends Character{
-
+public class BaseCharacter extends Character {
     protected Deck deck = new Deck(GameOfThrones.Suit.values(), GameOfThrones.Rank.values(), "cover");
     protected Hand pile = new Hand(deck);
 
-    public BaseCharacter(Card card){
+    public BaseCharacter(Card card) {
         super();
         this.card = card;
-        pile.insert(card,false);
+        pile.insert(card, false);
     }
-    public BaseCharacter(){
+
+    public BaseCharacter() {
         card = null;
-
-    }
-    public void addBaseCard(Card card){
-        this.card= card;
-        pile.insert(card,false);
     }
 
-
+    public void addBaseCard(Card card) {
+        this.card = card;
+        pile.insert(card, false);
+    }
 
     public Hand getPile() {
         return pile;
@@ -33,33 +31,33 @@ public class BaseCharacter extends Character{
 
     @Override
     public void insertToPile(Card card) {
-        pile.insert(card,false);
+        pile.insert(card, false);
     }
 
     @Override
     public int getAttack() {
-        if(card==null){
+        if (card == null) {
             return 0;
         }
-        Rank rank =  (Rank)card.getRank();
+        Rank rank = (Rank) card.getRank();
         return rank.getRankValue();
     }
+
     @Override
     public int getDefense() {
-        if(card==null){
+        if (card == null) {
             return 0;
         }
-        Rank rank =  (Rank)card.getRank();
+        Rank rank = (Rank) card.getRank();
         return rank.getRankValue();
     }
+
     @Override
     public Rank getBaseRank() {
-        if(card==null){
+        if (card == null) {
             return null;
         }
-        Rank rank =  (Rank)card.getRank();
+        Rank rank = (Rank) card.getRank();
         return rank;
     }
-
-
 }

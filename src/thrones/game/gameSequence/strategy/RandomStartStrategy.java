@@ -1,20 +1,18 @@
 package thrones.game.gameSequence.strategy;
+
 import thrones.game.utility.RandomSingleton;
 
-public class RandomStartStrategy implements  IStartingPlayerStrategy {
+public class RandomStartStrategy implements IStartingPlayerStrategy {
     static RandomSingleton random;
-
     int startingPlayer;
 
-
-    public RandomStartStrategy(int prevPlayerIndex){
-        startingPlayer = random.getInstance().generateRandomInt(4);;
+    public RandomStartStrategy(int prevPlayerIndex) {
+        startingPlayer = random.getInstance().generateRandomInt(4);
+        ;
     }
+
     @Override
     public int getStartingPlayer() {
         return startingPlayer;
     }
-
-
-
 }

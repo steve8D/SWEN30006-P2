@@ -5,19 +5,18 @@ import ch.aplu.jcardgame.Hand;
 import thrones.game.GameOfThrones.Rank;
 import thrones.game.character.Character;
 
-
 public abstract class CharacterEffect extends Character {
     protected Character character;
 
-    public CharacterEffect(Card card, Character character){
+    public CharacterEffect(Card card, Character character) {
         this.card = card;
         this.character = character;
     }
 
-    public CharacterEffect(Card card, Character character, boolean transfer){
+    public CharacterEffect(Card card, Character character, boolean transfer) {
         this.card = card;
         this.character = character;
-        if(transfer){
+        if (transfer) {
             insertToPile(card); //pile is only neccessary for rendering.
             // transfer is false for smartPlayer's calculations.
         }
@@ -37,20 +36,22 @@ public abstract class CharacterEffect extends Character {
     public int getAttack() {
         return character.getAttack();
     }
+
     @Override
     public int getDefense() {
         return character.getDefense();
     }
+
     @Override
     public Rank getBaseRank() {
         return character.getBaseRank();
     }
 
-    public boolean isDouble(){
-        return false;// abstract for later
+    public boolean isDouble() {
+        return false;
     }
 
-    protected CharacterEffect getCharacter(){ // for recursion in magic piles
+    protected CharacterEffect getCharacter() {
         return (CharacterEffect) this.character;
     }
 }
