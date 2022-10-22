@@ -7,8 +7,7 @@ import thrones.game.GameOfThrones.Rank;
 import java.util.ArrayList;
 
 
-public class CharacterEffect extends Character {
-    //will be abstract in the future
+public abstract class CharacterEffect extends Character {
     Character character;
 
     public CharacterEffect(Card card, Character character){
