@@ -6,12 +6,14 @@ import thrones.game.character.Character;
 import thrones.game.character.CharacterEffect;
 import thrones.game.players.Player;
 import thrones.game.players.PlayerType;
+import thrones.game.utility.CardCounter;
 import thrones.game.utility.CardUI;
 import thrones.game.utility.LoggingSystem;
+import thrones.game.utility.Publisher;
 
 import java.util.Optional;
 
-public class EffectTurn extends Turn{
+public class EffectTurn extends Turn implements Publisher {
     public EffectTurn(GameOfThrones game, CardUI cardUI, Character[] characters) {
         super(game, cardUI, characters);
     }
@@ -43,6 +45,8 @@ public class EffectTurn extends Turn{
             } else {
                 LoggingSystem.logMove(playerIndex,selected.get(),selectedPileIndex);
 
+                publish(selected.get());
+
                 cardUI.moveToPile(selected.get(), characters[selectedPileIndex].getPile());
                 characters[selectedPileIndex] = new CharacterEffect(selected.get(), characters[selectedPileIndex]);
 
@@ -56,5 +60,10 @@ public class EffectTurn extends Turn{
             System.out.println("passed "+ playerIndex);
         }
 
+    }
+
+    @Override
+    public void publish(Card event) {
+        CardCounter.getInstance().publish(this, event);
     }
 }

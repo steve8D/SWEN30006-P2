@@ -14,8 +14,10 @@ import thrones.game.GameOfThrones.Rank;
 import thrones.game.character.DefenseEffect;
 import thrones.game.character.MagicEffect;
 import thrones.game.gameLogic.sequence.plays.Battle;
+import thrones.game.utility.CardCounter;
+import thrones.game.utility.Subscriber;
 
-public class SmartPlayer extends Player{
+public class SmartPlayer extends Player implements Subscriber {
 
     private Map<Card,Integer> shortlist = new HashMap<>();
     private ArrayList<Rank> diamondNumbersSeen = new ArrayList<>();
@@ -26,6 +28,7 @@ public class SmartPlayer extends Player{
 
     public SmartPlayer(Hand hand, GameOfThrones game, int playerIndex) {
         super(hand, game, playerIndex);
+        CardCounter.getInstance().subscribe(this,"Diamonds");
 
 
 
@@ -105,6 +108,7 @@ public class SmartPlayer extends Player{
                 // apply magic to enemy
                 hypotheticalBattleOutcome =
                         battle.simulateBattle(friendlyCharacter,new MagicEffect(c, enemyCharacter,false));
+                hypotheticalBattleOutcome = new int[] {1,0};
 
             }else {
                 Character newchar;
@@ -150,6 +154,7 @@ public class SmartPlayer extends Player{
 
 
     private ArrayList<Card> removeDiamonds(){
+        // remve cards which there is still a diamond
         ArrayList<Card> viableCards = new ArrayList<>();
 
         for(Card c: hand.getCardList()){
@@ -166,9 +171,16 @@ public class SmartPlayer extends Player{
                 continue;
             }
 
-            if(diamondNumbersSeen.contains(rank)){
+           if(diamondNumbersSeen.contains(rank)){
                 // if the smart player has seen the diamond, its also good
-                viableCards.add(c);
+                if(rank.getRankValue()==10){ // if it is one of the tens
+                    if(playTen()){ //make sure you havve seen all tens
+                        viableCards.add(c);
+                    }
+                } else{
+                    viableCards.add(c);
+
+                }
                 continue;
             }
         }
@@ -203,4 +215,12 @@ public class SmartPlayer extends Player{
     }
 
 
+    @Override
+    public void notify(Card event) {
+        if(diamondNumbersSeen.contains((Rank)event.getRank())){
+            return; //if we played that card
+        }
+        diamondNumbersSeen.add((Rank)event.getRank());
+
+    }
 }
