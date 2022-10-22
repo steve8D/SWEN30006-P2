@@ -1,20 +1,17 @@
-package thrones.game.gameLogic.sequence.plays;
+package thrones.game.gameSequence.plays;
 
-import ch.aplu.jcardgame.Card;
-import ch.aplu.jcardgame.CardAdapter;
 import ch.aplu.jcardgame.Hand;
 import thrones.game.GameOfThrones;
-import thrones.game.PropertiesLoader;
 import thrones.game.character.BaseCharacter;
 import thrones.game.character.Character;
-import thrones.game.gameLogic.sequence.ConsequentRound;
-import thrones.game.gameLogic.sequence.FirstRound;
-import thrones.game.gameLogic.sequence.Round;
-import thrones.game.gameLogic.sequence.plays.strategy.IStartingPlayerStrategy;
+import thrones.game.gameSequence.Battle;
+import thrones.game.gameSequence.round.ConsequentRound;
+import thrones.game.gameSequence.round.FirstRound;
+import thrones.game.gameSequence.round.Round;
+import thrones.game.gameSequence.strategy.IStartingPlayerStrategy;
 import thrones.game.players.Player;
 import thrones.game.utility.CardUI;
-
-import java.util.Properties;
+import thrones.game.utility.PropertiesLoader;
 
 public class Play {
 
@@ -82,32 +79,22 @@ public class Play {
     }
 
     private void createNewPiles() {
-
         characters = new Character[2];
 
         for (int i = 0; i < 2; i++) {
-
             characters[i] = new BaseCharacter();
 
-            //get the pile for setting up the listener (this will happen when the heart card is played later)
+            // get the pile for setting up the listener (this will happen when the heart card is played later)
             // for now the code requires i set up the listener now
             Hand characterPile = characters[i].getPile();
 
             cardUI.drawPile(characterPile, i);
-
-            final Hand currentPile = characterPile;
-            final int pileIndex = i;
-
-
-
         }
 
         updatePileRanks();
     }
 
     public void runPlay(){
-        
-
         for (int i = 0; i < 3; i++){
             rounds[i].runRound();
         }
@@ -118,6 +105,5 @@ public class Play {
 
         game.delay(Long.parseLong(PropertiesLoader.getProperties().getProperty("WatchingTime",PropertiesLoader.getDefaultWatchingTime())));
         removeOldPiles();
-
     }
 }

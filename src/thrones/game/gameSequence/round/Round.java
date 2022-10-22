@@ -1,9 +1,9 @@
-package thrones.game.gameLogic.sequence;
+package thrones.game.gameSequence.round;
 
 import thrones.game.GameOfThrones;
 import thrones.game.character.Character;
+import thrones.game.gameSequence.turn.Turn;
 import thrones.game.players.Player;
-import thrones.game.players.PlayerType;
 import thrones.game.utility.CardUI;
 
 public abstract class Round {
@@ -24,24 +24,19 @@ public abstract class Round {
         this.startingPlayer = startingPlayer;
 
         this.turns = createTurns();
-
     }
 
     public void runRound(){
-
         int currPlayer = startingPlayer;
 
         for(int i = 0; i < 4; i++){
             currPlayer=getPlayerIndex(currPlayer);
             game.setStatusText("Player " + currPlayer + " select a Heart card to play");
 
-            turns[i].runTurn(players[currPlayer] );
+            turns[i].runTurn(players[currPlayer]);
 
             currPlayer++;
         }
-
-
-
     }
 
     private int getPlayerIndex(int index) {

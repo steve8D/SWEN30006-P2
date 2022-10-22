@@ -1,4 +1,4 @@
-package thrones.game;
+package thrones.game.utility;
 
 import java.io.FileInputStream;
 import java.io.IOException;

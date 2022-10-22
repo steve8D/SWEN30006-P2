@@ -1,20 +1,17 @@
-package thrones.game.character;
+package thrones.game.character.effect;
 
 import ch.aplu.jcardgame.Card;
 import ch.aplu.jcardgame.Hand;
 import thrones.game.GameOfThrones.Rank;
+import thrones.game.character.Character;
 
 
-public class CharacterEffect extends Character{
-    //will be abstract in the future
-
-    Character character;
+public abstract class CharacterEffect extends Character {
+    protected Character character;
 
     public CharacterEffect(Card card, Character character){
         this.card = card;
         this.character = character;
-
-        insertToPile(card);
     }
 
     public CharacterEffect(Card card, Character character, boolean transfer){
@@ -38,7 +35,6 @@ public class CharacterEffect extends Character{
 
     @Override
     public int getAttack() {
-        // this will become more complicated once we actually add characters
         return character.getAttack();
     }
     @Override
@@ -52,5 +48,9 @@ public class CharacterEffect extends Character{
 
     public boolean isDouble(){
         return false;// abstract for later
+    }
+
+    protected CharacterEffect getCharacter(){ // for recursion in magic piles
+        return (CharacterEffect) this.character;
     }
 }

@@ -3,14 +3,16 @@ package thrones.game;
 // Oh_Heaven.java
 
 import ch.aplu.jcardgame.*;
-import thrones.game.character.BaseCharacter;
 import thrones.game.character.Character;
-import thrones.game.gameLogic.sequence.plays.Battle;
-import thrones.game.gameLogic.sequence.plays.Play;
-import thrones.game.gameLogic.sequence.plays.PlayFactory;
 import thrones.game.players.*;
+import thrones.game.gameSequence.plays.Play;
+import thrones.game.gameSequence.plays.PlayFactory;
+import thrones.game.players.HumanPlayer;
+import thrones.game.players.Player;
+import thrones.game.players.RandomPlayer;
 import thrones.game.utility.CardUI;
 import thrones.game.utility.LoggingSystem;
+import thrones.game.utility.PropertiesLoader;
 import thrones.game.utility.RandomSingleton;
 
 import java.util.*;
@@ -149,18 +151,13 @@ public class GameOfThrones extends CardGame {
 
         PlayerFactory playerFactory = new PlayerFactory();
         players = playerFactory.getPlayers(this,deck);
-        /*
-
-
-
         dealingOut(hands, nbPlayers, nbStartCards);
 
         for (int i = 0; i < nbPlayers; i++) {
             players[i].sortHand();
 
-             LoggingSystem.logHand(i, players[i].getHand());
+            LoggingSystem.logHand(i, players[i].getHand());
         }
-
 
         Hand[] newhands = new Hand[4];
         int i = 0; //will fix later so initLayout accepts Player
@@ -170,35 +167,14 @@ public class GameOfThrones extends CardGame {
             i++;
         }
 
-
-
-
         cardUI.initLayout(nbPlayers, newhands);
     }
 
-
-
-
-    private void updatePileRanks() {
-        for (int j = 0; j < characters.length; j++) { //
-            int[] ranks = characters[j].calculatePileRanks();
-            cardUI.updatePileRankState(j, ranks[ATTACK_RANK_INDEX], ranks[DEFENCE_RANK_INDEX]);
-        }
-    }
-
-    private int getPlayerIndex(int index) {
-        return index % nbPlayers;
-    }
-
     private void executeAPlay(int playIndex) {
-
-        Play play = playFactory.createPlay(playIndex,this);
+        Play play = playFactory.getInstance().createPlay(playIndex,this);
 
         play.runPlay();
-
     }
-
-
 
     public GameOfThrones() {
         super(700, 700, 30);
@@ -207,13 +183,9 @@ public class GameOfThrones extends CardGame {
 
         setupGame();
 
-
-        playFactory = new PlayFactory();
-
         for (int i = 0; i < nbPlays; i++) {
             executeAPlay(i);
         }
-
 
         LoggingSystem.logResult(players[0].getScore(), players[1].getScore());
         cardUI.displayResult(players[0].getScore(), players[1].getScore());

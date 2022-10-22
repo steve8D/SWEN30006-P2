@@ -4,16 +4,15 @@ import ch.aplu.jcardgame.Card;
 import ch.aplu.jcardgame.Hand;
 import thrones.game.GameOfThrones;
 import thrones.game.GameOfThrones.Suit;
-
-import thrones.game.character.AttackEffect;
 import thrones.game.character.Character;
 
 import java.util.*;
 
 import thrones.game.GameOfThrones.Rank;
-import thrones.game.character.DefenseEffect;
-import thrones.game.character.MagicEffect;
-import thrones.game.gameLogic.sequence.plays.Battle;
+import thrones.game.character.effect.AttackEffect;
+import thrones.game.character.effect.DefenseEffect;
+import thrones.game.character.effect.MagicEffect;
+import thrones.game.gameSequence.Battle;
 import thrones.game.utility.CardCounter;
 import thrones.game.utility.Subscriber;
 
@@ -100,7 +99,7 @@ public class SmartPlayer extends Player implements Subscriber {
             if(suit.isMagic()){
                 // apply magic to enemy
                 hypotheticalBattleOutcome =
-                        battle.simulateBattle(friendlyCharacter,new MagicEffect(c, enemyCharacter,false));//
+                        battle.simulateBattle(friendlyCharacter,new MagicEffect(c, enemyCharacter,false));
 
             }else {
                 Character newchar;

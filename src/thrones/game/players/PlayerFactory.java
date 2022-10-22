@@ -3,7 +3,7 @@ package thrones.game.players;
 import ch.aplu.jcardgame.Deck;
 import ch.aplu.jcardgame.Hand;
 import thrones.game.GameOfThrones;
-import thrones.game.PropertiesLoader;
+import thrones.game.utility.PropertiesLoader;
 
 import java.util.Properties;
 
