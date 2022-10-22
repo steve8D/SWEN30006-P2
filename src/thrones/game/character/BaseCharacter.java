@@ -9,12 +9,6 @@ import thrones.game.GameOfThrones.Rank;
 public class BaseCharacter extends Character{
     protected Deck deck = new Deck(GameOfThrones.Suit.values(), GameOfThrones.Rank.values(), "cover");
     protected Hand pile = new Hand(deck);
-
-    public BaseCharacter(Card card){
-        super();
-        this.card = card;
-        pile.insert(card,false);
-    }
     public BaseCharacter() {
         card = null;
     }

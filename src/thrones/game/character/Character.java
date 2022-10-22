@@ -9,17 +9,14 @@ public abstract class Character {
     abstract public int getAttack();
     abstract public int getDefense();
     abstract public Rank getBaseRank();
-
-    abstract public Hand getPile(); //protected later
+    abstract public Hand getPile();
     abstract public void insertToPile(Card card);
-
     public int[] calculatePileRanks() {
         int attack = this.getAttack();
         int def = this.getDefense();
 
         return new int[] { attack, def };
     }
-
     public Card getCard() {
         return card;
     }

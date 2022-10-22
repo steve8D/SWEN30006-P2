@@ -8,9 +8,8 @@ import thrones.game.character.Character;
 
 import java.util.Optional;
 
-public class HumanPlayer extends Player{
+public class HumanPlayer extends Player {
     private final int NON_SELECTION_VALUE = -1;
-
 
     public HumanPlayer(Hand hand, GameOfThrones game, int playerIndex) {
         super(hand, game, playerIndex);
@@ -54,7 +53,7 @@ public class HumanPlayer extends Player{
         return selected;
     }
 
-    public  int  waitForPileSelection(Character[] characters) {
+    public int waitForPileSelection(Character[] characters) {
         selectedPileIndex = NON_SELECTION_VALUE;
 
         // more listener stuff
@@ -64,7 +63,7 @@ public class HumanPlayer extends Player{
 
 
         //establish listeners
-        for(int i = 0; i < 2; i++){
+        for (int i = 0; i < 2; i++) {
             Hand characterPile = newpiles[i];
 
             final int pileIndex = i;
@@ -80,13 +79,10 @@ public class HumanPlayer extends Player{
         }
 
 
-
-
-
         for (Hand pile : newpiles) {
             pile.setTouchEnabled(true);
         }
-        while(selectedPileIndex == NON_SELECTION_VALUE) {
+        while (selectedPileIndex == NON_SELECTION_VALUE) {
             GameOfThrones.delay(100);
         }
         for (Hand pile : newpiles) {

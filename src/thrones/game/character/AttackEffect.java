@@ -3,7 +3,7 @@ package thrones.game.character;
 import ch.aplu.jcardgame.Card;
 import thrones.game.GameOfThrones.Rank;
 
-public class AttackEffect extends CharacterEffect{
+public class AttackEffect extends CharacterEffect {
     public AttackEffect(Card card, Character character) {
         super(card, character);
     }

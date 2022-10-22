@@ -7,7 +7,6 @@ import thrones.game.GameOfThrones;
 import java.util.ArrayList;
 
 public class MagicEffect extends CharacterEffect {
-    String operation = "";
     public MagicEffect(Card card, Character character) {
         super(card, character);
     }
@@ -15,7 +14,6 @@ public class MagicEffect extends CharacterEffect {
     @Override
     public int getAttack() {
         if (applyEffect(GameOfThrones.Suit.CLUBS)) {
-            operation = "attack";
             int thisCardRank = ((GameOfThrones.Rank)card.getRank()).getRankValue();
             int rankOfCardBelow = 0;
             rankOfCardBelow += character.getAttack();
@@ -33,7 +31,6 @@ public class MagicEffect extends CharacterEffect {
     @Override
     public int getDefense() {
         if (applyEffect(GameOfThrones.Suit.SPADES)) {
-            operation = "defense";
             int thisCardRank = ((GameOfThrones.Rank)card.getRank()).getRankValue();
             int rankOfCardBelow = 0;
             rankOfCardBelow += character.getDefense();
@@ -58,19 +55,25 @@ public class MagicEffect extends CharacterEffect {
     private boolean applyEffect(GameOfThrones.Suit suit) {
         GameOfThrones.Suit suitOfCardBelow = (GameOfThrones.Suit)character.getCard().getSuit();
         if (suitOfCardBelow == GameOfThrones.Suit.DIAMONDS) {
-            ArrayList<Card> piles = character.getPile().getCardList();
-            int curCard = piles.indexOf(character.getCard());
-            int i = 1;
-            while (true) {
-                int prevIndex = curCard - i;
-                Card prevCard = piles.get(prevIndex);
-                if (prevCard.getSuit() != GameOfThrones.Suit.DIAMONDS) {
-                    suitOfCardBelow = (GameOfThrones.Suit) prevCard.getSuit();
-                    break;
-                }
-                i++;
-            }
+            suitOfCardBelow = getSuitOfCardBelow();
         }
         return (suit == suitOfCardBelow);
+    }
+
+    private GameOfThrones.Suit getSuitOfCardBelow() {
+        GameOfThrones.Suit suitOfCardBelow;
+        ArrayList<Card> piles = character.getPile().getCardList();
+        int curCard = piles.indexOf(character.getCard());
+        int i = 1;
+        while (true) {
+            int prevIndex = curCard - i;
+            Card prevCard = piles.get(prevIndex);
+            if (prevCard.getSuit() != GameOfThrones.Suit.DIAMONDS) {
+                suitOfCardBelow = (GameOfThrones.Suit) prevCard.getSuit();
+                break;
+            }
+            i++;
+        }
+        return suitOfCardBelow;
     }
 }

@@ -2,7 +2,6 @@ package thrones.game.gameSequence.turn;
 
 import ch.aplu.jcardgame.Card;
 import thrones.game.GameOfThrones;
-import thrones.game.character.*;
 import thrones.game.character.Character;
 import thrones.game.players.Player;
 import thrones.game.utility.CardUI;
@@ -17,7 +16,6 @@ public class EffectTurn extends Turn {
 
     @Override
     public void runTurn(Player player) {
-
         int selectedPileIndex;
         Optional<Card> selected;
         int playerIndex = player.getPlayerIndex();
@@ -34,16 +32,9 @@ public class EffectTurn extends Turn {
 
             cardUI.moveToPile(selected.get(), characters[selectedPileIndex].getPile());
 
-            //move this to a factory later
-            // just new CharacterFactory
-            // characterFactory.getCharacter( selected.gt(), characters[selectedPileIndex]
-            if(((GameOfThrones.Suit)selected.get().getSuit()).isAttack()) {
-                characters[selectedPileIndex] = new AttackEffect(selected.get(), characters[selectedPileIndex]);
-            }  else if(((GameOfThrones.Suit)selected.get().getSuit()).isDefence()) {
-                characters[selectedPileIndex] = new DefenseEffect(selected.get(), characters[selectedPileIndex]);
-            } else if(((GameOfThrones.Suit)selected.get().getSuit()).isMagic()){
-                characters[selectedPileIndex] = new MagicEffect(selected.get(), characters[selectedPileIndex]);
-            }
+            Card selectedCard = selected.get();
+            Character mostRecentCard = characters[selectedPileIndex];
+            characters[selectedPileIndex] = characterEffectFactory.getInstance().createCharacter(selectedCard, mostRecentCard);
             updatePileRanks();
         } else {
             game.setStatusText("Pass.");

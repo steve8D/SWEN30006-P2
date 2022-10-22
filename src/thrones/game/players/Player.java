@@ -10,21 +10,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public  abstract class Player {
+public abstract class Player {
 
     protected Hand hand;
     protected Optional<Card> selected;
     protected int score=0;
     private GameOfThrones game;
-
-
     int selectedPileIndex;
-
     int playerIndex;
 
-
-
-    public Player(Hand hand, GameOfThrones game , int playerIndex) {
+    public Player(Hand hand, GameOfThrones game, int playerIndex) {
         this.hand = hand;
         this.game=game;
         this.playerIndex=playerIndex;
@@ -40,8 +35,6 @@ public  abstract class Player {
 
     public void setHand(Hand hand) {
         this.hand = hand;
-
-
     }
 
     public void sortHand(){
@@ -63,18 +56,14 @@ public  abstract class Player {
         });
     }
 
-
     public abstract Optional<Card> pickCard(boolean isCharacter) ;
     public  abstract int  pickPile (Character[] characters) ;
-
     public int getScore() {
         return score;
     }
-
     public void setScore(int score) {
         this.score = score;
     }
-
     public void addScore(int score){
         this.score += score;
     }

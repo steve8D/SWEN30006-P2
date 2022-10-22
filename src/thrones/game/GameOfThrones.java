@@ -176,11 +176,9 @@ public class GameOfThrones extends CardGame {
     }
 
     private void executeAPlay(int playIndex) {
-
-        Play play = playFactory.createPlay(playIndex,this);
+        Play play = playFactory.getInstance().createPlay(playIndex,this);
 
         play.runPlay();
-
     }
 
     public GameOfThrones() {
@@ -190,12 +188,9 @@ public class GameOfThrones extends CardGame {
 
         setupGame();
 
-        playFactory = new PlayFactory();
-
         for (int i = 0; i < nbPlays; i++) {
             executeAPlay(i);
         }
-
 
         LoggingSystem.logResult(players[0].getScore(), players[1].getScore());
         cardUI.displayResult(players[0].getScore(), players[1].getScore());

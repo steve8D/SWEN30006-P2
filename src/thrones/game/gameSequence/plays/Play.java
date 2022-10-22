@@ -89,9 +89,6 @@ public class Play {
             Hand characterPile = characters[i].getPile();
 
             cardUI.drawPile(characterPile, i);
-
-            final Hand currentPile = characterPile;
-            final int pileIndex = i;
         }
 
         updatePileRanks();

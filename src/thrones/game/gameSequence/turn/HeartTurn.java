@@ -11,12 +11,9 @@ import thrones.game.character.Character;
 import java.util.Optional;
 
 public class HeartTurn extends Turn {
-
-
     public HeartTurn(GameOfThrones game, CardUI cardUI, Character[] characters) {
         super(game, cardUI, characters);
     }
-
     @Override
     public void runTurn(Player player) {
         Optional<Card> selected;
@@ -32,13 +29,10 @@ public class HeartTurn extends Turn {
 
         cardUI.moveToPile(selected.get(),characters[pileIndex].getPile());
 
-        // i am forced to initialise a character before a heart card is chosen because i need the pile for clicking purposes
-        // will fix later
+        // get existing pile and add heart card into the pile
         BaseCharacter base = (BaseCharacter) characters[pileIndex];
         base.addBaseCard(selected.get());
 
         updatePileRanks();
     }
-
-
 }
