@@ -17,6 +17,15 @@ public class CharacterEffect extends Character{
         insertToPile(card);
     }
 
+    public CharacterEffect(Card card, Character character, boolean transfer){
+        this.card = card;
+        this.character = character;
+        if(transfer){
+            insertToPile(card); //pile is only neccessary for rendering.
+            // transfer is false for smartPlayer's calculations.
+        }
+    }
+
     @Override
     public Hand getPile() {
         return character.getPile();

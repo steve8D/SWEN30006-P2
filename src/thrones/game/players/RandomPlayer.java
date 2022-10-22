@@ -17,7 +17,7 @@ public class RandomPlayer extends Player{
     }
 
     @Override
-    public Optional<Card> pickCard(boolean isCharacter) {
+    public Optional<Card> pickCard(boolean isCharacter, Character[] characters) {
         return pickACorrectSuit(isCharacter);
     }
 

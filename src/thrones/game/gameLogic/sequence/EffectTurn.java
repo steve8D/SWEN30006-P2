@@ -5,16 +5,21 @@ import thrones.game.GameOfThrones;
 import thrones.game.character.Character;
 import thrones.game.character.CharacterEffect;
 import thrones.game.players.Player;
-import thrones.game.players.PlayerType;
+import thrones.game.utility.CardCounter;
 import thrones.game.utility.CardUI;
 import thrones.game.utility.LoggingSystem;
+import thrones.game.utility.Publisher;
 
 import java.util.Optional;
 
-public class EffectTurn extends Turn{
+public class EffectTurn extends Turn implements Publisher {
     public EffectTurn(GameOfThrones game, CardUI cardUI, Character[] characters) {
         super(game, cardUI, characters);
     }
+
+
+    private final int NON_SELECTION_VALUE = -1;
+
 
     @Override
     public void runTurn(Player player) {
@@ -23,44 +28,35 @@ public class EffectTurn extends Turn{
         Optional<Card> selected;
         int playerIndex = player.getPlayerIndex();
 
-        selected = player.pickCard(false);
-
-
-//        if (playerType == PlayerType.HUMAN) {
-//            //waitForCorrectSuit(nextPlayer, false);
-//            selected = player.pickCard(false);
-//
-//        } else {
-//            //pickACorrectSuit(nextPlayer, false);
-//            selected = player.pickCard(false);
-//
-//        }
+        selected = player.pickCard(false, characters);
 
         if (selected.isPresent()) {
             // fix this later
             game.setStatusText("Selected: " + LoggingSystem.canonical(selected.get()) + ". Player" + playerIndex + " select a pile to play the card.");
 
             selectedPileIndex = player.pickPile(characters);
+            if(selectedPileIndex == NON_SELECTION_VALUE){
+                game.setStatusText("Pass.");
 
+            } else {
+                LoggingSystem.logMove(playerIndex,selected.get(),selectedPileIndex);
 
-//            if (playerType == PlayerType.HUMAN) {
-//                //waitForPileSelection();
-//            } else {
-//                //selectRandomPile();
-//                selectedPileIndex = player.pickPile(characters);
-//            }
-            LoggingSystem.logMove(playerIndex,selected.get(),selectedPileIndex);
+                publish(selected.get());
 
-            cardUI.moveToPile(selected.get(), characters[selectedPileIndex].getPile());
-            characters[selectedPileIndex] = new CharacterEffect(selected.get(), characters[selectedPileIndex]);
+                cardUI.moveToPile(selected.get(), characters[selectedPileIndex].getPile());
+                characters[selectedPileIndex] = new CharacterEffect(selected.get(), characters[selectedPileIndex]);
 
+                updatePileRanks();
+            }
 
-            updatePileRanks();
         } else {
             game.setStatusText("Pass.");
-            //for debugging
-            System.out.println("passed "+ playerIndex);
         }
 
+    }
+
+    @Override
+    public void publish(Card event) {
+        CardCounter.getInstance().publish(this, event);
     }
 }

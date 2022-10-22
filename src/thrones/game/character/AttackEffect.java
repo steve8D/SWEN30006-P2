@@ -6,4 +6,7 @@ public class AttackEffect extends CharacterEffect{
     public AttackEffect(Card card, Character character) {
         super(card, character);
     }
+    public AttackEffect(Card card, Character character, boolean transfer) {
+        super(card, character, transfer);
+    }
 }
