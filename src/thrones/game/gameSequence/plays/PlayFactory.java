@@ -31,7 +31,7 @@ public class PlayFactory {
 //        return new Play(game.getHands(), game.piles, game.scores, prevPlayerIndex);
 
         this.playIndex = playIndex;
-        Play play = new Play(game,game.getCardUI(),game.getCharacters(),game.getPlayers(),selectStartingStrategy());
+        Play play = new Play(game,game.getCardUI(),game.getPlayers(),selectStartingStrategy());
 
 
         return play;

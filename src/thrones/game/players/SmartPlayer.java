@@ -42,6 +42,8 @@ public class SmartPlayer extends Player implements Subscriber {
 
     @Override
     public Optional<Card> pickCard(boolean isCharacter, Character[] characters) {
+        this.isCharacter=isCharacter;
+
 
         Optional<Card>  selected;
         if(isCharacter){
@@ -55,12 +57,22 @@ public class SmartPlayer extends Player implements Subscriber {
 
     @Override
     public int pickPile(Character[] characters) {
+
+        int selectedPile;
+
         if(((Suit)selectedCard.getSuit()).isMagic()){
-            return (team+1)%2; //magic on enemy
+            selectedPile= (team+1)%2; //magic on enemy
         }
         else{
-            return team;
+            selectedPile= team;
         }
+
+        if(isLegal(characters[selectedPile],selectedCard )==false){
+            // should not be neccessary for smart player
+            return NON_SELECTION_INDEX;
+        }
+
+        return selectedPile;
     }
 
     private Optional<Card> pickEffect(Character[] characters){

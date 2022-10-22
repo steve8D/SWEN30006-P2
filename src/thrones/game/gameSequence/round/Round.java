@@ -31,7 +31,6 @@ public abstract class Round {
 
         for(int i = 0; i < 4; i++){
             currPlayer=getPlayerIndex(currPlayer);
-            game.setStatusText("Player " + currPlayer + " select a Heart card to play");
 
             turns[i].runTurn(players[currPlayer]);
 

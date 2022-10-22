@@ -9,7 +9,6 @@ import java.util.Optional;
 
 public class SimplePlayer extends RandomPlayer {
 
-    public static final int NON_SELECTION_INDEX = -1;
     private Optional<Card> selectedCard;
 
     public SimplePlayer(Hand hand, GameOfThrones game, int playerIndex) {
@@ -18,6 +17,8 @@ public class SimplePlayer extends RandomPlayer {
 
     @Override
     public Optional<Card> pickCard(boolean isCharacter, Character[] characters) {
+        this.isCharacter=isCharacter;
+
         selectedCard = pickACorrectSuit(isCharacter);
         return selectedCard;
     }
@@ -37,6 +38,10 @@ public class SimplePlayer extends RandomPlayer {
             if (selectedPile != team) {
                 return NON_SELECTION_INDEX; //if apply buff to enemy
             }
+        }
+
+        if(isLegal(characters[selectedPile],selectedCard.get() )==false){
+            return NON_SELECTION_INDEX;
         }
         return selectedPile;
     }

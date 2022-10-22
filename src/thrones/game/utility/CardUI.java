@@ -4,6 +4,7 @@ import ch.aplu.jgamegrid.Actor;
 import ch.aplu.jgamegrid.Location;
 import ch.aplu.jgamegrid.TextActor;
 import thrones.game.GameOfThrones;
+import thrones.game.players.Player;
 
 import java.awt.*;
 import java.util.Optional;
@@ -77,26 +78,6 @@ public class CardUI {
     }
 
     public void initLayout(int players, Hand[] hands) {
-//        for (int i = 0; i < players; i++) {
-//            hands[i].sort(Hand.SortType.SUITPRIORITY, true);
-//
-//            LoggingSystem.logHand(i,hands[i]);
-//        }
-//
-//        for (final Hand currentHand : hands) {
-//            // Set up human player for interaction
-//            currentHand.addCardListener(new CardAdapter() {
-//                public void leftDoubleClicked(Card card) {
-//                    selected = Optional.of(card);
-//                    currentHand.setTouchEnabled(false);
-//                }
-//                public void rightClicked(Card card) {
-//                    selected = Optional.empty(); // Don't care which card we right-clicked for player to pass
-//                    currentHand.setTouchEnabled(false);
-//                }
-//            });
-//        }
-
 
         RowLayout[] layouts = new RowLayout[players];
         Hand[] playerHands = hands;
@@ -106,6 +87,19 @@ public class CardUI {
             playerHands[i].setView(gameOfThrones, layouts[i]);
             playerHands[i].draw();
         }
+    }
+
+    public void initLayout(Player[] players){
+
+        RowLayout[] layouts = new RowLayout[players.length];
+        //Hand[] playerHands = hands;
+        for (int i = 0; i < players.length; i++) {
+            layouts[i] = new RowLayout(handLocations[i], handWidth);
+            layouts[i].setRotationAngle(90 * i);
+            players[i].getHand().setView(gameOfThrones, layouts[i]);
+            players[i].getHand().draw();
+        }
+
     }
 
     public void updateScore(int player, int score) {

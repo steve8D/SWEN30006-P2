@@ -5,6 +5,10 @@ import ch.aplu.jcardgame.CardAdapter;
 import ch.aplu.jcardgame.Hand;
 import thrones.game.GameOfThrones;
 import thrones.game.character.Character;
+import thrones.game.utility.rules.CompositeRule;
+import thrones.game.utility.rules.DiamondOnHeartRule;
+import thrones.game.utility.rules.EffectRule;
+import thrones.game.utility.rules.HeartRule;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,12 +22,17 @@ public abstract class Player {
     private GameOfThrones game;
     int selectedPileIndex;
     int playerIndex;
-    protected int team = playerIndex%2;
+    protected int team ;
+    protected boolean isCharacter;
+
+    protected static final int NON_SELECTION_INDEX = -1;
+
 
     public Player(Hand hand, GameOfThrones game, int playerIndex) {
         this.hand = hand;
         this.game=game;
         this.playerIndex=playerIndex;
+        team = playerIndex%2;
     }
 
     public int getPlayerIndex() {
@@ -42,22 +51,10 @@ public abstract class Player {
         hand.sort(Hand.SortType.SUITPRIORITY, true);
     }
 
-    public void setUpClickListener(){
-        final Hand currentHand = hand;
 
-        currentHand.addCardListener(new CardAdapter() {
-            public void leftDoubleClicked(Card card) {
-                selected = Optional.of(card);
-                currentHand.setTouchEnabled(false);
-            }
-            public void rightClicked(Card card) {
-                selected = Optional.empty(); // Don't care which card we right-clicked for player to pass
-                currentHand.setTouchEnabled(false);
-            }
-        });
-    }
     public abstract Optional<Card> pickCard(boolean isCharacter, Character[] characters) ;
     public  abstract int  pickPile (Character[] characters) ;
+
     public int getScore() {
         return score;
     }
@@ -66,5 +63,19 @@ public abstract class Player {
     }
     public void addScore(int score){
         this.score += score;
+    }
+
+    protected boolean isLegal(Character character, Card card){
+        CompositeRule legalityChecker = new CompositeRule();
+
+
+        if(isCharacter){
+            legalityChecker.addRule(new HeartRule());
+        } else {
+            legalityChecker.addRule(new EffectRule());
+            legalityChecker.addRule(new DiamondOnHeartRule());
+        }
+        return legalityChecker.isLegal(character,card);
+
     }
 }

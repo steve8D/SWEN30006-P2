@@ -28,10 +28,9 @@ public class Play {
 
     protected IStartingPlayerStrategy startingPlayerStrategy;
 
-    public Play( GameOfThrones game, CardUI cardUI, Character[] characters, Player[] players, IStartingPlayerStrategy startingPlayerStrategy) {
+    public Play( GameOfThrones game, CardUI cardUI,  Player[] players, IStartingPlayerStrategy startingPlayerStrategy) {
         this.game = game;
         this.cardUI = cardUI;
-        this.characters = characters;
         this.players = players;
 
 
