@@ -5,7 +5,6 @@ import thrones.game.GameOfThrones;
 import thrones.game.character.Character;
 import thrones.game.character.CharacterEffect;
 import thrones.game.players.Player;
-import thrones.game.players.PlayerType;
 import thrones.game.utility.CardCounter;
 import thrones.game.utility.CardUI;
 import thrones.game.utility.LoggingSystem;
@@ -31,8 +30,6 @@ public class EffectTurn extends Turn implements Publisher {
 
         selected = player.pickCard(false, characters);
 
-
-
         if (selected.isPresent()) {
             // fix this later
             game.setStatusText("Selected: " + LoggingSystem.canonical(selected.get()) + ". Player" + playerIndex + " select a pile to play the card.");
@@ -49,14 +46,11 @@ public class EffectTurn extends Turn implements Publisher {
                 cardUI.moveToPile(selected.get(), characters[selectedPileIndex].getPile());
                 characters[selectedPileIndex] = new CharacterEffect(selected.get(), characters[selectedPileIndex]);
 
-
                 updatePileRanks();
             }
 
         } else {
             game.setStatusText("Pass.");
-            //for debugging
-            System.out.println("passed "+ playerIndex);
         }
 
     }

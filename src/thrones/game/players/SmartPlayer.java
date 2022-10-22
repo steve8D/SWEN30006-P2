@@ -22,7 +22,7 @@ public class SmartPlayer extends Player implements Subscriber {
     private Map<Card,Integer> shortlist = new HashMap<>();
     private ArrayList<Rank> diamondNumbersSeen = new ArrayList<>();
     private Card selectedCard ;
-    private int team = playerIndex%2; // move up to Player and make protected
+
 
 
 
@@ -91,10 +91,7 @@ public class SmartPlayer extends Player implements Subscriber {
         Character enemyCharacter=characters[(team+1)%2];
 
         Battle battle = new Battle();
-        //ok i need a different constructor in battle
         boolean[] currentBattleOutcome = battle.simulateBattle(friendlyCharacter,enemyCharacter );
-
-
 
         for(Card c: viableCards){
             Suit suit = ((Suit) c.getSuit());
@@ -104,7 +101,6 @@ public class SmartPlayer extends Player implements Subscriber {
                 // apply magic to enemy
                 hypotheticalBattleOutcome =
                         battle.simulateBattle(friendlyCharacter,new MagicEffect(c, enemyCharacter,false));//
-                // hypotheticalBattleOutcome = new int[] {1,0};
 
             }else {
                 Character newchar;
@@ -119,7 +115,6 @@ public class SmartPlayer extends Player implements Subscriber {
                 //buff our character
                 hypotheticalBattleOutcome =
                         battle.simulateBattle(newchar, enemyCharacter);
-                //hypotheticalBattleOutcome = new int[] {1,0};
             }
             if((currentBattleOutcome[0]==false&& hypotheticalBattleOutcome[0] ==true)|| (currentBattleOutcome[1] ==true&&hypotheticalBattleOutcome[1]==false)){
                 // if we win the battle, or the enemy loses the battle
@@ -168,9 +163,9 @@ public class SmartPlayer extends Player implements Subscriber {
             }
 
            if(diamondNumbersSeen.contains(rank)){
-                // if the smart player has seen the diamond, its also good
+                // if the smart player has seen the diamond, card can be played
                 if(rank.getRankValue()==10){ // if it is one of the tens
-                    if(playTen()){ //make sure you havve seen all tens
+                    if(playTen()){ //make sure you have seen all tens
                         viableCards.add(c);
                     }
                 } else{
@@ -195,7 +190,7 @@ public class SmartPlayer extends Player implements Subscriber {
                 shortListCards.add(card);
             }
         }
-        // specs does not specify how to pick hearts
+        // selects first heart. open to extension
         return shortListCards.get(0);
     }
 

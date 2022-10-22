@@ -10,14 +10,14 @@ import thrones.game.gameLogic.sequence.plays.Battle;
 import java.util.Optional;
 
 public class SimplePlayer extends RandomPlayer{
+
+    public static final int NON_SELECTION_INDEX = -1;
+
     public SimplePlayer(Hand hand, GameOfThrones game, int playerIndex) {
         super(hand, game, playerIndex);
     }
 
     private Optional<Card> selectedCard;
-
-    private int team = playerIndex%2; // move up to Player and make protected
-
 
     @Override
     public Optional<Card> pickCard(boolean isCharacter, Character[] characters) {
@@ -34,15 +34,13 @@ public class SimplePlayer extends RandomPlayer{
 
         if(suit.isMagic()){
             if(selectedPile==team){
-                return -1; // if apply magic to own team
+                return NON_SELECTION_INDEX; // if apply magic to own team
             }
         } else{
             if(selectedPile!=team){
-                return -1; //if apply buff to enemy
+                return NON_SELECTION_INDEX; //if apply buff to enemy
             }
         }
-
-
         return selectedPile;
     }
 

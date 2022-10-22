@@ -21,6 +21,7 @@ public  abstract class Player {
     int selectedPileIndex;
 
     int playerIndex;
+    protected int team = playerIndex%2;
 
 
 
