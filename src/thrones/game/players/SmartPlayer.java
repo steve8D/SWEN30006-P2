@@ -210,6 +210,7 @@ public class SmartPlayer extends Player implements Subscriber {
     private boolean playTen(){
         if(diamondNumbersSeen.contains(Rank.TEN)&&diamondNumbersSeen.contains(Rank.JACK)&&diamondNumbersSeen.contains(Rank.QUEEN)&&diamondNumbersSeen.contains(Rank.KING)){
             //if you have seen all possible magics for 10
+            System.out.println("seen all tens "+ playerIndex + diamondNumbersSeen.toString());
             return true;
         }else{
             return false;

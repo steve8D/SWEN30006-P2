@@ -54,11 +54,7 @@ public class RandomPlayer extends Player{
     }
 
     public int selectRandomPile() {
-
         int selectedPileIndex = GameOfThrones.random.nextInt(2);
-
-
-
         return selectedPileIndex;
     }
 }
