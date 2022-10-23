@@ -8,7 +8,7 @@ import thrones.game.GameOfThrones.Suit;
 import thrones.game.character.Character;
 import thrones.game.character.effect.CharacterEffectFactory;
 import thrones.game.character.effect.MagicEffect;
-import thrones.game.gameSequence.Battle;
+import thrones.game.gameSequence.plays.Battle;
 import thrones.game.utility.CardCounter;
 import thrones.game.utility.Subscriber;
 

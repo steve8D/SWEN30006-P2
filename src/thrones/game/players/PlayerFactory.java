@@ -1,14 +1,10 @@
 package thrones.game.players;
 
-import ch.aplu.jcardgame.Card;
 import ch.aplu.jcardgame.Deck;
 import ch.aplu.jcardgame.Hand;
 import thrones.game.GameOfThrones;
-import thrones.game.utility.LoggingSystem;
+import thrones.game.players.humanplayer.HumanPlayer;
 import thrones.game.utility.PropertiesLoader;
-import thrones.game.utility.RandomSingleton;
-
-import java.util.List;
 
 public class PlayerFactory {
     public static final int NB_CARDS_PER_PLAYER = 9;

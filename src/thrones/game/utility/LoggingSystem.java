@@ -66,7 +66,11 @@ public class LoggingSystem {
         System.out.println(text);
     }
 
-    public static void logResult(int score0, int score1) {
+    public static void logResult(Player[] players) {
+
+        int score0 = players[0].getScore();
+                int score1 = players[1].getScore();
+
         String text;
         if (score0 > score1) {
             text = "Players 0 and 2 won.";

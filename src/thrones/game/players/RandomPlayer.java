@@ -9,11 +9,10 @@ import thrones.game.utility.RandomSingleton;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
 
 public class RandomPlayer extends Player {
-    public RandomPlayer(Hand hand,  int playerIndex) {
-        super(hand,  playerIndex);
+    public RandomPlayer(Hand hand, int playerIndex) {
+        super(hand, playerIndex);
     }
 
     @Override
@@ -41,10 +40,10 @@ public class RandomPlayer extends Player {
                 shortListCards.add(card);
             }
         }
-        if (shortListCards.isEmpty() || !isCharacter && RandomSingleton.getInstance().generateRandomInt( 3) == 0) {
+        if (shortListCards.isEmpty() || !isCharacter && RandomSingleton.getInstance().generateRandomInt(3) == 0) {
             selected = Optional.empty();
         } else {
-            selected = Optional.of(shortListCards.get(RandomSingleton.getInstance().generateRandomInt(  shortListCards.size())));
+            selected = Optional.of(shortListCards.get(RandomSingleton.getInstance().generateRandomInt(shortListCards.size())));
         }
         return selected;
     }

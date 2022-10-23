@@ -25,7 +25,6 @@ public class GameOfThrones extends CardGame {
     private Deck deck = new Deck(Suit.values(), Rank.values(), "cover");
     private Player[] players;
     private CardUI cardUI;
-    private PlayFactory playFactory;
 
     public GameOfThrones() {
         super(700, 700, 30);
@@ -34,16 +33,14 @@ public class GameOfThrones extends CardGame {
         for (int i = 0; i < nbPlays; i++) {
             executeAPlay(i);
         }
-        LoggingSystem.logResult(players[0].getScore(), players[1].getScore());
-        cardUI.displayResult(players[0].getScore(), players[1].getScore());
+        LoggingSystem.logResult(players);
+        cardUI.displayResult(players);
         refresh();
     }
 
     public static void main(String[] args) {
         Properties properties = new Properties();
         if (args == null || args.length == 0) {
-            //set default
-//            properties = PropertiesLoader.defaultProperties();
             properties = PropertiesLoader.loadPropertiesFile("properties/got.properties");
         } else {
             properties = PropertiesLoader.loadPropertiesFile(args[0]);
@@ -64,7 +61,7 @@ public class GameOfThrones extends CardGame {
     }
 
     private void executeAPlay(int playIndex) {
-        Play play = playFactory.getInstance().createPlay(playIndex, this);
+        Play play = PlayFactory.getInstance().createPlay(playIndex, this);
         play.runPlay();
     }
 

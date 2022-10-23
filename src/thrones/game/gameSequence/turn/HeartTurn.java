@@ -4,7 +4,7 @@ import ch.aplu.jcardgame.Card;
 import thrones.game.character.BaseCharacter;
 import thrones.game.character.Character;
 import thrones.game.players.Player;
-import thrones.game.utility.BrokeRuleException;
+import thrones.game.utility.rules.BrokeRuleException;
 import thrones.game.utility.CardUI;
 import thrones.game.utility.LoggingSystem;
 import thrones.game.utility.rules.CompositeRule;

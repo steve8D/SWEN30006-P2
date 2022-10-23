@@ -1,4 +1,4 @@
-package thrones.game.utility;
+package thrones.game.utility.rules;
 
 /**
  * An exception thrown when a player breaks a rule

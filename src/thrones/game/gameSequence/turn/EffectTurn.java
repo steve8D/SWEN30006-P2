@@ -21,12 +21,12 @@ public class EffectTurn extends Turn implements Publisher {
     @Override
     public void runTurn(Player player) {
         playerIndex = player.getPlayerIndex();
-        cardUI.cardSelectedMessage(playerIndex,false);
+        cardUI.cardSelectedMessage(playerIndex, false);
         selected = player.pickCard(false, characters);
 
         if (selected.isPresent()) {
 
-            cardUI.cardSelectedMessage(selected.get(),playerIndex);
+            cardUI.cardSelectedMessage(selected.get(), playerIndex);
             selectedPileIndex = player.pickPile(characters);
             if (selectedPileIndex == NON_SELECTION_VALUE) {
                 cardUI.setStatusText("Pass.");
@@ -34,7 +34,6 @@ public class EffectTurn extends Turn implements Publisher {
             }
             try {
                 LegalityChecker legalityChecker = createRuleChecker();
-
 
                 if (legalityChecker.isLegal(characters[selectedPileIndex], selected.get()) == false) {
                     throw new BrokeRuleException("rule violated");
@@ -49,7 +48,7 @@ public class EffectTurn extends Turn implements Publisher {
         }
     }
 
-    private LegalityChecker createRuleChecker(){
+    private LegalityChecker createRuleChecker() {
         CompositeRule legalityChecker = new CompositeRule();
         legalityChecker.addRule(new EffectRule());
         legalityChecker.addRule(new DiamondOnHeartRule());
@@ -61,7 +60,7 @@ public class EffectTurn extends Turn implements Publisher {
         CardCounter.getInstance().publish(this, event);
     }
 
-    private void makeMove(){
+    private void makeMove() {
         LoggingSystem.logMove(playerIndex, selected.get(), selectedPileIndex);
         cardUI.moveToPile(selected.get(), characters[selectedPileIndex].getPile());
         Card selectedCard = selected.get();

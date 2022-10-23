@@ -20,8 +20,8 @@ public abstract class Player {
     protected Optional<Card> selected;
     protected int score=0;
     private GameOfThrones game;
-    int selectedPileIndex;
-    int playerIndex;
+    protected int selectedPileIndex;
+    protected int playerIndex;
     protected int team ;
     protected boolean isCharacter;
 

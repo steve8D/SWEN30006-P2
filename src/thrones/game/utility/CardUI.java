@@ -7,6 +7,7 @@ import ch.aplu.jgamegrid.Actor;
 import ch.aplu.jgamegrid.Location;
 import ch.aplu.jgamegrid.TextActor;
 import thrones.game.GameOfThrones;
+import thrones.game.character.Character;
 import thrones.game.players.Player;
 
 import java.awt.*;
@@ -15,32 +16,18 @@ public class CardUI {
     private final String version = "1.0";
     private final int pileWidth = 40;
     private final int handWidth = 400;
-    private final Location[] handLocations = {
-            new Location(350, 625),
-            new Location(75, 350),
-            new Location(350, 75),
-            new Location(625, 350)
-    };
-    private final Location[] scoreLocations = {
-            new Location(575, 675),
-            new Location(25, 575),
-            new Location(25, 25),
-            new Location(575, 125)
-    };
-    private final Location[] pileLocations = {
-            new Location(350, 280),
-            new Location(350, 430)
-    };
-    private final Location[] pileStatusLocations = {
-            new Location(250, 200),
-            new Location(250, 520)
-    };
+    private final Location[] handLocations = {new Location(350, 625), new Location(75, 350), new Location(350, 75), new Location(625, 350)};
+    private final Location[] scoreLocations = {new Location(575, 675), new Location(25, 575), new Location(25, 25), new Location(575, 125)};
+    private final Location[] pileLocations = {new Location(350, 280), new Location(350, 430)};
+    private final Location[] pileStatusLocations = {new Location(250, 200), new Location(250, 520)};
     private final String[] playerTeams = {"[Players 0 & 2]", "[Players 1 & 3]"};
     public Actor[] pileTextActors = {null, null};
     Font bigFont = new Font("Arial", Font.BOLD, 36);
     Font smallFont = new Font("Arial", Font.PLAIN, 10);
     private GameOfThrones gameOfThrones;
     private Actor[] scoreActors = {null, null, null, null};
+    private final int ATTACK_RANK_INDEX = 0;
+    private final int DEFENCE_RANK_INDEX = 1;
 
     public CardUI(GameOfThrones game) {
         this.gameOfThrones = game;
@@ -104,7 +91,11 @@ public class CardUI {
         gameOfThrones.addActor(pileTextActors[pileIndex], pileStatusLocations[pileIndex]);
     }
 
-    public void displayResult(int score0, int score1) {
+    public void displayResult(Player[] players) {
+
+        int score0 = players[0].getScore();
+        int score1 = players[1].getScore();
+
         String text;
         if (score0 > score1) {
             text = "Players 0 and 2 won.";
@@ -128,9 +119,9 @@ public class CardUI {
 
     public void cardSelectedMessage(int playerIndex, boolean heart) {
         String text;
-        if(heart){
+        if (heart) {
             text = " select a Heart card to play";
-        }else{
+        } else {
             text = " select a non-Heart card to play.";
         }
         setStatusText("Player " + playerIndex + text);
@@ -140,5 +131,12 @@ public class CardUI {
     public void cardSelectedMessage(Card card, int playerIndex) {
         setStatusText("Selected: " + LoggingSystem.canonical(card) + ". Player" + playerIndex + " select a pile to play the card.");
 
+    }
+
+    public void updatePileRanks(Character[] characters) {
+        for (int j = 0; j < characters.length; j++) { //
+            int[] ranks = characters[j].calculatePileRanks();
+            updatePileRankState(j, ranks[ATTACK_RANK_INDEX], ranks[DEFENCE_RANK_INDEX]);
+        }
     }
 }

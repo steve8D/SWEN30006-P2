@@ -1,10 +1,11 @@
-package thrones.game.players;
+package thrones.game.players.humanplayer;
 
 import ch.aplu.jcardgame.Card;
 import ch.aplu.jcardgame.Hand;
 import thrones.game.GameOfThrones.Suit;
 import thrones.game.GameOfThrones;
 import thrones.game.character.Character;
+import thrones.game.players.Player;
 
 import java.util.Optional;
 

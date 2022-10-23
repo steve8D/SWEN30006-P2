@@ -1,4 +1,4 @@
-package thrones.game.players;
+package thrones.game.players.humanplayer;
 
 import ch.aplu.jcardgame.Card;
 import ch.aplu.jcardgame.CardAdapter;

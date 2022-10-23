@@ -1,4 +1,4 @@
-package thrones.game.gameSequence;
+package thrones.game.gameSequence.plays;
 
 import ch.aplu.jcardgame.Hand;
 import thrones.game.GameOfThrones;
