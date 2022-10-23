@@ -3,12 +3,10 @@ package thrones.game.gameSequence.strategy;
 import thrones.game.utility.RandomSingleton;
 
 public class RandomStartStrategy implements IStartingPlayerStrategy {
-    static RandomSingleton random;
-    int startingPlayer;
+    private int startingPlayer;
 
     public RandomStartStrategy(int prevPlayerIndex) {
-        startingPlayer = random.getInstance().generateRandomInt(4);
-        ;
+        startingPlayer = RandomSingleton.getInstance().generateRandomInt(4);
     }
 
     @Override

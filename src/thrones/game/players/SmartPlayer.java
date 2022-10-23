@@ -6,10 +6,9 @@ import thrones.game.GameOfThrones;
 import thrones.game.GameOfThrones.Rank;
 import thrones.game.GameOfThrones.Suit;
 import thrones.game.character.Character;
-import thrones.game.character.effect.AttackEffect;
-import thrones.game.character.effect.DefenseEffect;
+import thrones.game.character.CharacterFactory;
 import thrones.game.character.effect.MagicEffect;
-import thrones.game.gameSequence.Battle;
+import thrones.game.gameSequence.plays.Battle;
 import thrones.game.utility.CardCounter;
 import thrones.game.utility.Subscriber;
 
@@ -21,8 +20,8 @@ public class SmartPlayer extends Player implements Subscriber {
     private ArrayList<Rank> diamondNumbersSeen = new ArrayList<>();
     private Card selectedCard;
 
-    public SmartPlayer(Hand hand, GameOfThrones game, int playerIndex) {
-        super(hand, game, playerIndex);
+    public SmartPlayer(Hand hand, int playerIndex) {
+        super(hand, playerIndex);
         CardCounter.getInstance().subscribe(this, "Diamonds");
     }
 
@@ -85,16 +84,7 @@ public class SmartPlayer extends Player implements Subscriber {
                 hypotheticalBattleOutcome =
                         battle.simulateBattle(friendlyCharacter, new MagicEffect(c, enemyCharacter, false));
             } else {
-                Character newchar;
-                //this will become a factory's problem later
-                if (suit.isAttack()) {
-                    newchar = new AttackEffect(c, friendlyCharacter, false);
-                } else if (suit.isDefence()) {
-                    newchar = new DefenseEffect(c, friendlyCharacter, false);
-                } else {
-                    newchar = null;
-                }
-                //buff our character
+                Character newchar = CharacterFactory.getInstance().createCharacter(c, friendlyCharacter, false);
                 hypotheticalBattleOutcome =
                         battle.simulateBattle(newchar, enemyCharacter);
             }

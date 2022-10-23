@@ -1,7 +1,6 @@
-package thrones.game.gameSequence;
+package thrones.game.gameSequence.plays;
 
 import ch.aplu.jcardgame.Hand;
-import thrones.game.GameOfThrones;
 import thrones.game.GameOfThrones.Rank;
 import thrones.game.character.Character;
 import thrones.game.players.Player;
@@ -15,13 +14,11 @@ public class Battle {
     public static final String CHARACTER_0_FAILED = "Character 1 attack on character 0 failed.";
     private final int ATTACK_RANK_INDEX = 0;
     private final int DEFENCE_RANK_INDEX = 1;
-    private GameOfThrones game;
     private Character[] characters;
     private CardUI cardUI;
     private Player[] players;
 
-    public Battle(GameOfThrones game, Character[] characters, CardUI cardUI, Player[] players) {
-        this.game = game;
+    public Battle(Character[] characters, CardUI cardUI, Player[] players) {
         this.characters = characters;
         this.cardUI = cardUI;
         this.players = players;
@@ -58,7 +55,7 @@ public class Battle {
         return new boolean[]{character0success, character1success};
     }
 
-    public int[] doBattle() {
+    public void doBattle() {
         int[] character0stats = calculatePileRanks(characters[0]);
         int[] character1stats = calculatePileRanks(characters[1]);
         LoggingSystem.logPiles(getPilesFromCharacters(characters), character0stats, character1stats);
@@ -90,8 +87,7 @@ public class Battle {
         updateScores();
         LoggingSystem.logBattle(character0Result);
         LoggingSystem.logBattle(character1Result);
-        game.setStatusText(character0Result + " " + character1Result);
-        return null;
+        cardUI.setStatusText(character0Result + " " + character1Result);
     }
 
     private int[] calculatePileRanks(Character character) {

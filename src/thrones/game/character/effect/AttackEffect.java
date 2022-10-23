@@ -5,9 +5,6 @@ import thrones.game.GameOfThrones.Rank;
 import thrones.game.character.Character;
 
 public class AttackEffect extends CharacterEffect {
-    public AttackEffect(Card card, Character character) {
-        super(card, character);
-    }
 
     public AttackEffect(Card card, Character character, boolean transfer) {
         super(card, character, transfer);

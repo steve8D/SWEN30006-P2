@@ -2,9 +2,8 @@ package thrones.game.gameSequence.plays;
 
 import ch.aplu.jcardgame.Hand;
 import thrones.game.GameOfThrones;
-import thrones.game.character.BaseCharacter;
 import thrones.game.character.Character;
-import thrones.game.gameSequence.Battle;
+import thrones.game.character.CharacterFactory;
 import thrones.game.gameSequence.round.ConsequentRound;
 import thrones.game.gameSequence.round.FirstRound;
 import thrones.game.gameSequence.round.Round;
@@ -14,14 +13,12 @@ import thrones.game.utility.CardUI;
 import thrones.game.utility.PropertiesLoader;
 
 public class Play {
-    private final int ATTACK_RANK_INDEX = 0;
-    private final int DEFENCE_RANK_INDEX = 1;
-    protected GameOfThrones game;
-    protected CardUI cardUI;
-    protected Character[] characters;
-    protected Player[] players;
-    protected Round[] rounds;
-    protected IStartingPlayerStrategy startingPlayerStrategy;
+    private GameOfThrones game;
+    private CardUI cardUI;
+    private Character[] characters;
+    private Player[] players;
+    private Round[] rounds;
+    private IStartingPlayerStrategy startingPlayerStrategy;
 
     public Play(GameOfThrones game, CardUI cardUI, Player[] players, IStartingPlayerStrategy startingPlayerStrategy) {
         this.game = game;
@@ -35,18 +32,11 @@ public class Play {
     private Round[] createRounds() {
         int startingPlayer = startingPlayerStrategy.getStartingPlayer();
         Round[] rounds = {
-                new FirstRound(game, cardUI, characters, players, startingPlayer),
-                new ConsequentRound(game, cardUI, characters, players, startingPlayer),
-                new ConsequentRound(game, cardUI, characters, players, startingPlayer)
+                new FirstRound(cardUI, characters, players, startingPlayer),
+                new ConsequentRound(cardUI, characters, players, startingPlayer),
+                new ConsequentRound(cardUI, characters, players, startingPlayer)
         };
         return rounds;
-    }
-
-    private void updatePileRanks() {
-        for (int j = 0; j < characters.length; j++) { //
-            int[] ranks = characters[j].calculatePileRanks();
-            cardUI.updatePileRankState(j, ranks[ATTACK_RANK_INDEX], ranks[DEFENCE_RANK_INDEX]);
-        }
     }
 
     private void removeOldPiles() {
@@ -67,21 +57,21 @@ public class Play {
     private void createNewPiles() {
         characters = new Character[2];
         for (int i = 0; i < 2; i++) {
-            characters[i] = new BaseCharacter();
+            characters[i] = CharacterFactory.getInstance().createCharacter();
             // get the pile for setting up the listener (this will happen when the heart card is played later)
             // for now the code requires i set up the listener now
             Hand characterPile = characters[i].getPile();
             cardUI.drawPile(characterPile, i);
         }
-        updatePileRanks();
+        cardUI.updatePileRanks(characters);
     }
 
     public void runPlay() {
         for (int i = 0; i < 3; i++) {
             rounds[i].runRound();
         }
-        updatePileRanks();
-        Battle battle = new Battle(game, characters, cardUI, players);
+        cardUI.updatePileRanks(characters);
+        Battle battle = new Battle(characters, cardUI, players);
         battle.doBattle();
         game.delay(Long.parseLong(PropertiesLoader.getProperties().getProperty("WatchingTime", PropertiesLoader.getDefaultWatchingTime())));
         removeOldPiles();

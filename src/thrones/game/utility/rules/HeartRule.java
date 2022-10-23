@@ -6,7 +6,7 @@ import thrones.game.character.Character;
 
 public class HeartRule extends LegalityChecker {
     @Override
-    boolean isLegal(Character targetCharacter, Card attemptedCard) {
+    public boolean isLegal(Character targetCharacter, Card attemptedCard) {
         Suit suit = (Suit) attemptedCard.getSuit();
         if (suit.isCharacter()) {
             return true;

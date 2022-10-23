@@ -1,40 +1,51 @@
 package thrones.game.gameSequence.turn;
 
 import ch.aplu.jcardgame.Card;
-import thrones.game.GameOfThrones;
 import thrones.game.character.BaseCharacter;
 import thrones.game.character.Character;
 import thrones.game.players.Player;
-import thrones.game.utility.BrokeRuleException;
 import thrones.game.utility.CardUI;
 import thrones.game.utility.LoggingSystem;
+import thrones.game.utility.rules.BrokeRuleException;
 import thrones.game.utility.rules.CompositeRule;
 import thrones.game.utility.rules.HeartRule;
+import thrones.game.utility.rules.LegalityChecker;
 
 import java.util.Optional;
 
 public class HeartTurn extends Turn {
-    public HeartTurn(GameOfThrones game, CardUI cardUI, Character[] characters) {
-        super(game, cardUI, characters);
+    int playerIndex;
+    Optional<Card> selected;
+    int pileIndex;
+
+    public HeartTurn(CardUI cardUI, Character[] characters) {
+        super(cardUI, characters);
     }
 
     @Override
     public void runTurn(Player player) {
-        int playerIndex = player.getPlayerIndex();
-        //move this to cardUI
-        game.setStatusText("Player " + playerIndex + " select a Heart card to play");
-        Optional<Card> selected;
+        playerIndex = player.getPlayerIndex();
+        cardUI.cardSelectedMessage(playerIndex, true);
         selected = player.pickCard(true, characters);
-        int pileIndex = playerIndex % 2;
+        pileIndex = playerIndex % 2;
         try {
-            CompositeRule legalityChecker = new CompositeRule();
-            legalityChecker.addRule(new HeartRule());
+            LegalityChecker legalityChecker = createRuleChecker();
             if (legalityChecker.isLegal(characters[pileIndex], selected.get()) == false) {
                 throw new BrokeRuleException("rule violated");
             }
+            assert selected.isPresent() : " Pass returned on selection of character.";
+            moveCard();
         } catch (BrokeRuleException e) {
         }
-        assert selected.isPresent() : " Pass returned on selection of character.";
+    }
+
+    private LegalityChecker createRuleChecker() {
+        CompositeRule legalityChecker = new CompositeRule();
+        legalityChecker.addRule(new HeartRule());
+        return (LegalityChecker) legalityChecker;
+    }
+
+    private void moveCard() {
         LoggingSystem.logMove(playerIndex, selected.get(), pileIndex);
         cardUI.moveToPile(selected.get(), characters[pileIndex].getPile());
         // get existing pile and add heart card into the pile

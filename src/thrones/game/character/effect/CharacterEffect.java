@@ -8,17 +8,13 @@ import thrones.game.character.Character;
 public abstract class CharacterEffect extends Character {
     protected Character character;
 
-    public CharacterEffect(Card card, Character character) {
-        this.card = card;
-        this.character = character;
-    }
-
     public CharacterEffect(Card card, Character character, boolean transfer) {
         this.card = card;
         this.character = character;
+        //transfer is true when the card must also be transferred to the underlying pile for display purposes
         if (transfer) {
-            insertToPile(card); //pile is only neccessary for rendering.
-            // transfer is false for smartPlayer's calculations.
+            insertToPile(card);
+
         }
     }
 
@@ -51,7 +47,4 @@ public abstract class CharacterEffect extends Character {
         return false;
     }
 
-    protected CharacterEffect getCharacter() {
-        return (CharacterEffect) this.character;
-    }
 }

@@ -1,7 +1,6 @@
 package thrones.game;
 // Oh_Heaven.java
 
-import ch.aplu.jcardgame.Card;
 import ch.aplu.jcardgame.CardGame;
 import ch.aplu.jcardgame.Deck;
 import thrones.game.gameSequence.plays.Play;
@@ -13,20 +12,16 @@ import thrones.game.utility.LoggingSystem;
 import thrones.game.utility.PropertiesLoader;
 import thrones.game.utility.RandomSingleton;
 
-import java.util.Optional;
 import java.util.Properties;
-import java.util.Random;
 
 @SuppressWarnings("serial")
 public class GameOfThrones extends CardGame {
     public static final int nbPlayers = 4;
     static public int seed;
-    static public Random random;
     public final int nbPlays = 6;
     private Deck deck = new Deck(Suit.values(), Rank.values(), "cover");
     private Player[] players;
     private CardUI cardUI;
-    private PlayFactory playFactory;
 
     public GameOfThrones() {
         super(700, 700, 30);
@@ -35,16 +30,14 @@ public class GameOfThrones extends CardGame {
         for (int i = 0; i < nbPlays; i++) {
             executeAPlay(i);
         }
-        LoggingSystem.logResult(players[0].getScore(), players[1].getScore());
-        cardUI.displayResult(players[0].getScore(), players[1].getScore());
+        LoggingSystem.logResult(players);
+        cardUI.displayResult(players);
         refresh();
     }
 
     public static void main(String[] args) {
         Properties properties = new Properties();
         if (args == null || args.length == 0) {
-            //set default
-//            properties = PropertiesLoader.defaultProperties();
             properties = PropertiesLoader.loadPropertiesFile("properties/got.properties");
         } else {
             properties = PropertiesLoader.loadPropertiesFile(args[0]);
@@ -53,10 +46,8 @@ public class GameOfThrones extends CardGame {
         if (seedProp != null) {
             seed = Integer.parseInt(seedProp);
         }
-        random = new Random(seed);
         RandomSingleton.getInstance().addSeed(seed);
         LoggingSystem.logSeed(seed);
-        GameOfThrones.random = new Random(seed);
         new GameOfThrones();
     }
 
@@ -67,7 +58,7 @@ public class GameOfThrones extends CardGame {
     }
 
     private void executeAPlay(int playIndex) {
-        Play play = playFactory.getInstance().createPlay(playIndex, this);
+        Play play = PlayFactory.getInstance().createPlay(playIndex, this);
         play.runPlay();
     }
 
