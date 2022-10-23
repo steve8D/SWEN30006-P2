@@ -21,7 +21,6 @@ import java.util.Random;
 public class GameOfThrones extends CardGame {
     public static final int nbPlayers = 4;
     static public int seed;
-    static public Random random;
     public final int nbPlays = 6;
     private Deck deck = new Deck(Suit.values(), Rank.values(), "cover");
     private Player[] players;
@@ -53,10 +52,8 @@ public class GameOfThrones extends CardGame {
         if (seedProp != null) {
             seed = Integer.parseInt(seedProp);
         }
-        random = new Random(seed);
         RandomSingleton.getInstance().addSeed(seed);
         LoggingSystem.logSeed(seed);
-        GameOfThrones.random = new Random(seed);
         new GameOfThrones();
     }
 

@@ -28,9 +28,8 @@ public abstract class Player {
     protected static final int NON_SELECTION_INDEX = -1;
 
 
-    public Player(Hand hand, GameOfThrones game, int playerIndex) {
+    public Player(Hand hand, int playerIndex) {
         this.hand = hand;
-        this.game=game;
         this.playerIndex=playerIndex;
         team = playerIndex%2;
     }

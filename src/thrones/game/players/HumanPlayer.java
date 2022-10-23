@@ -12,8 +12,8 @@ public class HumanPlayer extends Player {
     private final int NON_SELECTION_VALUE = -1;
     private HumanAdapter humanAdapter = new HumanAdapter();
 
-    public HumanPlayer(Hand hand, GameOfThrones game, int playerIndex) {
-        super(hand, game, playerIndex);
+    public HumanPlayer(Hand hand,  int playerIndex) {
+        super(hand,  playerIndex);
     }
 
     @Override

@@ -10,8 +10,8 @@ import java.util.Optional;
 public class SimplePlayer extends RandomPlayer {
     private Optional<Card> selectedCard;
 
-    public SimplePlayer(Hand hand, GameOfThrones game, int playerIndex) {
-        super(hand, game, playerIndex);
+    public SimplePlayer(Hand hand,  int playerIndex) {
+        super(hand,  playerIndex);
     }
 
     @Override

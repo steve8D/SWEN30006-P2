@@ -31,16 +31,16 @@ public class PlayerFactory {
         if (playerType != null) {
             Player player = null;
             if (playerType.matches("human")) {
-                player = new HumanPlayer(new Hand(deck), game, index);
+                player = new HumanPlayer(new Hand(deck),  index);
             }
             if (playerType.matches("random")) {
-                player = new RandomPlayer(new Hand(deck), game, index);
+                player = new RandomPlayer(new Hand(deck),  index);
             }
             if (playerType.matches("simple")) {
-                player = new SimplePlayer(new Hand(deck), game, index);
+                player = new SimplePlayer(new Hand(deck),  index);
             }
             if (playerType.matches("smart")) {
-                player = new SmartPlayer(new Hand(deck), game, index);
+                player = new SmartPlayer(new Hand(deck),  index);
             }
             return player;
         }

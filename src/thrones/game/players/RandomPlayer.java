@@ -4,14 +4,16 @@ import ch.aplu.jcardgame.Card;
 import ch.aplu.jcardgame.Hand;
 import thrones.game.GameOfThrones;
 import thrones.game.character.Character;
+import thrones.game.utility.RandomSingleton;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 public class RandomPlayer extends Player {
-    public RandomPlayer(Hand hand, GameOfThrones game, int playerIndex) {
-        super(hand, game, playerIndex);
+    public RandomPlayer(Hand hand,  int playerIndex) {
+        super(hand,  playerIndex);
     }
 
     @Override
@@ -39,16 +41,16 @@ public class RandomPlayer extends Player {
                 shortListCards.add(card);
             }
         }
-        if (shortListCards.isEmpty() || !isCharacter && GameOfThrones.random.nextInt(3) == 0) {
+        if (shortListCards.isEmpty() || !isCharacter && RandomSingleton.getInstance().generateRandomInt( 3) == 0) {
             selected = Optional.empty();
         } else {
-            selected = Optional.of(shortListCards.get(GameOfThrones.random.nextInt(shortListCards.size())));
+            selected = Optional.of(shortListCards.get(RandomSingleton.getInstance().generateRandomInt(  shortListCards.size())));
         }
         return selected;
     }
 
     public int selectRandomPile() {
-        int selectedPileIndex = GameOfThrones.random.nextInt(2);
+        int selectedPileIndex = RandomSingleton.getInstance().generateRandomInt(2);
         return selectedPileIndex;
     }
 }

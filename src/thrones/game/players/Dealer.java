@@ -56,6 +56,7 @@ public class Dealer {
     public static Card randomCard(Hand hand) {
         assert !hand.isEmpty() : " random card from empty hand.";
         int x = RandomSingleton.getInstance().generateRandomInt(hand.getNumberOfCards());
+        //int x = RandomSingleton.getInstance().generateRandomInt(hand.getNumberOfCards());
         return hand.get(x);
     }
 

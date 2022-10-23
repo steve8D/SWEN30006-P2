@@ -20,8 +20,8 @@ public class SmartPlayer extends Player implements Subscriber {
     private ArrayList<Rank> diamondNumbersSeen = new ArrayList<>();
     private Card selectedCard;
 
-    public SmartPlayer(Hand hand, GameOfThrones game, int playerIndex) {
-        super(hand, game, playerIndex);
+    public SmartPlayer(Hand hand, int playerIndex) {
+        super(hand,  playerIndex);
         CardCounter.getInstance().subscribe(this, "Diamonds");
     }
 
