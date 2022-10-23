@@ -26,7 +26,7 @@ public class EffectTurn extends Turn implements Publisher {
         Optional<Card> selected;
         selected = player.pickCard(false, characters);
         if (selected.isPresent()) {
-            cardUI.setStatusText("Selected: " + LoggingSystem.canonical(selected.get()) + ". Player" + playerIndex + " select a pile to play the card.");
+            cardUI.roundStartMessage(selected.get(),playerIndex);
             selectedPileIndex = player.pickPile(characters);
             if (selectedPileIndex == NON_SELECTION_VALUE) {
                 cardUI.setStatusText("Pass.");

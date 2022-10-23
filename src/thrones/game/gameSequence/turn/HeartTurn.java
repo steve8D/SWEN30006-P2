@@ -21,7 +21,8 @@ public class HeartTurn extends Turn {
     @Override
     public void runTurn(Player player) {
         int playerIndex = player.getPlayerIndex();
-        cardUI.setStatusText("Player " + playerIndex + " select a Heart card to play");
+
+        cardUI.roundStartMessage(playerIndex);
         Optional<Card> selected;
         selected = player.pickCard(true, characters);
         int pileIndex = playerIndex % 2;

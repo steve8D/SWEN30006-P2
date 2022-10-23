@@ -32,7 +32,7 @@ public class LoggingSystem {
         }
     }
 
-    static public String canonical(Card c) {
+    static  String canonical(Card c) {
         return canonical((GameOfThrones.Rank) c.getRank()) + canonical((GameOfThrones.Suit) c.getSuit());
     }
 

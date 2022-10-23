@@ -123,6 +123,17 @@ public class CardUI {
     }
 
     public void setStatusText(String text) {
+
         gameOfThrones.setStatusText(text);
+    }
+
+    public void roundStartMessage(int playerIndex) {
+        setStatusText("Player " + playerIndex + " select a Heart card to play");
+
+    }
+
+    public void roundStartMessage(Card card, int playerIndex) {
+        setStatusText("Selected: " + LoggingSystem.canonical(card) + ". Player" + playerIndex + " select a pile to play the card.");
+
     }
 }
