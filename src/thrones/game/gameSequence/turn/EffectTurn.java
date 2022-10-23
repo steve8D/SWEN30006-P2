@@ -66,7 +66,7 @@ public class EffectTurn extends Turn implements Publisher {
         Card selectedCard = selected.get();
         publish(selectedCard);
         Character mostRecentCard = characters[selectedPileIndex];
-        characters[selectedPileIndex] = characterEffectFactory.getInstance().createCharacter(selectedCard, mostRecentCard, true);
+        characters[selectedPileIndex] = characterFactory.getInstance().createCharacter(selectedCard, mostRecentCard, true);
         updatePileRanks();
     }
 }

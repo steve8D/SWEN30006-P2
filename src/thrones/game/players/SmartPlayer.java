@@ -6,7 +6,7 @@ import thrones.game.GameOfThrones;
 import thrones.game.GameOfThrones.Rank;
 import thrones.game.GameOfThrones.Suit;
 import thrones.game.character.Character;
-import thrones.game.character.effect.CharacterEffectFactory;
+import thrones.game.character.CharacterFactory;
 import thrones.game.character.effect.MagicEffect;
 import thrones.game.gameSequence.plays.Battle;
 import thrones.game.utility.CardCounter;
@@ -84,7 +84,7 @@ public class SmartPlayer extends Player implements Subscriber {
                 hypotheticalBattleOutcome =
                         battle.simulateBattle(friendlyCharacter, new MagicEffect(c, enemyCharacter, false));
             } else {
-                Character newchar = CharacterEffectFactory.getInstance().createCharacter(c, friendlyCharacter, false);
+                Character newchar = CharacterFactory.getInstance().createCharacter(c, friendlyCharacter, false);
                 hypotheticalBattleOutcome =
                         battle.simulateBattle(newchar, enemyCharacter);
             }

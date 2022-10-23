@@ -1,7 +1,7 @@
 package thrones.game.gameSequence.turn;
 
 import thrones.game.GameOfThrones;
-import thrones.game.character.effect.CharacterEffectFactory;
+import thrones.game.character.CharacterFactory;
 import thrones.game.players.Player;
 import thrones.game.utility.CardUI;
 import thrones.game.character.Character;
@@ -10,7 +10,7 @@ public abstract class Turn {
     protected GameOfThrones game;
     protected CardUI cardUI;
     protected Character[] characters;
-    protected CharacterEffectFactory characterEffectFactory;
+    protected CharacterFactory characterFactory;
     protected final int ATTACK_RANK_INDEX = 0;
     protected final int DEFENCE_RANK_INDEX = 1;
 

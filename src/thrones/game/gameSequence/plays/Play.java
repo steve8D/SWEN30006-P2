@@ -1,9 +1,11 @@
 package thrones.game.gameSequence.plays;
 
+import ch.aplu.jcardgame.Card;
 import ch.aplu.jcardgame.Hand;
 import thrones.game.GameOfThrones;
 import thrones.game.character.BaseCharacter;
 import thrones.game.character.Character;
+import thrones.game.character.CharacterFactory;
 import thrones.game.gameSequence.round.ConsequentRound;
 import thrones.game.gameSequence.round.FirstRound;
 import thrones.game.gameSequence.round.Round;
@@ -60,7 +62,9 @@ public class Play {
     private void createNewPiles() {
         characters = new Character[2];
         for (int i = 0; i < 2; i++) {
-            characters[i] = new BaseCharacter();
+
+
+            characters[i] = CharacterFactory.getInstance().createCharacter();
             // get the pile for setting up the listener (this will happen when the heart card is played later)
             // for now the code requires i set up the listener now
             Hand characterPile = characters[i].getPile();
