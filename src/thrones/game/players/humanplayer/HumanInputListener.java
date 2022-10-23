@@ -8,7 +8,7 @@ import thrones.game.character.Character;
 
 import java.util.Optional;
 
-public class HumanAdapter implements IHumanInputAdapter {
+public class HumanInputListener implements IHumanInputAdapter {
 
     private Optional<Card> selectedCard;
     private int selectedPileIndex;

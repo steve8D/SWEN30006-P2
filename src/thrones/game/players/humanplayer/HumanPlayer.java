@@ -11,7 +11,7 @@ import java.util.Optional;
 
 public class HumanPlayer extends Player {
     private final int NON_SELECTION_VALUE = -1;
-    private HumanAdapter humanAdapter = new HumanAdapter();
+    private HumanInputListener humanInputListener = new HumanInputListener();
 
     public HumanPlayer(Hand hand,  int playerIndex) {
         super(hand,  playerIndex);
@@ -31,38 +31,38 @@ public class HumanPlayer extends Player {
     public Optional<Card> waitForCorrectSuit(boolean isCharacter) {
         if (hand.isEmpty()) {
             //selected = Optional.empty();
-            humanAdapter.setSelectedCard(Optional.empty());
+            humanInputListener.setSelectedCard(Optional.empty());
         } else {
             //selected = null;
-            humanAdapter.setSelectedCard(null);
+            humanInputListener.setSelectedCard(null);
             hand.setTouchEnabled(true);
             do {
-                if (humanAdapter.getSelectedCard() == null) {
+                if (humanInputListener.getSelectedCard() == null) {
                     GameOfThrones.delay(100);
                     continue;
                 }
                 GameOfThrones.Suit suit = null;
-                if(humanAdapter.getSelectedCard().isPresent()){
-                    suit = (Suit) humanAdapter.getSelectedCard().get().getSuit();
+                if(humanInputListener.getSelectedCard().isPresent()){
+                    suit = (Suit) humanInputListener.getSelectedCard().get().getSuit();
                 }
                 if (isCharacter && suit != null && suit.isCharacter() ||
                         !isCharacter && (suit == null || !suit.isCharacter())) {
                     break;
                 } else {
-                    humanAdapter.setSelectedCard(null);
+                    humanInputListener.setSelectedCard(null);
                     hand.setTouchEnabled(true);
                 }
                 GameOfThrones.delay(100);
             } while (true);
         }
-        return humanAdapter.getSelectedCard();
+        return humanInputListener.getSelectedCard();
     }
 
     public int waitForPileSelection(Character[] characters) {
 
-        selectedPileIndex = humanAdapter.selectPile(characters);
+        selectedPileIndex = humanInputListener.selectPile(characters);
 
-        if (isLegal(characters[selectedPileIndex], humanAdapter.getSelectedCard().get()) == false) {
+        if (isLegal(characters[selectedPileIndex], humanInputListener.getSelectedCard().get()) == false) {
             sortHand(); // unfocuses the illegal card
             return NON_SELECTION_VALUE;
         }
@@ -72,6 +72,6 @@ public class HumanPlayer extends Player {
     @Override
     public void setHand(Hand hand) {
         super.setHand(hand);
-        humanAdapter.setUpClickListener(hand);
+        humanInputListener.setUpClickListener(hand);
     }
 }
