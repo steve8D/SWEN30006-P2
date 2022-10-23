@@ -14,9 +14,7 @@ public abstract class Round {
     protected int startingPlayer;
     protected Turn[] turns = null;
 
-    public Round(GameOfThrones game, CardUI cardUI, Character[] characters, Player[] players, int startingPlayer) {
-        // will clean this up later
-        this.game = game;
+    public Round(CardUI cardUI, Character[] characters, Player[] players, int startingPlayer) {
         this.cardUI = cardUI;
         this.characters = characters;
         this.players = players;

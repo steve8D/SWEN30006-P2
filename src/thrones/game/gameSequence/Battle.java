@@ -15,13 +15,11 @@ public class Battle {
     public static final String CHARACTER_0_FAILED = "Character 1 attack on character 0 failed.";
     private final int ATTACK_RANK_INDEX = 0;
     private final int DEFENCE_RANK_INDEX = 1;
-    private GameOfThrones game;
     private Character[] characters;
     private CardUI cardUI;
     private Player[] players;
 
-    public Battle(GameOfThrones game, Character[] characters, CardUI cardUI, Player[] players) {
-        this.game = game;
+    public Battle(Character[] characters, CardUI cardUI, Player[] players) {
         this.characters = characters;
         this.cardUI = cardUI;
         this.players = players;

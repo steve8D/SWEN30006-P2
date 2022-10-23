@@ -35,9 +35,9 @@ public class Play {
     private Round[] createRounds() {
         int startingPlayer = startingPlayerStrategy.getStartingPlayer();
         Round[] rounds = {
-                new FirstRound(game, cardUI, characters, players, startingPlayer),
-                new ConsequentRound(game, cardUI, characters, players, startingPlayer),
-                new ConsequentRound(game, cardUI, characters, players, startingPlayer)
+                new FirstRound(cardUI, characters, players, startingPlayer),
+                new ConsequentRound(cardUI, characters, players, startingPlayer),
+                new ConsequentRound(cardUI, characters, players, startingPlayer)
         };
         return rounds;
     }
@@ -81,7 +81,7 @@ public class Play {
             rounds[i].runRound();
         }
         updatePileRanks();
-        Battle battle = new Battle(game, characters, cardUI, players);
+        Battle battle = new Battle(characters, cardUI, players);
         battle.doBattle();
         game.delay(Long.parseLong(PropertiesLoader.getProperties().getProperty("WatchingTime", PropertiesLoader.getDefaultWatchingTime())));
         removeOldPiles();

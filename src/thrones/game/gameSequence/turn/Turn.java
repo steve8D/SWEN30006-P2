@@ -14,8 +14,7 @@ public abstract class Turn {
     protected final int ATTACK_RANK_INDEX = 0;
     protected final int DEFENCE_RANK_INDEX = 1;
 
-    public Turn(GameOfThrones game, CardUI cardUI, Character[] characters) {
-        this.game = game;
+    public Turn(CardUI cardUI, Character[] characters) {
         this.cardUI = cardUI;
         this.characters = characters;
     }
