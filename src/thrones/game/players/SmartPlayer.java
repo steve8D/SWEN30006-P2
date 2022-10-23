@@ -7,6 +7,7 @@ import thrones.game.GameOfThrones.Rank;
 import thrones.game.GameOfThrones.Suit;
 import thrones.game.character.Character;
 import thrones.game.character.effect.AttackEffect;
+import thrones.game.character.effect.CharacterEffectFactory;
 import thrones.game.character.effect.DefenseEffect;
 import thrones.game.character.effect.MagicEffect;
 import thrones.game.gameSequence.Battle;
@@ -85,16 +86,7 @@ public class SmartPlayer extends Player implements Subscriber {
                 hypotheticalBattleOutcome =
                         battle.simulateBattle(friendlyCharacter, new MagicEffect(c, enemyCharacter, false));
             } else {
-                Character newchar;
-                //this will become a factory's problem later
-                if (suit.isAttack()) {
-                    newchar = new AttackEffect(c, friendlyCharacter, false);
-                } else if (suit.isDefence()) {
-                    newchar = new DefenseEffect(c, friendlyCharacter, false);
-                } else {
-                    newchar = null;
-                }
-                //buff our character
+                Character newchar = CharacterEffectFactory.getInstance().createCharacter(c, friendlyCharacter);
                 hypotheticalBattleOutcome =
                         battle.simulateBattle(newchar, enemyCharacter);
             }
