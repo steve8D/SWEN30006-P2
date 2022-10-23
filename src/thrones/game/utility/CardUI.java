@@ -46,7 +46,7 @@ public class CardUI {
     public CardUI(GameOfThrones game) {
         this.gameOfThrones = game;
         gameOfThrones.setTitle("Game of Thrones (V" + version + ") Constructed for UofM SWEN30006 with JGameGrid (www.aplu.ch)");
-        gameOfThrones.setStatusText("Initializing...");
+        setStatusText("Initializing...");
         initScore(game.nbPlayers);
         initPileTextActors();
     }
@@ -114,11 +114,15 @@ public class CardUI {
         } else {
             text = "Players 1 and 3 won.";
         }
-        gameOfThrones.setStatusText(text);
+        setStatusText(text);
     }
 
     public void moveToPile(Card card, Hand pile) {
         card.setVerso(false);
         card.transfer(pile, true);
+    }
+
+    public void setStatusText(String text) {
+        gameOfThrones.setStatusText(text);
     }
 }

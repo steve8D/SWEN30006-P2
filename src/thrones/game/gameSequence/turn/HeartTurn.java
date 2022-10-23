@@ -14,15 +14,14 @@ import thrones.game.utility.rules.HeartRule;
 import java.util.Optional;
 
 public class HeartTurn extends Turn {
-    public HeartTurn(GameOfThrones game, CardUI cardUI, Character[] characters) {
-        super(game, cardUI, characters);
+    public HeartTurn(CardUI cardUI, Character[] characters) {
+        super(cardUI, characters);
     }
 
     @Override
     public void runTurn(Player player) {
         int playerIndex = player.getPlayerIndex();
-        //move this to cardUI
-        game.setStatusText("Player " + playerIndex + " select a Heart card to play");
+        cardUI.setStatusText("Player " + playerIndex + " select a Heart card to play");
         Optional<Card> selected;
         selected = player.pickCard(true, characters);
         int pileIndex = playerIndex % 2;

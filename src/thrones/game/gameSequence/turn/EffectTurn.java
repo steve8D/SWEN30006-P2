@@ -14,23 +14,22 @@ import java.util.Optional;
 public class EffectTurn extends Turn implements Publisher {
     public static final int NON_SELECTION_VALUE = -1;
 
-    public EffectTurn(GameOfThrones game, CardUI cardUI, Character[] characters) {
-        super(game, cardUI, characters);
+    public EffectTurn(CardUI cardUI, Character[] characters) {
+        super(cardUI, characters);
     }
 
     @Override
     public void runTurn(Player player) {
         int playerIndex = player.getPlayerIndex();
-        game.setStatusText("Player" + playerIndex + " select a non-Heart card to play.");
+        cardUI.setStatusText("Player" + playerIndex + " select a non-Heart card to play.");
         int selectedPileIndex;
         Optional<Card> selected;
         selected = player.pickCard(false, characters);
         if (selected.isPresent()) {
-            // move this to cardUI
-            game.setStatusText("Selected: " + LoggingSystem.canonical(selected.get()) + ". Player" + playerIndex + " select a pile to play the card.");
+            cardUI.setStatusText("Selected: " + LoggingSystem.canonical(selected.get()) + ". Player" + playerIndex + " select a pile to play the card.");
             selectedPileIndex = player.pickPile(characters);
             if (selectedPileIndex == NON_SELECTION_VALUE) {
-                game.setStatusText("Pass.");
+                cardUI.setStatusText("Pass.");
                 return;
             }
             try {
@@ -51,7 +50,7 @@ public class EffectTurn extends Turn implements Publisher {
                 // Empty
             }
         } else {
-            game.setStatusText("Pass.");
+            cardUI.setStatusText("Pass.");
         }
     }
 

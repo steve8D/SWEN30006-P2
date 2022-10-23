@@ -90,7 +90,7 @@ public class Battle {
         updateScores();
         LoggingSystem.logBattle(character0Result);
         LoggingSystem.logBattle(character1Result);
-        game.setStatusText(character0Result + " " + character1Result);
+        cardUI.setStatusText(character0Result + " " + character1Result);
         return null;
     }
 
