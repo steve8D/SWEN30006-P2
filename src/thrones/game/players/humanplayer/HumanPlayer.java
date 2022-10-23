@@ -11,7 +11,7 @@ import java.util.Optional;
 
 public class HumanPlayer extends Player {
     private final int NON_SELECTION_VALUE = -1;
-    private HumanInputListener humanInputListener = new HumanInputListener();
+    private IHumanInputAdapter humanInputListener = new HumanInputListener();
 
     public HumanPlayer(Hand hand,  int playerIndex) {
         super(hand,  playerIndex);
