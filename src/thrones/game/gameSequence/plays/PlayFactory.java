@@ -30,7 +30,7 @@ public class PlayFactory {
     private IStartingPlayerStrategy selectStartingStrategy() {
         if (playIndex == 0) {
             startingPlayerStrategy = new RandomStartStrategy(prevPlayerIndex);
-        } else if (playIndex == totalRound-1) {
+        } else if (playIndex == totalRound - 1) {
             startingPlayerStrategy = new LastStartStrategy(prevPlayerIndex);
         } else {
             startingPlayerStrategy = new NormalStartStrategy(prevPlayerIndex);

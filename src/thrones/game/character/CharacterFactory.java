@@ -17,8 +17,6 @@ public class CharacterFactory {
     }
 
     public Character createCharacter(Card card, Character mostRecentCard, boolean transfer) {
-
-
         if (((GameOfThrones.Suit) card.getSuit()).isAttack()) {
             return new AttackEffect(card, mostRecentCard, transfer);
         } else if (((GameOfThrones.Suit) card.getSuit()).isDefence()) {
@@ -29,9 +27,7 @@ public class CharacterFactory {
         return null;
     }
 
-    public  Character createCharacter(){
-
-            return new BaseCharacter();
-
+    public Character createCharacter() {
+        return new BaseCharacter();
     }
 }

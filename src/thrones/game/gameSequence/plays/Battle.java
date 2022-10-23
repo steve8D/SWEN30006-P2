@@ -1,7 +1,6 @@
 package thrones.game.gameSequence.plays;
 
 import ch.aplu.jcardgame.Hand;
-import thrones.game.GameOfThrones;
 import thrones.game.GameOfThrones.Rank;
 import thrones.game.character.Character;
 import thrones.game.players.Player;

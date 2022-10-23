@@ -12,6 +12,12 @@ import java.util.List;
 public class Dealer {
     private Deck deck = new Deck(GameOfThrones.Suit.values(), GameOfThrones.Rank.values(), "cover");
 
+    public static Card randomCard(Hand hand) {
+        assert !hand.isEmpty() : " random card from empty hand.";
+        int x = RandomSingleton.getInstance().generateRandomInt(hand.getNumberOfCards());
+        //int x = RandomSingleton.getInstance().generateRandomInt(hand.getNumberOfCards());
+        return hand.get(x);
+    }
 
     public void dealingOut(Player[] players, int nbPlayers, int nbCardsPerPlayer) {
         Hand[] hands = {new Hand(deck), new Hand(deck), new Hand(deck), new Hand(deck)};
@@ -52,12 +58,4 @@ public class Dealer {
             LoggingSystem.logHand(players[k]);
         }
     }
-
-    public static Card randomCard(Hand hand) {
-        assert !hand.isEmpty() : " random card from empty hand.";
-        int x = RandomSingleton.getInstance().generateRandomInt(hand.getNumberOfCards());
-        //int x = RandomSingleton.getInstance().generateRandomInt(hand.getNumberOfCards());
-        return hand.get(x);
-    }
-
 }

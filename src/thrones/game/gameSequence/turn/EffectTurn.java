@@ -3,7 +3,10 @@ package thrones.game.gameSequence.turn;
 import ch.aplu.jcardgame.Card;
 import thrones.game.character.Character;
 import thrones.game.players.Player;
-import thrones.game.utility.*;
+import thrones.game.utility.CardCounter;
+import thrones.game.utility.CardUI;
+import thrones.game.utility.LoggingSystem;
+import thrones.game.utility.Publisher;
 import thrones.game.utility.rules.*;
 
 import java.util.Optional;
@@ -23,9 +26,7 @@ public class EffectTurn extends Turn implements Publisher {
         playerIndex = player.getPlayerIndex();
         cardUI.cardSelectedMessage(playerIndex, false);
         selected = player.pickCard(false, characters);
-
         if (selected.isPresent()) {
-
             cardUI.cardSelectedMessage(selected.get(), playerIndex);
             selectedPileIndex = player.pickPile(characters);
             if (selectedPileIndex == NON_SELECTION_VALUE) {
@@ -34,12 +35,10 @@ public class EffectTurn extends Turn implements Publisher {
             }
             try {
                 LegalityChecker legalityChecker = createRuleChecker();
-
                 if (legalityChecker.isLegal(characters[selectedPileIndex], selected.get()) == false) {
                     throw new BrokeRuleException("rule violated");
                 }
                 makeMove();
-
             } catch (BrokeRuleException e) {
                 // Empty
             }

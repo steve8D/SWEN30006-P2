@@ -32,7 +32,7 @@ public class LoggingSystem {
         }
     }
 
-    static  String canonical(Card c) {
+    static String canonical(Card c) {
         return canonical((GameOfThrones.Rank) c.getRank()) + canonical((GameOfThrones.Suit) c.getSuit());
     }
 
@@ -67,10 +67,8 @@ public class LoggingSystem {
     }
 
     public static void logResult(Player[] players) {
-
         int score0 = players[0].getScore();
-                int score1 = players[1].getScore();
-
+        int score1 = players[1].getScore();
         String text;
         if (score0 > score1) {
             text = "Players 0 and 2 won.";

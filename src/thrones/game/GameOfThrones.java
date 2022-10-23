@@ -1,7 +1,6 @@
 package thrones.game;
 // Oh_Heaven.java
 
-import ch.aplu.jcardgame.Card;
 import ch.aplu.jcardgame.CardGame;
 import ch.aplu.jcardgame.Deck;
 import thrones.game.gameSequence.plays.Play;
@@ -13,9 +12,7 @@ import thrones.game.utility.LoggingSystem;
 import thrones.game.utility.PropertiesLoader;
 import thrones.game.utility.RandomSingleton;
 
-import java.util.Optional;
 import java.util.Properties;
-import java.util.Random;
 
 @SuppressWarnings("serial")
 public class GameOfThrones extends CardGame {

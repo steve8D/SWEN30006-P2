@@ -21,13 +21,13 @@ public class CardUI {
     private final Location[] pileLocations = {new Location(350, 280), new Location(350, 430)};
     private final Location[] pileStatusLocations = {new Location(250, 200), new Location(250, 520)};
     private final String[] playerTeams = {"[Players 0 & 2]", "[Players 1 & 3]"};
+    private final int ATTACK_RANK_INDEX = 0;
+    private final int DEFENCE_RANK_INDEX = 1;
     public Actor[] pileTextActors = {null, null};
     Font bigFont = new Font("Arial", Font.BOLD, 36);
     Font smallFont = new Font("Arial", Font.PLAIN, 10);
     private GameOfThrones gameOfThrones;
     private Actor[] scoreActors = {null, null, null, null};
-    private final int ATTACK_RANK_INDEX = 0;
-    private final int DEFENCE_RANK_INDEX = 1;
 
     public CardUI(GameOfThrones game) {
         this.gameOfThrones = game;
@@ -92,10 +92,8 @@ public class CardUI {
     }
 
     public void displayResult(Player[] players) {
-
         int score0 = players[0].getScore();
         int score1 = players[1].getScore();
-
         String text;
         if (score0 > score1) {
             text = "Players 0 and 2 won.";
@@ -113,7 +111,6 @@ public class CardUI {
     }
 
     public void setStatusText(String text) {
-
         gameOfThrones.setStatusText(text);
     }
 
@@ -125,12 +122,10 @@ public class CardUI {
             text = " select a non-Heart card to play.";
         }
         setStatusText("Player " + playerIndex + text);
-
     }
 
     public void cardSelectedMessage(Card card, int playerIndex) {
         setStatusText("Selected: " + LoggingSystem.canonical(card) + ". Player" + playerIndex + " select a pile to play the card.");
-
     }
 
     public void updatePileRanks(Character[] characters) {

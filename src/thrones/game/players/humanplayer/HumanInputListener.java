@@ -9,19 +9,15 @@ import thrones.game.character.Character;
 import java.util.Optional;
 
 public class HumanInputListener implements IHumanInputAdapter {
-
+    private final int NON_SELECTION_VALUE = -1;
     private Optional<Card> selectedCard;
     private int selectedPileIndex;
-    private final int NON_SELECTION_VALUE = -1;
-
 
     public int selectPile(Character[] characters) {
         selectedPileIndex = NON_SELECTION_VALUE;
-
         Hand[] newpiles = new Hand[2];
         newpiles[0] = characters[0].getPile();
         newpiles[1] = characters[1].getPile();
-
         for (int i = 0; i < 2; i++) {
             Hand characterPile = newpiles[i];
             final int pileIndex = i;

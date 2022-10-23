@@ -2,8 +2,8 @@ package thrones.game.players.humanplayer;
 
 import ch.aplu.jcardgame.Card;
 import ch.aplu.jcardgame.Hand;
-import thrones.game.GameOfThrones.Suit;
 import thrones.game.GameOfThrones;
+import thrones.game.GameOfThrones.Suit;
 import thrones.game.character.Character;
 import thrones.game.players.Player;
 
@@ -13,8 +13,8 @@ public class HumanPlayer extends Player {
     private final int NON_SELECTION_VALUE = -1;
     private IHumanInputAdapter humanInputListener = new HumanInputListener();
 
-    public HumanPlayer(Hand hand,  int playerIndex) {
-        super(hand,  playerIndex);
+    public HumanPlayer(Hand hand, int playerIndex) {
+        super(hand, playerIndex);
     }
 
     @Override
@@ -42,7 +42,7 @@ public class HumanPlayer extends Player {
                     continue;
                 }
                 GameOfThrones.Suit suit = null;
-                if(humanInputListener.getSelectedCard().isPresent()){
+                if (humanInputListener.getSelectedCard().isPresent()) {
                     suit = (Suit) humanInputListener.getSelectedCard().get().getSuit();
                 }
                 if (isCharacter && suit != null && suit.isCharacter() ||
@@ -59,9 +59,7 @@ public class HumanPlayer extends Player {
     }
 
     public int waitForPileSelection(Character[] characters) {
-
         selectedPileIndex = humanInputListener.selectPile(characters);
-
         if (isLegal(characters[selectedPileIndex], humanInputListener.getSelectedCard().get()) == false) {
             sortHand(); // unfocuses the illegal card
             return NON_SELECTION_VALUE;

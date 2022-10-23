@@ -1,6 +1,5 @@
 package thrones.game.gameSequence.round;
 
-import thrones.game.GameOfThrones;
 import thrones.game.character.Character;
 import thrones.game.gameSequence.turn.Turn;
 import thrones.game.players.Player;
