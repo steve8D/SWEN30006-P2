@@ -7,12 +7,11 @@ import thrones.game.players.Player;
 import thrones.game.utility.CardUI;
 
 public abstract class Round {
-    protected GameOfThrones game;
     protected CardUI cardUI;
     protected Character[] characters;
-    protected Player[] players;
-    protected int startingPlayer;
-    protected Turn[] turns = null;
+    private Player[] players;
+    private int startingPlayer;
+    private Turn[] turns = null;
 
     public Round(CardUI cardUI, Character[] characters, Player[] players, int startingPlayer) {
         this.cardUI = cardUI;

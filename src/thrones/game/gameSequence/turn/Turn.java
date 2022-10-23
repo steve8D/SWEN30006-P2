@@ -7,7 +7,6 @@ import thrones.game.utility.CardUI;
 import thrones.game.character.Character;
 
 public abstract class Turn {
-    protected GameOfThrones game;
     protected CardUI cardUI;
     protected Character[] characters;
     protected CharacterEffectFactory characterEffectFactory;

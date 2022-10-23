@@ -19,7 +19,6 @@ public abstract class Player {
     protected Hand hand;
     protected Optional<Card> selected;
     protected int score=0;
-    private GameOfThrones game;
     protected int selectedPileIndex;
     protected int playerIndex;
     protected int team ;
