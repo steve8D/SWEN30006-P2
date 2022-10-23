@@ -44,10 +44,6 @@ public class LoggingSystem {
         System.out.println(PLAYER_TEAMS[0] + " score = " + scores[0] + "; " + PLAYER_TEAMS[1] + " score = " + scores[1]);
     }
 
-    public static void logHand(int player, Hand hand) {
-        System.out.println("hands[" + player + "]: " + canonical(hand));
-    }
-
     public static void logHand(Player p) {
         System.out.println("hands[" + p.getPlayerIndex() + "]: " + canonical(p.getHand()));
     }
