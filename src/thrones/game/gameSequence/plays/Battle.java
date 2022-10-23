@@ -56,7 +56,7 @@ public class Battle {
         return new boolean[]{character0success, character1success};
     }
 
-    public int[] doBattle() {
+    public void doBattle() {
         int[] character0stats = calculatePileRanks(characters[0]);
         int[] character1stats = calculatePileRanks(characters[1]);
         LoggingSystem.logPiles(getPilesFromCharacters(characters), character0stats, character1stats);
@@ -89,7 +89,6 @@ public class Battle {
         LoggingSystem.logBattle(character0Result);
         LoggingSystem.logBattle(character1Result);
         cardUI.setStatusText(character0Result + " " + character1Result);
-        return null;
     }
 
     private int[] calculatePileRanks(Character character) {

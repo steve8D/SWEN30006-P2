@@ -15,13 +15,12 @@ import thrones.game.utility.CardUI;
 import thrones.game.utility.PropertiesLoader;
 
 public class Play {
-
-    protected GameOfThrones game;
-    protected CardUI cardUI;
-    protected Character[] characters;
-    protected Player[] players;
-    protected Round[] rounds;
-    protected IStartingPlayerStrategy startingPlayerStrategy;
+    private GameOfThrones game;
+    private CardUI cardUI;
+    private Character[] characters;
+    private Player[] players;
+    private Round[] rounds;
+    private IStartingPlayerStrategy startingPlayerStrategy;
 
     public Play(GameOfThrones game, CardUI cardUI, Player[] players, IStartingPlayerStrategy startingPlayerStrategy) {
         this.game = game;
@@ -41,8 +40,6 @@ public class Play {
         };
         return rounds;
     }
-
-
 
     private void removeOldPiles() {
         Hand[] piles = getPilesFromCharacters(characters);
