@@ -1,7 +1,7 @@
 package thrones.game.gameSequence.strategy;
 
 public class NormalStartStrategy implements IStartingPlayerStrategy {
-    int startingPlayer;
+    private int startingPlayer;
 
     public NormalStartStrategy(int prevPlayerIndex) {
         startingPlayer = prevPlayerIndex + 1;
