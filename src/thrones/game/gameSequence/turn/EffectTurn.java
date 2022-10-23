@@ -1,18 +1,18 @@
 package thrones.game.gameSequence.turn;
 
 import ch.aplu.jcardgame.Card;
-import thrones.game.GameOfThrones;
 import thrones.game.character.Character;
 import thrones.game.players.Player;
 import thrones.game.utility.*;
-import thrones.game.utility.rules.CompositeRule;
-import thrones.game.utility.rules.DiamondOnHeartRule;
-import thrones.game.utility.rules.EffectRule;
+import thrones.game.utility.rules.*;
 
 import java.util.Optional;
 
 public class EffectTurn extends Turn implements Publisher {
     public static final int NON_SELECTION_VALUE = -1;
+    int selectedPileIndex;
+    Optional<Card> selected;
+    int playerIndex;
 
     public EffectTurn(CardUI cardUI, Character[] characters) {
         super(cardUI, characters);
@@ -20,32 +20,27 @@ public class EffectTurn extends Turn implements Publisher {
 
     @Override
     public void runTurn(Player player) {
-        int playerIndex = player.getPlayerIndex();
-        cardUI.setStatusText("Player" + playerIndex + " select a non-Heart card to play.");
-        int selectedPileIndex;
-        Optional<Card> selected;
+        playerIndex = player.getPlayerIndex();
+        cardUI.cardSelectedMessage(playerIndex,false);
         selected = player.pickCard(false, characters);
+
         if (selected.isPresent()) {
-            cardUI.roundStartMessage(selected.get(),playerIndex);
+
+            cardUI.cardSelectedMessage(selected.get(),playerIndex);
             selectedPileIndex = player.pickPile(characters);
             if (selectedPileIndex == NON_SELECTION_VALUE) {
                 cardUI.setStatusText("Pass.");
                 return;
             }
             try {
-                CompositeRule legalityChecker = new CompositeRule();
-                legalityChecker.addRule(new EffectRule());
-                legalityChecker.addRule(new DiamondOnHeartRule());
+                LegalityChecker legalityChecker = createRuleChecker();
+
+
                 if (legalityChecker.isLegal(characters[selectedPileIndex], selected.get()) == false) {
                     throw new BrokeRuleException("rule violated");
                 }
-                LoggingSystem.logMove(playerIndex, selected.get(), selectedPileIndex);
-                cardUI.moveToPile(selected.get(), characters[selectedPileIndex].getPile());
-                Card selectedCard = selected.get();
-                publish(selectedCard);
-                Character mostRecentCard = characters[selectedPileIndex];
-                characters[selectedPileIndex] = characterEffectFactory.getInstance().createCharacter(selectedCard, mostRecentCard);
-                updatePileRanks();
+                makeMove();
+
             } catch (BrokeRuleException e) {
                 // Empty
             }
@@ -54,8 +49,25 @@ public class EffectTurn extends Turn implements Publisher {
         }
     }
 
+    private LegalityChecker createRuleChecker(){
+        CompositeRule legalityChecker = new CompositeRule();
+        legalityChecker.addRule(new EffectRule());
+        legalityChecker.addRule(new DiamondOnHeartRule());
+        return (LegalityChecker) legalityChecker;
+    }
+
     @Override
     public void publish(Card event) {
         CardCounter.getInstance().publish(this, event);
+    }
+
+    private void makeMove(){
+        LoggingSystem.logMove(playerIndex, selected.get(), selectedPileIndex);
+        cardUI.moveToPile(selected.get(), characters[selectedPileIndex].getPile());
+        Card selectedCard = selected.get();
+        publish(selectedCard);
+        Character mostRecentCard = characters[selectedPileIndex];
+        characters[selectedPileIndex] = characterEffectFactory.getInstance().createCharacter(selectedCard, mostRecentCard, true);
+        updatePileRanks();
     }
 }

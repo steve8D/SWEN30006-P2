@@ -86,7 +86,7 @@ public class SmartPlayer extends Player implements Subscriber {
                 hypotheticalBattleOutcome =
                         battle.simulateBattle(friendlyCharacter, new MagicEffect(c, enemyCharacter, false));
             } else {
-                Character newchar = CharacterEffectFactory.getInstance().createCharacter(c, friendlyCharacter);
+                Character newchar = CharacterEffectFactory.getInstance().createCharacter(c, friendlyCharacter, false);
                 hypotheticalBattleOutcome =
                         battle.simulateBattle(newchar, enemyCharacter);
             }

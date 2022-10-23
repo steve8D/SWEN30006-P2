@@ -7,9 +7,7 @@ import thrones.game.character.Character;
 import java.util.ArrayList;
 
 public class MagicEffect extends CharacterEffect {
-    public MagicEffect(Card card, Character character) {
-        super(card, character);
-    }
+
 
     public MagicEffect(Card card, Character character, boolean transfer) {
         super(card, character, transfer);

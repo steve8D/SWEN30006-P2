@@ -10,7 +10,6 @@ import thrones.game.GameOfThrones;
 import thrones.game.players.Player;
 
 import java.awt.*;
-import java.util.Optional;
 
 public class CardUI {
     private final String version = "1.0";
@@ -127,12 +126,18 @@ public class CardUI {
         gameOfThrones.setStatusText(text);
     }
 
-    public void roundStartMessage(int playerIndex) {
-        setStatusText("Player " + playerIndex + " select a Heart card to play");
+    public void cardSelectedMessage(int playerIndex, boolean heart) {
+        String text;
+        if(heart){
+            text = " select a Heart card to play";
+        }else{
+            text = " select a non-Heart card to play.";
+        }
+        setStatusText("Player " + playerIndex + text);
 
     }
 
-    public void roundStartMessage(Card card, int playerIndex) {
+    public void cardSelectedMessage(Card card, int playerIndex) {
         setStatusText("Selected: " + LoggingSystem.canonical(card) + ". Player" + playerIndex + " select a pile to play the card.");
 
     }

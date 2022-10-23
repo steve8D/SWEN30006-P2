@@ -6,7 +6,7 @@ import thrones.game.character.Character;
 
 public class DiamondOnHeartRule extends LegalityChecker {
     @Override
-    boolean isLegal(Character targetCharacter, Card attemptedCard) {
+    public boolean isLegal(Character targetCharacter, Card attemptedCard) {
         Suit suit = (Suit) attemptedCard.getSuit();
         if (suit.isMagic()) {
             if (((Suit) targetCharacter.getCard().getSuit()).isCharacter()) {
